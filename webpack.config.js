@@ -25,6 +25,9 @@ module.exports = {
     },
     port: 5000,
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
@@ -38,6 +41,9 @@ module.exports = {
       {
         test: /\.html$/i,
         loader: 'html-loader',
+      },
+      {
+        test: /\.ts$/i, use: 'ts-loader'
       },
       {
         test: /\.(sa|sc|c)ss$/i,
