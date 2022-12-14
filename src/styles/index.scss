@@ -1,0 +1,13 @@
+@use 'global';
+@use 'fonts';
+
+.img_bg {
+  background: url('../images/Bamboo-cap.jpg');
+  height: 300px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Roboto;
+}
