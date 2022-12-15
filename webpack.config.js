@@ -9,7 +9,8 @@ if (process.env.NODE_ENV === 'production') {
 console.log(mode + ' mode');
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.ts'),
+  // entry: path.resolve(__dirname, './src/index.ts'),
+  entry: path.resolve(__dirname, './src/js/hash-router.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash:8].js',
