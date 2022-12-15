@@ -9,7 +9,8 @@ if (process.env.NODE_ENV === 'production') {
 console.log(mode + ' mode');
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.ts'),
+  // entry: path.resolve(__dirname, './src/index.ts'),
+  entry: path.resolve(__dirname, './src/js/hash-router.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash:8].js',
@@ -25,6 +26,9 @@ module.exports = {
     },
     port: 5000,
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
@@ -38,6 +42,9 @@ module.exports = {
       {
         test: /\.html$/i,
         loader: 'html-loader',
+      },
+      {
+        test: /\.ts$/i, use: 'ts-loader'
       },
       {
         test: /\.(sa|sc|c)ss$/i,
