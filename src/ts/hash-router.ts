@@ -3,25 +3,25 @@ import { IRouter, IRoutes } from '../types/hash-router-types';
 const pageTitle = 'Online store';
 
 const routes: IRoutes = {
+  '/': {
+    template: 'templates/main.html',
+    title: 'Main | ' + pageTitle,
+    description: 'This is the home page',
+  },
   404: {
     template: 'templates/404.html',
     title: '404 | ' + pageTitle,
     description: 'Page not found',
   },
-  '/': {
-    template: 'templates/index.html',
-    title: 'Home | ' + pageTitle,
-    description: 'This is the home page',
-  },
-  about: {
-    template: 'templates/about.html',
+  cart: {
+    template: 'templates/cart.html',
     title: 'About Us | ' + pageTitle,
-    description: 'This is the about page',
+    description: 'Cart page',
   },
-  contact: {
-    template: 'templates/contact.html',
-    title: 'Contact Us | ' + pageTitle,
-    description: 'This is the contact page',
+  goods: {
+    template: 'templates/goods.html',
+    title: 'Goods | ' + pageTitle,
+    description: 'Page for goods',
   },
 };
 

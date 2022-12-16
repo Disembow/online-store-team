@@ -1,3 +1,4 @@
+import './style.scss';
 import { Router } from './ts/hash-router';
 
 const router = new Router();
