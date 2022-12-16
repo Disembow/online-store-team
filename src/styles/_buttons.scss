@@ -1,0 +1,56 @@
+.button {
+  font-family: Poppins, sans-serif;
+  font-size: 1rem;
+  width: 9.4rem;
+  height: 3rem;
+  background: #6a983c;
+  border: 2px solid #46760a;
+  border-radius: 12px;
+  color: #ffffff;
+  &__submit {
+    width: 11rem;
+    &_cart {
+      margin: 1rem;
+    }
+  }
+}
+
+.cart__changer {
+  background: #f9f9f9;
+  width: 6rem;
+  height: 2rem;
+  border: 1px solid #d1d1d1;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  margin: 0 0 0 1rem;
+  user-select: none;
+}
+
+.plus,
+.minus {
+  width: 50%;
+  min-height: 100%;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minus {
+  border-right: 1px solid #d1d1d1;
+}
+
+.plus:hover,
+.minus.hover {
+  background: #eae8e8;
+}
+
+.plus:active,
+.minus:active {
+  background: #d1d0d0;
+}
