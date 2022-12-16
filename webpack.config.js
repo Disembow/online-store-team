@@ -1,6 +1,8 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
 
 let mode = 'development';
 if (process.env.NODE_ENV === 'production') {
@@ -9,8 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 console.log(mode + ' mode');
 
 module.exports = {
-  // entry: path.resolve(__dirname, './src/index.ts'),
-  entry: path.resolve(__dirname, './src/js/hash-router.js'),
+  entry: path.resolve(__dirname, './src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash:8].js',
@@ -30,12 +31,14 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:8].css',
-    }),
     new HTMLWebpackPlugin({
       template: './src/index.html',
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:8].css',
+    }),
+    new CleanWebpackPlugin(),
+    new EslintPlugin({ extensions: 'ts' }),
   ],
   module: {
     rules: [
@@ -85,11 +88,6 @@ module.exports = {
         },
       },
       {
-        test: /\.pug$/i,
-        loader: 'pug-loader',
-        exclude: /(node_modules|bower_components)/,
-      },
-      {
         test: /\.m?js$/i,
         exclude: /(node_modules)/,
         use: {
@@ -98,6 +96,11 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
+      },
+      {
+        test: /\.pug$/i,
+        loader: 'pug-loader',
+        exclude: /(node_modules|bower_components)/,
       },
     ],
   },
