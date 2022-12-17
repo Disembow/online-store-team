@@ -3,27 +3,30 @@
   font-size: 1rem;
   width: 9.4rem;
   height: 3rem;
-  background: #6a983c;
-  border: 2px solid #46760a;
+  background: $button-green;
+  border: 2px solid $button-green_active;
   border-radius: 12px;
   color: #ffffff;
+  cursor: pointer;
   &__submit {
     width: 11rem;
     &_cart {
       margin: 1rem;
     }
   }
+  &:active {
+    background: $button-green_active;
+  }
 }
 
 .cart__changer {
   background: #f9f9f9;
-  width: 6rem;
-  height: 2rem;
+  width: 4rem;
+  height: 1.2rem;
   border: 1px solid #d1d1d1;
   border-radius: 12px;
   display: flex;
   overflow: hidden;
-  margin: 0 0 0 1rem;
   user-select: none;
 }
 
@@ -31,7 +34,7 @@
 .minus {
   width: 50%;
   min-height: 100%;
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: 700;
   text-align: center;
   border: none;
