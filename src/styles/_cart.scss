@@ -21,7 +21,11 @@
 
 .product {
   flex: 0 0 49%;
+  @media (max-width: 967px) {
+    flex: 0 0 100%;
+  }
 }
+
 
 .product__header {
   display: flex;

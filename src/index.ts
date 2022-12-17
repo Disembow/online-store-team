@@ -4,10 +4,16 @@ import { QuantityChanger } from './ts/changer';
 
 // Hash-router
 const router = new Router();
-window.addEventListener('hashchange', router.locationHandler);
-router.locationHandler();
-
 // Quantity of goods changer
-const goodsQuantity = new QuantityChanger();
-goodsQuantity.increase();
-goodsQuantity.decrease();
+const linkToCart = document.querySelector('#cart');
+// TODO: temporary solution, need to be redone
+linkToCart?.addEventListener('click', (): void => {
+  const goodsQuantity = new QuantityChanger();
+  goodsQuantity.increase();
+  goodsQuantity.decrease();
+});
+
+window.addEventListener('hashchange', () => {
+  router.locationHandler;
+});
+router.locationHandler();
