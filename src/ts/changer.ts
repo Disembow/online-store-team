@@ -13,23 +13,20 @@ export class QuantityChanger implements ICartChanger {
   }
 
   increase() {
-    if (this.cartButtonPlus)
-      this.cartButtonPlus.addEventListener('click', () => {
-        if (this.counter) {
-          this.number += 1;
-          this.counter.innerHTML = this.number.toString();
-        }
-      });
+    this.cartButtonPlus?.addEventListener('click', () => {
+      if (this.counter) {
+        this.number += 1;
+        this.counter.innerHTML = this.number.toString();
+      }
+    });
   }
 
   decrease() {
-    console.log(this.cartButtonMinus);
-    if (this.cartButtonMinus)
-      this.cartButtonMinus.addEventListener('click', () => {
-        if (this.counter && this.number > 0) {
-          this.number -= 1;
-          this.counter.innerHTML = this.number.toString();
-        }
-      });
+    this.cartButtonMinus?.addEventListener('click', () => {
+      if (this.counter && this.number > 0) {
+        this.number -= 1;
+        this.counter.innerHTML = this.number.toString();
+      }
+    });
   }
 }

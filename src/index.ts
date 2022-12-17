@@ -5,7 +5,7 @@ import { QuantityChanger } from './ts/changer';
 // Hash-router
 const router = new Router();
 // Quantity of goods changer
-const linkToCart = document.querySelector('#cart');
+const linkToCart: HTMLElement | null = document.querySelector('#cart');
 // TODO: temporary solution, need to be redone
 linkToCart?.addEventListener('click', (): void => {
   const goodsQuantity = new QuantityChanger();
