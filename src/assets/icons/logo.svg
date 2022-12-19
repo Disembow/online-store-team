@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.66 64">
+	<defs>
+		<style>
+			.cls-1{fill:#46760A;}.cls-2{fill:#5dad00;}.cls-3{fill:#cfd8dd;}
+		</style>
+	</defs>
+	<title>
+		Shopping Bags
+	</title>
+	<g id="Layer_2" data-name="Layer 2">
+		<g id="Layer_1-2" data-name="Layer 1">
+			<path class="cls-1" d="M42,16H5.67a4,4,0,0,0-4,3.83L0,59.83A4,4,0,0,0,4,64H43.66a4,4,0,0,0,4-4.17L46,19.83A4,4,0,0,0,42,16Z" />
+			<circle class="cls-2" cx="13.83" cy="22" r="4" />
+			<circle class="cls-2" cx="33.83" cy="22" r="4" />
+			<path class="cls-3" d="M33.83,24a2,2,0,0,1-2-2V12a8,8,0,0,0-16,0V22a2,2,0,0,1-4,0V12a12,12,0,0,1,24,0V22A2,2,0,0,1,33.83,24Z" />
+		</g>
+	</g>
+</svg>
