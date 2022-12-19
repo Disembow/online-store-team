@@ -1,6 +1,6 @@
 import './style.scss';
-import { Router } from './ts/hash-router';
-import { QuantityChanger } from './ts/changer';
+import { Router } from './scripts/hash-router';
+import { QuantityChanger } from './scripts/modules/changer';
 
 // Hash-router
 const router = new Router();
@@ -13,7 +13,5 @@ linkToCart?.addEventListener('click', (): void => {
   goodsQuantity.decrease();
 });
 
-window.addEventListener('hashchange', () => {
-  router.locationHandler;
-});
+window.addEventListener('hashchange', router.locationHandler);
 router.locationHandler();

@@ -1,5 +1,6 @@
-@import './styles/normalize';
-@import './styles/cart';
-@import './styles/404';
-@import './styles/global';
-@import './styles/buttons';
+@import './styles/global/normalize';
+@import './styles/modules/cart/cart';
+@import './styles/modules/404/404';
+@import './styles/global/global';
+@import './styles/common/buttons';
+@import './styles/constants/constants';

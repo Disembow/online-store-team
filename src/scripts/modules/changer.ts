@@ -1,4 +1,4 @@
-import { ICartChanger } from '../types/changer-types';
+import { ICartChanger } from '../../types/changer-types';
 
 export class QuantityChanger implements ICartChanger {
   cartButtonMinus: HTMLElement | null;
