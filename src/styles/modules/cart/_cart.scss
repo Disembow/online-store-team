@@ -1,12 +1,12 @@
 .cart-wrapper {
-  max-width: 78.75rem;
+  max-width: $widthTemplate;
   height: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.6rem;
 }
 
 .cart__title {
-  font-size: 1.625rem;
+  font-size: 2.6;
   font-weight: 700;
   line-height: 120%;
 }
@@ -15,8 +15,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 2rem 1rem;
-  margin: 1rem 0;
+  gap: 3.2rem 1.6rem;
+  margin: 1.6rem 0;
 }
 
 .product {
@@ -34,7 +34,7 @@
 
 .product__subtitle {
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.6rem;
   line-height: 120%;
   color: #a9a9a9;
 }
@@ -42,27 +42,27 @@
 .product__image {
   background: no-repeat url('https://i.dummyjson.com/data/products/1/1.jpg');
   background-size: cover;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
   max-width: 100%;
   max-height: 100%;
-  height: 15rem;
+  height: 24rem;
   flex: 1 0 50%;
 }
 
 .product__info {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  margin: 0 1rem;
+  gap: 0.16rem;
+  margin: 0 1.6rem;
 }
 
 .product__title,
 .product__brand {
-  font-size: 1.1rem;
+  font-size: 1.76rem;
 }
 
 .product__price {
-  font-size: 1.2rem;
+  font-size: 1.92rem;
   line-height: 120%;
   color: #6a983c;
 }
@@ -71,14 +71,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.5rem;
 }
 
 .product-value__sum {
-  font-size: 1.5rem;
+  font-size: 2.4rem;
   font-weight: 600;
   line-height: 120%;
-  margin: 3rem 0 2rem 1rem;
+  margin: 4.8rem 0 3.2rem 1.6rem;
   &_colored {
     color: #6a983c;
   }
@@ -87,6 +87,6 @@
 .cart__separator {
   display: inline-block;
   width: 100%;
-  height: 0.1rem;
+  height: 0.16rem;
   background: #ebebeb;
 }

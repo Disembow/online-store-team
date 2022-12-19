@@ -5,8 +5,8 @@
   font-size: 1rem;
   width: 9.4rem;
   height: 3rem;
-  background: $button-green;
-  border: 2px solid $button-green_active;
+  background: $primaryColor2;
+  border: 2px solid $borderColor2;
   border-radius: 12px;
   color: #ffffff;
   cursor: pointer;
@@ -17,7 +17,7 @@
     }
   }
   &:active {
-    background: $button-green_active;
+    background: $borderColor2;
   }
 }
 
