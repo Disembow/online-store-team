@@ -31,7 +31,7 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   plugins: [
-    new HTMLWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
     new MiniCssExtractPlugin({

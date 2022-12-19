@@ -1,6 +1,6 @@
-import './style.scss'
+import './style.scss';
 
-import setDropdown from './scripts/modules/dropdown/dropdown'
+import setDropdown from './scripts/modules/dropdown/dropdown';
 import { Router } from './scripts/hash-router';
 import { QuantityChanger } from './scripts/modules/changer';
 
@@ -18,4 +18,4 @@ linkToCart?.addEventListener('click', (): void => {
 window.addEventListener('hashchange', router.locationHandler);
 router.locationHandler();
 
-setDropdown()
+setDropdown();
