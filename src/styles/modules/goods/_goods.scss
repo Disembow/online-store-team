@@ -1,92 +1,52 @@
-.cart-wrapper {
+.goods-wrapper {
   max-width: 78.75rem;
   height: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 2.6rem;
 }
 
-.page__title {
-  font-size: 1.625rem;
-  font-weight: 700;
-  line-height: 120%;
-}
-
-.products__container {
+.product__container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 2rem 1rem;
-  margin: 1rem 0;
 }
 
-.product {
-  flex: 0 0 49%;
-  @media (max-width: 967px) {
-    flex: 0 0 100%;
-  }
-}
-
-
-.product__header {
-  display: flex;
-  flex-direction: row;
-}
-
-.product__subtitle {
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 120%;
-  color: #a9a9a9;
-}
-
-.product__image {
-  background: no-repeat url('https://i.dummyjson.com/data/products/1/1.jpg');
-  background-size: cover;
-  border-radius: 0.5rem;
-  max-width: 100%;
-  max-height: 100%;
-  height: 15rem;
-  flex: 1 0 50%;
-}
-
-.product__info {
+.product-photo__box {
+  width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  margin: 0 1rem;
+  gap: 2rem;
 }
 
-.product__title,
-.product__brand {
-  font-size: 1.1rem;
-}
-
-.product__price {
-  font-size: 1.2rem;
-  line-height: 120%;
-  color: #6a983c;
-}
-
-.product__quantity {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.product-value__sum {
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 120%;
-  margin: 3rem 0 2rem 1rem;
-  &_colored {
-    color: #6a983c;
+.product-photo {
+  overflow: hidden;
+  width: 90%;
+  &__item {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.75rem;
   }
 }
 
-.cart__separator {
-  display: inline-block;
-  width: 100%;
-  height: 0.1rem;
-  background: #ebebeb;
+
+.product-item__info {
+  border: black 2px solid;
+  width: 50%;
+  min-height: 100%;
 }
+
+.rating_star {
+  width: 1rem;
+  height: 1rem;
+
+  &_fill {
+    background: url('./assets/icons/Rating_star_filled.svg');
+  }
+  &_empty {
+    background: url('./assets/icons/Rating_star_empty.svg');
+  }
+}
+
+.product-photo__popup {
+  display: none;
+}
+
