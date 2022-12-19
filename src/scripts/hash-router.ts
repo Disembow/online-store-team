@@ -15,7 +15,7 @@ const routes: IRoutes = {
   },
   cart: {
     template: 'templates/cart.html',
-    title: 'About Us | ' + pageTitle,
+    title: 'Cart | ' + pageTitle,
     description: 'Cart page',
   },
   goods: {
