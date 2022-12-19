@@ -1,14 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <meta name="description" content="">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <meta name="description" content="">
 </head>
+
 <body>
-    <br>
+
+  <header class="header">
+
+    <section class="header__contact-block">
+      <span>8-800-800-80-80</span>
+    </section>
+
+    <section class="header__main-block">
+      <div class="logo">
+        <span class="logo__color">Online</span> Store
+      </div>
+      <div class="search">
+
+        <div class="dropdown search__dropdown">
+          <div class="dropdown__arrow"></div>
+          <div class="dropdown__selected">All options</div>
+          <ul class="dropdown__list dropdown__list_hidden">
+            <li class="dropdown__item dropdown__item_selected" data-value="all">All options</li>
+            <li class="dropdown__item" data-value="categories">Categories</li>
+            <li class="dropdown__item" data-value="brand">Brand</li>
+            <li class="dropdown__item" data-value="product">Product</li>
+            <li class="dropdown__item" data-value="description">Description</li>
+            <li class="dropdown__item" data-value="price">Price</li>
+            <li class="dropdown__item" data-value="discount">Discount</li>
+            <li class="dropdown__item" data-value="stock">Stock</li>
+          </ul>
+        </div>
+
+        <div class="search__separator"></div>
+        <input class="search__input" type="text" name="" id="" placeholder="Search Products, categories ...">
+        <img class="search__icon" src="./assets/icons/search-icon.svg" alt="Enter">
+      </div>
+      <div class="header-total-price">
+        Cart total: <span class="header-total-price__sum">€0.00</span>
+      </div>
+      <div class="header-cart-block">
+        <div class="header-cart-block__count">5</div> <!-- header-cart-block__count_hidden -->
+        <img class="header-cart-block__icon" src="./assets/icons/cart-icon.svg" alt="Cart">
+      </div>
+    </section>
+
+    <section class="breadcrumbs">
+      <span class="breadcrumbs__links breadcrumbs__links_colored">Homepage</span>
+      <span class="breadcrumbs__separator">/</span>
+      <span class="breadcrumbs__links">Category</span>
+      <span class="breadcrumbs__separator">/</span>
+      <span class="breadcrumbs__links">Brand</span>
+      <span class="breadcrumbs__separator">/</span>
+      <span class="breadcrumbs__links_disabled">Product</span>
+    </section>
+
+  </header>
+
+  <main>
+
+  </main>
+
+
+  <!--     <br>
     <div class="container">
       <div id="main">
         <div>
@@ -19,7 +79,7 @@
         <br>
       </div>
       <div id="content"></div>
-    </div>
-    <script src="./js/hash-router.js"></script>
+    </div> -->
 </body>
+
 </html>
