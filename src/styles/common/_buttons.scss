@@ -2,18 +2,18 @@
 
 .button {
   font-family: Poppins, sans-serif;
-  font-size: 1rem;
-  width: 9.4rem;
-  height: 3rem;
+  font-size: 1.6rem;
+  width: 15em;
+  height: 4.8rem;
   background: $primaryColor2;
   border: 2px solid $borderColor2;
-  border-radius: 12px;
+  border-radius: 1.2rem;
   color: #ffffff;
   cursor: pointer;
   &__submit {
-    width: 11rem;
+    width: 17.6rem;
     &_cart {
-      margin: 1rem;
+      margin: 1.6rem;
     }
   }
   &:active {
@@ -23,10 +23,10 @@
 
 .cart__changer {
   background: #f9f9f9;
-  width: 4rem;
-  height: 1.2rem;
+  width: 6.4rem;
+  height: 1.6rem;
   border: 1px solid #d1d1d1;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   display: flex;
   overflow: hidden;
   user-select: none;
@@ -36,7 +36,7 @@
 .minus {
   width: 50%;
   min-height: 100%;
-  font-size: 1rem;
+  font-size: 1.6rem;
   font-weight: 700;
   text-align: center;
   border: none;
