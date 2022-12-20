@@ -16,6 +16,9 @@
       margin: 1.6rem;
     }
   }
+  &:hover {
+    background: #5c8830;
+  }
   &:active {
     background: $borderColor2;
   }
