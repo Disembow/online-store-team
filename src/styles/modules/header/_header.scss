@@ -25,6 +25,23 @@
     }
 }
 
+.overlay {
+  display: none;
+
+  &_active {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: #00000080;
+    transition: all 1s;
+    z-index: 3;
+  }
+}
+
 .logo {
     display: flex;
     align-items: center;

@@ -3,6 +3,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 let mode = 'development';
 if (process.env.NODE_ENV === 'production') {
@@ -16,7 +17,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash:8].js',
     assetModuleFilename: 'assets/[hash][ext][query]',
-    clean: true,
+    clean: process.env.NODE_ENV === "production",
   },
   devtool: 'source-map',
   devServer: {
@@ -39,6 +40,11 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: 'ts' }),
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'src', 'templates'), to: path.resolve(__dirname, 'dist', 'templates') },
+      ],
+    }),
   ],
   module: {
     rules: [
