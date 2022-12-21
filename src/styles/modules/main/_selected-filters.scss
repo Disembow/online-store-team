@@ -1,0 +1,42 @@
+.selected-filters-block {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.2rem;
+    font-size: 1.2rem;
+    user-select: none;
+    pointer-events: none;
+
+    &__title {
+        color: $textColor1;
+    }
+
+    &__item {
+        position: relative;
+        padding: 0px 10px 0px 8px;
+        background-color: #F4F8EC;
+        border-radius: 12px;
+        line-height: 20px;
+        font-weight: 600;
+        color: $primaryColor2;
+        
+        &::after {
+            content: '\2716';
+            margin-left: 7px;
+            width: 10px;
+            height: 10px;
+            color: $greenLight;
+            cursor: pointer;
+            pointer-events: all;
+        }
+
+        &:hover::after {
+            color: $redCraft;
+        }
+
+        &:active::after {
+            color: $redCraft;
+        }
+    }
+}
