@@ -50,11 +50,11 @@
 }
 
 .rating_star {
-  width: 1.8rem;
-  height: 1.6rem;
+  width: 1.9rem;
+  height: 1.8rem;
 
   &_fill {
-    background: url('./assets/icons/Rating_star_filled.svg');
+    background: url('./assets/icons/Rating_star_filled.svg') no-repeat;
   }
 
   &_empty {

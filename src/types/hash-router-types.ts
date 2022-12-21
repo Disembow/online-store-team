@@ -3,7 +3,7 @@ export interface IRoutes {
 }
 
 export type Page = {
-  [key: string]: string;
+  [key: string]: string | number[];
 };
 
 export interface IRouter {
