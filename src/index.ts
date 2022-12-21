@@ -1,5 +1,6 @@
 import './style.scss';
 
+import clickHandlerDocument from './scripts/clickHandlerDocument';
 import setDropdown from './scripts/modules/dropdown/dropdown';
 import { Router } from './scripts/hash-router';
 import { QuantityChanger } from './scripts/modules/changer';
@@ -18,7 +19,9 @@ linkToCart?.addEventListener('click', (): void => {
 window.addEventListener('hashchange', router.locationHandler);
 router.locationHandler();
 
-setDropdown();
+setDropdown(); // Выпадающие селект опций для поисковой строки
+
+document.addEventListener('click', (event: MouseEvent) => clickHandlerDocument(event));
 
 //
 //
