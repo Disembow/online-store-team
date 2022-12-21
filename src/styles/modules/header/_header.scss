@@ -60,15 +60,10 @@
 
 .search {
     width: 500px;
-    height: 42px;
-    padding: 0 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    background: $primaryColor3;
-    border: 1px solid #D1D1D1;
-    border-radius: 12px;
 
     &__dropdown {
         flex-shrink: 0;
