@@ -25,19 +25,22 @@ const callback = function (mutationsList: MutationRecord[]) {
   if (mutationsList) {
     for (const mutation of mutationsList) {
       if (mutation.type === 'childList') {
-        // Image popup on goods page
-        const photoBox = document.querySelector('.prod-photo__box');
-        const overlay = document.querySelector('.overlay');
-
-        const goodsPopup = new GoodsPopup();
-
-        photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
-        overlay?.addEventListener('click', () => goodsPopup.hide());
-
         // Item quantity changer on cart page
         const goodsQuantity = new QuantityChanger();
-        goodsQuantity.increase();
-        goodsQuantity.decrease();
+        // Image popup on goods page
+        const goodsPopup = new GoodsPopup();
+        const photoBox = document.querySelector('.prod-photo__box');
+        const overlay = document.querySelector('.overlay');
+        if (location.hash === '#goods') {
+          photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
+          overlay?.addEventListener('click', () => goodsPopup.hide());
+
+          goodsQuantity.increase();
+          goodsQuantity.decrease();
+        } else if (location.hash === '#cart') {
+          goodsQuantity.increase();
+          goodsQuantity.decrease();
+        }
       }
     }
   }
