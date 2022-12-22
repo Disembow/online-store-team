@@ -1,64 +1,60 @@
 import './style.scss';
 
+import { products } from './scripts/data';
 import clickHandlerDocument from './scripts/clickHandlerDocument';
 import { Router } from './scripts/hash-router';
 import { QuantityChanger } from './scripts/modules/changer';
+import { GoodsPopup } from './scripts/modules/goods-popup';
+import { ProductPage } from './scripts/modules/product-page';
 
 // Hash-router
 const router = new Router();
-// Quantity of goods changer
-const linkToCart = document.querySelector('#cart');
-// TODO: temporary solution, need to be redone
-linkToCart?.addEventListener('click', (): void => {
-  const goodsQuantity = new QuantityChanger();
-  goodsQuantity.increase();
-  goodsQuantity.decrease();
-});
 
 window.addEventListener('hashchange', router.locationHandler);
 router.locationHandler();
 
+// Delegating the click event
 document.addEventListener('click', (event: MouseEvent) => clickHandlerDocument(event));
 
-//
-//
-interface IGoodsPopup {
-  show(e: Event): void;
-}
-class GoodsPopup implements IGoodsPopup {
-  popup: HTMLDivElement | null;
-  img: HTMLImageElement | null;
-  overlay: HTMLDivElement | null;
-  constructor() {
-    this.popup = document.querySelector('.prod-photo__popup');
-    this.img = document.querySelector('.popup__item');
-    this.overlay = document.querySelector('.overlay');
-  }
+// Add Mutation Observer on content change in <main> element
+const targetToObserve: HTMLElement | null = document.querySelector('#content');
 
-  show(e: Event) {
-    const target: EventTarget | null = e.target;
-    if (target instanceof HTMLImageElement && target.classList.contains('prod-photo__item') && this.img) {
-      this.popup?.classList.add('prod-photo__popup_active');
-      this.img.alt = 'Big product photo';
-      this.img.src = target.src;
-      this.overlay?.classList.add('overlay_active');
+const config = {
+  childList: true,
+};
+
+const callback = function (mutationsList: MutationRecord[]) {
+  for (const mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      // Item quantity changer on cart page
+      const goodsQuantity = new QuantityChanger();
+      // Image popup on goods page
+      const goodsPopup = new GoodsPopup();
+      const photoBox = document.querySelector('.prod-photo__box');
+      const overlay = document.querySelector('.overlay');
+
+      if (location.hash.split('/')[0] === '#goods') {
+        photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
+        overlay?.addEventListener('click', () => goodsPopup.hide());
+
+        goodsQuantity.increase();
+        goodsQuantity.decrease();
+      } else if (location.hash === '#cart') {
+        goodsQuantity.increase();
+        goodsQuantity.decrease();
+      }
+
+      // Insert new product into goods-page
+      const sublocation = window.location.hash.replace('#', '').split('/')[1];
+      const targetProduct = products.products.find((e) => e.id === +sublocation);
+      if (sublocation && targetProduct) {
+        const product = new ProductPage();
+        product.render(sublocation, targetProduct);
+      }
     }
   }
-  hide(e: Event) {
-    const target: EventTarget | null = e.target;
-    console.log(target);
-    if (target instanceof HTMLDivElement && target.classList.contains('overlay_active')) {
-      this.popup?.classList.remove('prod-photo__popup_active');
-    }
-  }
-}
+};
 
-const linkToGoods = document.querySelector('#goods');
-linkToGoods?.addEventListener('click', () => {
-  const photoBox = document.querySelector('.prod-photo__box');
-  photoBox?.addEventListener('click', (e) => {
-    const goodsPopup = new GoodsPopup();
-    goodsPopup.show(e);
-  });
-  // goodsPopup.hide(e);
-});
+const observer = new MutationObserver(callback);
+
+if (targetToObserve) observer.observe(targetToObserve, config);
