@@ -115,14 +115,6 @@
   margin: 0 0 4rem 0;
 }
 
-.prod-order__box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1.6rem 1.6rem;
-}
-
 .prod__price {
   display: flex;
   flex-direction: column;
@@ -153,3 +145,12 @@
   height: 100%;
   object-fit: cover;
 }
+
+.prod-order__box {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 0 0 3.2rem 0;
+}
+
+
