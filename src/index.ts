@@ -6,6 +6,7 @@ import { Router } from './scripts/hash-router';
 import { QuantityChanger } from './scripts/modules/changer';
 import { GoodsPopup } from './scripts/modules/goods-popup';
 import { ProductPage } from './scripts/modules/product-page';
+import { AddToCart } from './scripts/modules/add-to-cart';
 
 // Hash-router
 const router = new Router();
@@ -51,6 +52,16 @@ const callback = function (mutationsList: MutationRecord[]) {
         const product = new ProductPage();
         product.render(targetProduct);
       }
+
+      //Add product from googs-page to cart
+      const addToCart = new AddToCart();
+      const addToCartButton = document.querySelector('.button__submit_cart');
+      addToCartButton?.addEventListener('click', () => {
+        const quantity = document.querySelector('.product__counter');
+        if (targetProduct && quantity instanceof HTMLDivElement) {
+          addToCart.create(targetProduct, +quantity.innerText);
+        }
+      });
     }
   }
 };
