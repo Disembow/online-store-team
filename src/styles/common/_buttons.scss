@@ -27,6 +27,12 @@
   &:active {
     background: $borderColor2;
   }
+
+  &:disabled {
+    background-color: $disable;
+    color: #151515;
+    cursor: auto;
+  }
 }
 
 .cart__changer {

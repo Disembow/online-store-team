@@ -62,6 +62,7 @@ const callback = function (mutationsList: MutationRecord[]) {
           addToCart.create(targetProduct, +quantity.innerText);
         }
       });
+      // if (targetProduct) addToCart.check(targetProduct);
     }
   }
 };

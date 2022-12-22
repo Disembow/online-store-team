@@ -15,6 +15,7 @@ interface IAddToCart {
   create(target: targetProduct, quantity: number): void;
   add(): void;
   get(): void;
+  check(target: targetProduct): void;
 }
 
 export class AddToCart implements IAddToCart {
@@ -43,11 +44,18 @@ export class AddToCart implements IAddToCart {
       });
     } else {
       this.localStorageValue.map((e) => {
-        if (e.id === target.id) {
-          e.quantity = quantity;
-        }
+        if (e.id === target.id) e.quantity = quantity;
       });
     }
     this.add();
+    this.check(target);
+  }
+
+  check(target: targetProduct) {
+    this.get();
+    const addToCartButton = document.querySelector('.button__submit_cart');
+    this.localStorageValue.filter((e) => e.id === target.id)
+      ? addToCartButton?.setAttribute('disabled', '')
+      : addToCartButton?.removeAttribute('disabled');
   }
 }
