@@ -1,8 +1,14 @@
 import { targetProduct, IProductPage } from '../../types/product-page-types';
 
 export class ProductPage implements IProductPage {
-  render(sublocation: string, targetProduct: targetProduct) {
-    console.log(sublocation, targetProduct);
+  render(targetProduct: targetProduct) {
+    const [, categoryLink, brandLink, itemLink]: NodeListOf<HTMLSpanElement> = document.querySelectorAll(
+      '.breadcrumbs__links'
+    );
+    if (categoryLink) categoryLink.innerText = targetProduct.category;
+    if (brandLink) brandLink.innerText = targetProduct.brand;
+    if (itemLink) itemLink.innerText = targetProduct.title;
+
     const photoBox = document.querySelector('.prod-photo__box');
     for (let i = 0; i < targetProduct.images.length; i++) {
       const div = document.createElement('div');

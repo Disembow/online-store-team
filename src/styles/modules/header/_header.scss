@@ -147,6 +147,7 @@
 
     &__links {
         cursor: pointer;
+        text-transform: capitalize;
 
         &_colored {
             color: $textColor1;

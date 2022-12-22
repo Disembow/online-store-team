@@ -49,7 +49,7 @@ const callback = function (mutationsList: MutationRecord[]) {
       const targetProduct = products.products.find((e) => e.id === +sublocation);
       if (sublocation && targetProduct) {
         const product = new ProductPage();
-        product.render(sublocation, targetProduct);
+        product.render(targetProduct);
       }
     }
   }

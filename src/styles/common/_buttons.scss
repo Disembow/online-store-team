@@ -13,9 +13,11 @@
   &__submit {
     width: 17.6rem;
 
-    &_cart {
-      margin: 1.6rem;
+    &_cart,
+    &_buynow {
+      margin-right: 1.6rem;
     }
+
   }
 
   &:hover {

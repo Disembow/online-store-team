@@ -13,5 +13,5 @@ export type targetProduct = {
 };
 
 export interface IProductPage {
-  render(sublocation: string, targetProduct: targetProduct): void;
+  render(targetProduct: targetProduct): void;
 }

@@ -119,12 +119,18 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.6rem 1.6rem;
 }
 
 .prod__price {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.product__quantity {
+  margin-right: 1.6rem;
 }
 
 .prod-photo__popup {
