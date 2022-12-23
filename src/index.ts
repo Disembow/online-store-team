@@ -7,6 +7,7 @@ import { QuantityChanger } from './scripts/modules/changer';
 import { GoodsPopup } from './scripts/modules/goods-popup';
 import { ProductPage } from './scripts/modules/product-page';
 import { AddToCart } from './scripts/modules/add-to-cart';
+import { CartView } from './scripts/modules/cart';
 
 // Hash-router
 const router = new Router();
@@ -46,15 +47,15 @@ const callback = function (mutationsList: MutationRecord[]) {
       }
 
       // Insert new product into goods-page
+      const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
       const targetProduct = products.products.find((e) => e.id === +sublocation);
       if (sublocation && targetProduct) {
-        const product = new ProductPage();
         product.render(targetProduct);
       }
 
       //Add product from googs-page to cart
-      const addToCart = new AddToCart();
+      const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
       const addToCartButton = document.querySelector('.button__submit_cart');
       addToCartButton?.addEventListener('click', () => {
         const quantity = document.querySelector('.product__counter');
@@ -62,7 +63,10 @@ const callback = function (mutationsList: MutationRecord[]) {
           addToCart.create(targetProduct, +quantity.innerText);
         }
       });
-      // if (targetProduct) addToCart.check(targetProduct);
+
+      // Render products into cart from localStorage
+      const cart = new CartView('OnlineStoreCartGN', []); //TODO: refactor into one call
+      cart.render();
     }
   }
 };

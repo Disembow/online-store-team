@@ -1,6 +1,6 @@
 import { targetProduct } from '../../types/product-page-types';
 
-type LocalStorageCartInfo = {
+export type LocalStorageCartInfo = {
   id: number;
   title: string;
   price: number;
@@ -21,6 +21,11 @@ interface IAddToCart {
 export class AddToCart implements IAddToCart {
   localStorageKey = 'OnlineStoreCartGN';
   localStorageValue: Array<LocalStorageCartInfo> = [];
+
+  constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
+    this.localStorageKey = localStorageKey;
+    this.localStorageValue = localStorageValue;
+  }
 
   get() {
     const data = localStorage.getItem(this.localStorageKey);
