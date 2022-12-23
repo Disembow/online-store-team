@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    padding-top: 60px;
+    padding-top: 20px;
 }
 
 .main-aside {
@@ -18,4 +18,20 @@
     display: flex;
     flex-direction: column;
     gap: 45px;
+}
+
+.aside-btn-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.aside-btn {
+    font-family: "Open Sans", sans-serif;;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+
+    &:active {
+        transform: scale(0.95);
+    }
 }

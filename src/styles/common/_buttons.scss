@@ -76,4 +76,8 @@
   background: $primaryColor3;
   border: 1px solid $borderColor1;
   border-radius: 12px;
+
+  &:hover {
+    background-color: $background1;
+  }
 }
