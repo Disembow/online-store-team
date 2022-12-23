@@ -2,10 +2,6 @@ import { targetProduct, IProductPage } from '../../types/product-page-types';
 import { AddToCart } from './add-to-cart';
 
 export class ProductPage extends AddToCart implements IProductPage {
-  // constructor() {
-  //   super(check);
-  // }
-
   render(targetProduct: targetProduct) {
     const [, categoryLink, brandLink, itemLink]: NodeListOf<HTMLSpanElement> = document.querySelectorAll(
       '.breadcrumbs__links'

@@ -7,7 +7,7 @@
   background: $primaryColor2;
   border: 2px solid $borderColor2;
   border-radius: 1.2rem;
-  color: #ffffff;
+  color: $primaryColor4;
   cursor: pointer;
 
   &__submit {
@@ -29,17 +29,17 @@
   }
 
   &:disabled {
-    background-color: $disable;
-    color: #151515;
+    background-color: $buttonDisableBG;
+    color: $primaryColor1;
     cursor: auto;
   }
 }
 
 .cart__changer {
-  background: #f9f9f9;
+  background: $primaryColor3;
   width: 6.4rem;
   height: 1.6rem;
-  border: 1px solid #d1d1d1;
+  border: 1px solid $borderColor1;
   border-radius: 0.75rem;
   display: flex;
   overflow: hidden;
@@ -65,7 +65,7 @@
 }
 
 .minus {
-  border-right: 1px solid #d1d1d1;
+  border-right: 1px solid $borderColor1;
 }
 
 .plus:hover,
