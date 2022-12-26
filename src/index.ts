@@ -28,18 +28,6 @@ const config = {
 const callback = function (mutationsList: MutationRecord[]) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'childList') {
-      // Item quantity changer on cart page
-      // document.addEventListener('click', (e) => {
-      //   if (e.target instanceof HTMLElement) {
-      //     const item = <HTMLElement>e.target.closest('.product');
-      //     const goodsQuantity = new QuantityChanger(item);
-      //     if (e.target.classList.contains('minus')) {
-      //       goodsQuantity.decrease();
-      //     } else if (e.target.classList.contains('plus')) {
-      //       goodsQuantity.increase();
-      //     }
-      //   }
-      // });
       // Image popup on goods page
       const goodsPopup = new GoodsPopup();
       const photoBox = document.querySelector('.prod-photo__box');
@@ -86,7 +74,7 @@ if (targetToObserve) observer.observe(targetToObserve, config);
 document.addEventListener('click', (e) => {
   if (e.target instanceof HTMLElement) {
     const item = <HTMLElement>e.target.closest('.product');
-    const goodsQuantity = new QuantityChanger(item);
+    const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
     if (e.target.classList.contains('minus')) {
       goodsQuantity.decrease();
     } else if (e.target.classList.contains('plus')) {

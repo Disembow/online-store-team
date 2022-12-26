@@ -50,21 +50,30 @@ export class CartView extends AddToCart {
         category.textContent = targetProduct.category;
         description.textContent = targetProduct.description;
         rating.textContent = targetProduct.rating.toString();
-        price.textContent = `${targetProduct.price} USD`;
+        price.textContent = `€${targetProduct.price.toFixed(2)}`;
         counter.textContent = this.localStorageValue[i].quantity.toString();
         stock.textContent = targetProduct.stock.toString();
-        subtotal.textContent = `${this.localStorageValue[i].quantity * targetProduct.price} USD`;
+        subtotal.textContent = `€${(this.localStorageValue[i].quantity * targetProduct.price).toFixed(2)}`;
       }
 
       const node = template?.content.cloneNode(true);
       if (node) productBox?.append(node);
+      this.getTotal();
     }
+  }
 
+  getTotal() {
     const total = document.querySelector('.product-value__sum_colored');
+    const headerTotal = document.querySelector('.header-total-price__sum');
     const subtotalValue = document.querySelectorAll('.product__subtotal');
+    const headerCounter = document.querySelector('.header-cart-block__count');
     const sum = Array.from(subtotalValue)
-      .map((e) => e.textContent?.split(' ')[0])
+      .map((e) => e.textContent?.replace('€', ''))
       .reduce((a, c) => (a += Number(c)), 0);
-    if (total) total.textContent = `${sum} USD`;
+    if (total && headerTotal && headerCounter) {
+      total.textContent = `€${sum.toFixed(2)}`;
+      headerTotal.textContent = `€${sum.toFixed(2)}`;
+      headerCounter.textContent = `${subtotalValue.length}`;
+    }
   }
 }
