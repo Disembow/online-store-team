@@ -29,7 +29,17 @@ const callback = function (mutationsList: MutationRecord[]) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'childList') {
       // Item quantity changer on cart page
-      const goodsQuantity = new QuantityChanger();
+      // document.addEventListener('click', (e) => {
+      //   if (e.target instanceof HTMLElement) {
+      //     const item = <HTMLElement>e.target.closest('.product');
+      //     const goodsQuantity = new QuantityChanger(item);
+      //     if (e.target.classList.contains('minus')) {
+      //       goodsQuantity.decrease();
+      //     } else if (e.target.classList.contains('plus')) {
+      //       goodsQuantity.increase();
+      //     }
+      //   }
+      // });
       // Image popup on goods page
       const goodsPopup = new GoodsPopup();
       const photoBox = document.querySelector('.prod-photo__box');
@@ -39,11 +49,8 @@ const callback = function (mutationsList: MutationRecord[]) {
         photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
         overlay?.addEventListener('click', () => goodsPopup.hide());
 
-        goodsQuantity.increase();
-        goodsQuantity.decrease();
-      } else if (location.hash === '#cart') {
-        goodsQuantity.increase();
-        goodsQuantity.decrease();
+        // goodsQuantity.increase();
+        // goodsQuantity.decrease();
       }
 
       // Insert new product into goods-page
@@ -74,3 +81,16 @@ const callback = function (mutationsList: MutationRecord[]) {
 const observer = new MutationObserver(callback);
 
 if (targetToObserve) observer.observe(targetToObserve, config);
+
+// Add products quantity counter
+document.addEventListener('click', (e) => {
+  if (e.target instanceof HTMLElement) {
+    const item = <HTMLElement>e.target.closest('.product');
+    const goodsQuantity = new QuantityChanger(item);
+    if (e.target.classList.contains('minus')) {
+      goodsQuantity.decrease();
+    } else if (e.target.classList.contains('plus')) {
+      goodsQuantity.increase();
+    }
+  }
+});
