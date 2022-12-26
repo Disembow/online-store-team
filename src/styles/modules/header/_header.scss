@@ -109,6 +109,12 @@
 
 .header-cart-block {
     position: relative;
+    cursor: pointer;
+    transition: ease-in 0.2s;
+    &:hover {
+      transform: scale(1.2);
+      transition: ease-in 0.2s;
+    }
 
     &__count {
         position: absolute;
