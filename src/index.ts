@@ -36,9 +36,20 @@ const callback = function (mutationsList: MutationRecord[]) {
       if (location.hash.split('/')[0] === '#goods') {
         photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
         overlay?.addEventListener('click', () => goodsPopup.hide());
-
-        // goodsQuantity.increase();
-        // goodsQuantity.decrease();
+      }
+      if (location.hash.split('/')[0] === '#cart') {
+        // Add products quantity counter
+        document.addEventListener('click', (e) => {
+          if (e.target instanceof HTMLElement) {
+            const item = <HTMLElement>e.target.closest('.product');
+            const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
+            if (e.target.classList.contains('minus')) {
+              goodsQuantity.decrease();
+            } else if (e.target.classList.contains('plus')) {
+              goodsQuantity.increase();
+            }
+          }
+        });
       }
 
       // Insert new product into goods-page
@@ -49,7 +60,7 @@ const callback = function (mutationsList: MutationRecord[]) {
         product.render(targetProduct);
       }
 
-      //Add product from googs-page to cart
+      //Add product from goods-page to cart
       const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
       const addToCartButton = document.querySelector('.button__submit_cart');
       addToCartButton?.addEventListener('click', () => {
@@ -70,15 +81,12 @@ const observer = new MutationObserver(callback);
 
 if (targetToObserve) observer.observe(targetToObserve, config);
 
-// Add products quantity counter
-document.addEventListener('click', (e) => {
-  if (e.target instanceof HTMLElement) {
-    const item = <HTMLElement>e.target.closest('.product');
-    const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
-    if (e.target.classList.contains('minus')) {
-      goodsQuantity.decrease();
-    } else if (e.target.classList.contains('plus')) {
-      goodsQuantity.increase();
-    }
+// Add cart length into header;
+document.addEventListener('DOMContentLoaded', () => {
+  const headerCounter = document.querySelector('.header-cart-block__count');
+  if (headerCounter) {
+    const cart = new CartView('OnlineStoreCartGN', []);
+    cart.get();
+    headerCounter.textContent = cart.localStorageValue.length.toString();
   }
 });

@@ -109,6 +109,7 @@
 
 .header-cart-block {
     position: relative;
+    display: block;
     cursor: pointer;
     transition: ease-in 0.2s;
     &:hover {
