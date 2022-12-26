@@ -8,6 +8,7 @@ import { GoodsPopup } from './scripts/modules/goods-popup';
 import { ProductPage } from './scripts/modules/product-page';
 import { AddToCart } from './scripts/modules/add-to-cart';
 import { CartView } from './scripts/modules/cart';
+import { PromoCode } from './scripts/modules/promocode';
 
 // Hash-router
 const router = new Router();
@@ -40,7 +41,7 @@ const callback = function (mutationsList: MutationRecord[]) {
       if (location.hash.split('/')[0] === '#cart') {
         // Add products quantity counter
         document.addEventListener('click', (e) => {
-          if (e.target instanceof HTMLElement) {
+          if (e.target instanceof HTMLElement && e.target.closest('.product')) {
             const item = <HTMLElement>e.target.closest('.product');
             const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
             if (e.target.classList.contains('minus')) {
@@ -52,6 +53,11 @@ const callback = function (mutationsList: MutationRecord[]) {
         });
       }
 
+      // Promo code
+      const promo = new PromoCode();
+      const promoInput = document.querySelector('.promo__input');
+      promoInput?.addEventListener('input', () => promo.apply());
+
       // Insert new product into goods-page
       const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
@@ -60,7 +66,7 @@ const callback = function (mutationsList: MutationRecord[]) {
         product.render(targetProduct);
       }
 
-      //Add product from goods-page to cart
+      //Add product from goos-page to cart
       const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
       const addToCartButton = document.querySelector('.button__submit_cart');
       addToCartButton?.addEventListener('click', () => {

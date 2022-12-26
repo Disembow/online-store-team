@@ -3,7 +3,7 @@ import { LocalStorageCartInfo } from './add-to-cart';
 import { CartView } from './cart';
 
 export class QuantityChanger extends CartView implements ICartChanger {
-  private target: HTMLElement | null;
+  private target: HTMLElement;
   private counter: HTMLElement | null;
   private stock: number | null | undefined;
   private quantity: number;
