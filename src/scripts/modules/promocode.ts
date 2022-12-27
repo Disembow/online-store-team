@@ -2,16 +2,19 @@ export class PromoCode implements IPromoCode {
   private input: HTMLInputElement | null;
   public button: HTMLButtonElement | null;
   public promoList: HTMLDivElement | null;
+  private summary: HTMLDivElement | null;
   private promocodes: string[];
   private usedPromocodes: string[];
   private discountRate: number;
   private discountRateMin = 0;
   private discountRateMax = 0.5;
+  private discountRatePerPromo = 0.1;
   constructor() {
     this.input = document.querySelector('.promo__input');
     this.button = document.querySelector('.promo__button');
     this.promoList = document.querySelector('.summary__promos');
-    this.promocodes = ['RSS', 'RSFE'];
+    this.summary = document.querySelector('.summary__box');
+    this.promocodes = ['RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'];
     this.usedPromocodes = [];
     this.discountRate = 0;
   }
@@ -28,12 +31,11 @@ export class PromoCode implements IPromoCode {
     // Add new total value
     const total = <HTMLTemplateElement | null>document.getElementById('cart-summary');
     const promo = <HTMLTemplateElement | null>document.getElementById('cart-promos');
-    const summary = document.querySelector('.summary__box');
     const clone = <Element>total?.content.cloneNode(true);
     const value = clone?.querySelector('.product-value__sum_colored');
     const lastValue: Element = document.querySelectorAll('.product-value__sum_colored')[0];
 
-    this.discountRate += 0.1;
+    this.discountRate += this.discountRatePerPromo;
     if (this.usedPromocodes.includes(String(this.input?.value))) alert('This promo code was alredy used.');
     if (
       value &&
@@ -42,9 +44,8 @@ export class PromoCode implements IPromoCode {
       !this.usedPromocodes.includes(String(this.input?.value))
     ) {
       value.textContent = `€${(Number(lastValue.textContent?.replace('€', '')) * (1 - this.discountRate)).toFixed(2)}`;
-      value.setAttribute('promo', `${this.input?.value}`);
-      console.log(value);
-      if (clone) summary?.append(clone);
+
+      if (clone) this.summary?.append(clone);
 
       const totalArray: NodeListOf<HTMLSpanElement> = document.querySelectorAll('.product-value__sum');
       totalArray.forEach((e, i, a) =>
@@ -66,16 +67,18 @@ export class PromoCode implements IPromoCode {
   }
 
   removePromo(e: Event) {
+    console.log(this.usedPromocodes);
     const target = <Element>e.target;
     const targetParent = <Element>target.parentNode;
     targetParent.remove();
 
     const [, promo] = <Array<string>>targetParent.firstElementChild?.textContent?.split(' - ');
-    const list = document.querySelectorAll('.product-value__sum_colored');
-    list.forEach((e) => {
-      if (e.getAttribute('promo') === promo) e.parentElement?.remove();
-    });
-    // console.log(promo);
+    this.usedPromocodes = this.usedPromocodes.filter((e) => e !== promo);
+    this.discountRate -= this.discountRatePerPromo;
+    console.log(this.usedPromocodes);
+
+    this.summary?.lastElementChild?.remove();
+    this.summary?.lastElementChild?.classList.remove('product-value__sum_previous');
   }
 }
 
