@@ -48,6 +48,7 @@
 /* input button */
 .promo__group {
   display: flex;
+  margin: 0 0 0 1.6rem;
 
   & input {
     border-top-right-radius: 0;
@@ -101,5 +102,5 @@
 .promo__label {
   display: block;
   color: $textColor1;
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 3.2rem;
 }
