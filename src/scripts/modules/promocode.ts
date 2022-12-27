@@ -1,3 +1,5 @@
+import IPromoCode from '../../types/promo-type';
+
 export class PromoCode implements IPromoCode {
   private input: HTMLInputElement | null;
   public button: HTMLButtonElement | null;
@@ -5,10 +7,10 @@ export class PromoCode implements IPromoCode {
   private summary: HTMLDivElement | null;
   private promocodes: string[];
   private usedPromocodes: string[];
-  private discountRate: number;
   private discountRateMin = 0;
   private discountRateMax = 0.5;
   private discountRatePerPromo = 0.1;
+  private discountRate = 0;
   constructor() {
     this.input = document.querySelector('.promo__input');
     this.button = document.querySelector('.promo__button');
@@ -16,7 +18,6 @@ export class PromoCode implements IPromoCode {
     this.summary = document.querySelector('.summary__box');
     this.promocodes = ['RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'];
     this.usedPromocodes = [];
-    this.discountRate = 0;
   }
 
   public apply() {
@@ -67,7 +68,6 @@ export class PromoCode implements IPromoCode {
   }
 
   removePromo(e: Event) {
-    console.log(this.usedPromocodes);
     const target = <Element>e.target;
     const targetParent = <Element>target.parentNode;
     targetParent.remove();
@@ -75,17 +75,8 @@ export class PromoCode implements IPromoCode {
     const [, promo] = <Array<string>>targetParent.firstElementChild?.textContent?.split(' - ');
     this.usedPromocodes = this.usedPromocodes.filter((e) => e !== promo);
     this.discountRate -= this.discountRatePerPromo;
-    console.log(this.usedPromocodes);
 
     this.summary?.lastElementChild?.remove();
     this.summary?.lastElementChild?.classList.remove('product-value__sum_previous');
   }
-}
-
-interface IPromoCode {
-  button: HTMLButtonElement | null;
-  promoList: HTMLDivElement | null;
-  apply(): void;
-  discount(): void;
-  removePromo(e: Event): void;
 }
