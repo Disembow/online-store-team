@@ -1,14 +1,16 @@
 export class PromoCode implements IPromoCode {
-  input: HTMLInputElement | null;
-  button: HTMLButtonElement | null;
-  promocodes: string[];
-  usedPromocodes: string[];
-  discountRate: number;
-  discountRateMin = 0;
-  discountRateMax = 0.5;
+  private input: HTMLInputElement | null;
+  public button: HTMLButtonElement | null;
+  public promoList: HTMLDivElement | null;
+  private promocodes: string[];
+  private usedPromocodes: string[];
+  private discountRate: number;
+  private discountRateMin = 0;
+  private discountRateMax = 0.5;
   constructor() {
     this.input = document.querySelector('.promo__input');
     this.button = document.querySelector('.promo__button');
+    this.promoList = document.querySelector('.summary__promos');
     this.promocodes = ['RSS', 'RSFE'];
     this.usedPromocodes = [];
     this.discountRate = 0;
@@ -40,6 +42,8 @@ export class PromoCode implements IPromoCode {
       !this.usedPromocodes.includes(String(this.input?.value))
     ) {
       value.textContent = `€${(Number(lastValue.textContent?.replace('€', '')) * (1 - this.discountRate)).toFixed(2)}`;
+      value.setAttribute('promo', `${this.input?.value}`);
+      console.log(value);
       if (clone) summary?.append(clone);
 
       const totalArray: NodeListOf<HTMLSpanElement> = document.querySelectorAll('.product-value__sum');
@@ -52,21 +56,33 @@ export class PromoCode implements IPromoCode {
       if (this.discountRate >= this.discountRateMax) this.button?.setAttribute('disabled', 'disabled');
 
       // Add promo code to code-list
-      const promoList = document.querySelector('.summary__promos');
       const clonePromo = <Element>promo?.content.cloneNode(true);
       const promoValue = clonePromo.querySelector('.promo-code__title');
       if (promoValue && this.input) promoValue.textContent = `Used promo code - ${this.input?.value}`;
-      promoList?.append(clonePromo);
+      this.promoList?.append(clonePromo);
 
       this.usedPromocodes.push(String(this.input?.value));
-      console.log(this.usedPromocodes);
     }
+  }
+
+  removePromo(e: Event) {
+    const target = <Element>e.target;
+    const targetParent = <Element>target.parentNode;
+    targetParent.remove();
+
+    const [, promo] = <Array<string>>targetParent.firstElementChild?.textContent?.split(' - ');
+    const list = document.querySelectorAll('.product-value__sum_colored');
+    list.forEach((e) => {
+      if (e.getAttribute('promo') === promo) e.parentElement?.remove();
+    });
+    // console.log(promo);
   }
 }
 
 interface IPromoCode {
-  input: HTMLInputElement | null;
   button: HTMLButtonElement | null;
-  promocodes: string[];
+  promoList: HTMLDivElement | null;
   apply(): void;
+  discount(): void;
+  removePromo(e: Event): void;
 }

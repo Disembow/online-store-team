@@ -58,6 +58,7 @@ const callback = function (mutationsList: MutationRecord[]) {
       const promoInput = document.querySelector('.promo__input');
       promoInput?.addEventListener('input', () => promo.apply());
       promo.button?.addEventListener('click', () => promo.discount());
+      promo.promoList?.addEventListener('click', (e) => promo.removePromo(e));
 
       // Insert new product into goods-page
       const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
