@@ -19,8 +19,8 @@ interface IAddToCart {
 }
 
 export class AddToCart implements IAddToCart {
-  localStorageKey = 'OnlineStoreCartGN';
-  localStorageValue: Array<LocalStorageCartInfo> = [];
+  localStorageKey: string;
+  localStorageValue: Array<LocalStorageCartInfo>;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     this.localStorageKey = localStorageKey;

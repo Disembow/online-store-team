@@ -54,11 +54,16 @@ const callback = function (mutationsList: MutationRecord[]) {
       }
 
       // Promo code
-      const promo = new PromoCode();
+      const promo = new PromoCode('OnlineStoreCartPromoGN');
       const promoInput = document.querySelector('.promo__input');
       promoInput?.addEventListener('input', () => promo.apply());
       promo.button?.addEventListener('click', () => promo.discount());
       promo.promoList?.addEventListener('click', (e) => promo.removePromo(e));
+      if (document.readyState === 'loading') {
+        document.addEventListener('load', promo.render);
+      } else {
+        promo.render();
+      }
 
       // Insert new product into goods-page
       const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
@@ -96,5 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cart = new CartView('OnlineStoreCartGN', []);
     cart.get();
     headerCounter.textContent = cart.localStorageValue.length.toString();
+
+    // const promo = new PromoCode('OnlineStoreCartPromoGN');
+    // promo.render();
   }
 });
