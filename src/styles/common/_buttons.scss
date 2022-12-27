@@ -20,6 +20,14 @@
 
   }
 
+  &__delete_promo {
+    height: 2.4rem;
+    width: 2.4rem;
+    text-align: center;
+    border: 1px solid $borderColor2;
+    text-decoration: none;
+  }
+
   &:hover {
     background: #5c8830;
   }

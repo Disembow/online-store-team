@@ -86,14 +86,57 @@
   gap: 0.5rem;
 }
 
+.summary__wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.summary__box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.cart-summary__wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
 .product-value__sum {
   font-size: 2.4rem;
   font-weight: 600;
   line-height: 120%;
-  margin: 4.8rem 0 3.2rem 1.6rem;
+  margin: 2rem 0 1.6rem 1.6rem;
+
   &_colored {
     color: #6a983c;
   }
+
+  &_previous {
+    text-decoration: line-through;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0.8rem 0 0 1.6rem;
+    color: $textColor1;
+  }
+}
+
+.summary__promos {
+  display: flex;
+  flex-direction: column;
+}
+
+.promo__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.8rem;
+  margin: 0.8rem 0 0 1.6rem;
+  gap: 1.6rem;
+  align-items: center;
 }
 
 .cart__separator {
