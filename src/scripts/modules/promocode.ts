@@ -75,7 +75,7 @@ export class PromoCode implements IPromoCode {
         const clonePromo = <Element>this.promo?.content.cloneNode(true);
         const promoValue = clonePromo.querySelector('.promo-code__title');
 
-        if (promoValue && this.input) promoValue.textContent = `Used promo code - ${e}`;
+        if (promoValue && this.input) promoValue.textContent = `Promo ${e} -10%`;
 
         this.promoList?.append(clonePromo);
       });
@@ -121,7 +121,7 @@ export class PromoCode implements IPromoCode {
       // Add promo code to code-list
       const clonePromo = <Element>this.promo?.content.cloneNode(true);
       const promoValue = clonePromo.querySelector('.promo-code__title');
-      if (promoValue && this.input) promoValue.textContent = `Used promo code - ${this.input?.value}`;
+      if (promoValue && this.input) promoValue.textContent = `Promo ${this.input?.value} -10%`;
       this.promoList?.append(clonePromo);
 
       this.addTotalToHeader();
