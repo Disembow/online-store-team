@@ -9,6 +9,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
   private quantity: number;
   private price: number;
   private subtotal: HTMLSpanElement | null;
+  private targetId: number;
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>, target: HTMLElement) {
     super(localStorageKey, localStorageValue);
     this.target = target;
@@ -17,13 +18,13 @@ export class QuantityChanger extends CartView implements ICartChanger {
     this.quantity = Number(this.counter?.innerText);
     this.price = Number(target.querySelector('.product__price_item')?.textContent?.replace('€', ''));
     this.subtotal = target.querySelector('.product__subtotal');
+    this.targetId = Number(this.target.querySelector('.product__id_item')?.textContent);
   }
 
   private setQuantity() {
     super.get();
 
-    const targetID = Number(this.target.querySelector('.product__id_item')?.textContent);
-    const item = this.localStorageValue.filter((e) => e.id === targetID)[0];
+    const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
     item.quantity = this.quantity;
 
     super.add();
@@ -35,9 +36,11 @@ export class QuantityChanger extends CartView implements ICartChanger {
       this.quantity += 1;
       this.counter.textContent = this.quantity.toString();
 
+      // console.log('+');
+
       this.recount();
-      this.setQuantity();
       this.recountDiscount();
+      this.setQuantity();
     }
   }
 
@@ -47,10 +50,16 @@ export class QuantityChanger extends CartView implements ICartChanger {
       this.quantity -= 1;
       this.counter.textContent = this.quantity.toString();
 
+      // this.deleteFromCart(); // TODO: removed only for testing
       this.recount();
-      this.setQuantity();
       this.recountDiscount();
+      this.setQuantity();
     }
+  }
+
+  deleteFromCart() {
+    if (this.quantity === 0) this.target.remove();
+    this.remove(this.targetId);
   }
 
   private recount() {
@@ -75,6 +84,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
           ) *
           (1 - 0.1 * promos.length)
         ).toFixed(2);
+
         total.textContent = `€${sum}`;
         const headerTotal = document.querySelector('.header-total-price__sum');
 

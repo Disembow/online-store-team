@@ -56,9 +56,8 @@ export class PromoCode implements IPromoCode {
   public render() {
     this.getFromLocalStorage(this.key);
     const priceBox = this.valueBox?.querySelector('.product-value__sum_colored');
-
-    if (this.usedPromocodes.length !== 0 && this.promoList?.children.length === 0 && priceBox) {
-      priceBox.textContent = `€${this.getCartSumWithDiscount()?.toFixed(2)}`;
+    if (priceBox) priceBox.textContent = `€${this.getCartSumWithDiscount()?.toFixed(2)}`;
+    if (this.usedPromocodes.length !== 0 && this.promoList?.children.length === 0) {
       this.valueBox?.classList.remove('hidden');
 
       // Render used promo codes
@@ -90,7 +89,6 @@ export class PromoCode implements IPromoCode {
       this.promocodes.includes(String(this.input?.value)) &&
       !this.usedPromocodes.includes(String(this.input?.value))
     ) {
-      console.log();
       this.button?.removeAttribute('disabled');
     } else {
       this.button?.setAttribute('disabled', 'disabled');
@@ -134,12 +132,11 @@ export class PromoCode implements IPromoCode {
     const targetParent = <Element>target.parentNode;
     targetParent.remove();
 
-    const [, promo] = <Array<string>>targetParent.firstElementChild?.textContent?.split(' - ');
+    const [, promo] = <Array<string>>targetParent.firstElementChild?.textContent?.split(' ');
     this.usedPromocodes = this.usedPromocodes.filter((e) => e !== promo);
     this.setToLocalStorage(this.key);
     this.discountRate -= this.discountRatePerPromo;
 
-    // this.getFromLocalStorage(this.key);
     if (this.usedPromocodes.length === 0) {
       this.valueBox?.classList.add('hidden');
       this.prevValueBox?.classList.remove('product-value__sum_previous');

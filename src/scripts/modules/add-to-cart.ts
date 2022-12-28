@@ -15,6 +15,7 @@ interface IAddToCart {
   create(target: targetProduct, quantity: number): void;
   add(): void;
   get(): void;
+  remove(id: number): void;
   check(target: targetProduct): void;
 }
 
@@ -34,6 +35,13 @@ export class AddToCart implements IAddToCart {
 
   add() {
     localStorage.setItem(this.localStorageKey, JSON.stringify(this.localStorageValue));
+  }
+
+  public remove(id: number) {
+    this.get();
+    this.localStorageValue = this.localStorageValue.filter((e) => e.id !== id);
+    this.add();
+    // console.log(this.localStorageValue);
   }
 
   create(target: targetProduct, quantity: number) {

@@ -38,7 +38,7 @@ const callback = function (mutationsList: MutationRecord[]) {
         photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
         overlay?.addEventListener('click', () => goodsPopup.hide());
       }
-      if (location.hash.split('/')[0] === '#cart') {
+      if (location.hash.split('/')[0] === '#cart' || location.hash.split('/')[0] === '#goods') {
         // Add products quantity counter
         document.addEventListener('click', (e) => {
           if (e.target instanceof HTMLElement && e.target.closest('.product')) {
@@ -49,6 +49,7 @@ const callback = function (mutationsList: MutationRecord[]) {
             } else if (e.target.classList.contains('plus')) {
               goodsQuantity.increase();
             }
+            // console.log('GOODS');
           }
         });
       }
