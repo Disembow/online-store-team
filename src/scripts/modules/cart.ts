@@ -63,7 +63,7 @@ export class CartView extends AddToCart {
   }
 
   getTotal() {
-    const total = document.querySelector('.product-value__sum_colored');
+    const total = document.querySelectorAll('.product-value__sum_colored')[0];
     const headerTotal = document.querySelector('.header-total-price__sum');
     const subtotalValue = document.querySelectorAll('.product__subtotal');
     const headerCounter = document.querySelector('.header-cart-block__count');

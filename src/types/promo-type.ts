@@ -4,5 +4,6 @@ export default interface IPromoCode {
   promoList: HTMLDivElement | null;
   apply(): void;
   discount(): void;
+  getCartSumWithDiscount(): number | undefined;
   removePromo(e: Event): void;
 }
