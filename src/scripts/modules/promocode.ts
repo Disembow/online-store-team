@@ -57,9 +57,11 @@ export class PromoCode implements IPromoCode {
       const clone = <Element>this.total?.content.cloneNode(true);
       const sum = this.getCartSum();
       const value = clone?.querySelector('.product-value__sum_colored');
+
       if (value && sum) {
         value.textContent = `€${(sum * (1 - this.discountRatePerPromo * this.usedPromocodes.length)).toFixed(2)}`;
       }
+
       this.usedPromocodes.map((e) => {
         if (clone) this.summary?.append(clone);
 
@@ -74,14 +76,17 @@ export class PromoCode implements IPromoCode {
 
         const clonePromo = <Element>this.promo?.content.cloneNode(true);
         const promoValue = clonePromo.querySelector('.promo-code__title');
+
         if (promoValue && this.input) promoValue.textContent = `Used promo code - ${e}`;
+
         this.promoList?.append(clonePromo);
       });
     }
   }
 
   public apply() {
-    if (this.promocodes.includes(String(this.input?.value))) {
+    this.getFromLocalStorage(this.key);
+    if (this.promocodes.includes(String(this.input?.value)) && !this.promocodes.includes(String(this.input?.value))) {
       this.button?.removeAttribute('disabled');
     } else {
       this.button?.setAttribute('disabled', 'disabled');
