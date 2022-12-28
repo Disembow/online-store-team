@@ -51,10 +51,8 @@ const callback = function (mutationsList: MutationRecord[]) {
             if (e.target.classList.contains('minus')) {
               goodsQuantity.decrease();
             } else if (e.target.classList.contains('plus')) {
-              // console.log(e.target.classList.contains('plus'));
               goodsQuantity.increase();
             }
-            // console.log('GOODS');
           }
         });
       }

@@ -20,20 +20,20 @@ interface IAddToCart {
 }
 
 export class AddToCart implements IAddToCart {
-  localStorageKey: string;
-  localStorageValue: Array<LocalStorageCartInfo>;
+  public localStorageKey: string;
+  public localStorageValue: Array<LocalStorageCartInfo>;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     this.localStorageKey = localStorageKey;
     this.localStorageValue = localStorageValue;
   }
 
-  get() {
+  public get() {
     const data = localStorage.getItem(this.localStorageKey);
     if (data) this.localStorageValue = JSON.parse(data);
   }
 
-  add() {
+  public add() {
     localStorage.setItem(this.localStorageKey, JSON.stringify(this.localStorageValue));
   }
 
@@ -41,10 +41,9 @@ export class AddToCart implements IAddToCart {
     this.get();
     this.localStorageValue = this.localStorageValue.filter((e) => e.id !== id);
     this.add();
-    // console.log(this.localStorageValue);
   }
 
-  create(target: targetProduct, quantity: number) {
+  public create(target: targetProduct, quantity: number) {
     this.get();
     if (this.localStorageValue.filter((e) => e.id === target.id).length === 0) {
       this.localStorageValue.push({
@@ -64,7 +63,7 @@ export class AddToCart implements IAddToCart {
     this.check(target);
   }
 
-  check(target: targetProduct) {
+  public check(target: targetProduct) {
     this.get();
     const addToCartButton = document.querySelector('.button__submit_cart');
     this.localStorageValue.filter((e) => e.id === target.id).length > 0

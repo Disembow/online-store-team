@@ -1,4 +1,5 @@
 import { ICartChanger } from '../../types/changer-types';
+import { LocalStorage } from '../../types/product-page-types';
 import { LocalStorageCartInfo } from './add-to-cart';
 import { CartView } from './cart';
 
@@ -33,7 +34,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   public increase() {
-    super.get();
+    // super.get();
 
     if (this.counter && this.stock && this.quantity < this.stock) {
       this.quantity += 1;
@@ -46,12 +47,13 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   public decrease() {
-    super.get();
+    // super.get();
+
     if (this.counter && this.quantity > 0) {
       this.quantity -= 1;
       this.counter.textContent = this.quantity.toString();
 
-      // this.deleteFromCart(); // TODO: removed only for testing
+      this.deleteFromCart();
       this.recount();
       this.recountDiscount();
       this.setQuantity();
@@ -59,8 +61,18 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   deleteFromCart() {
-    if (this.quantity === 0) this.target.remove();
-    this.remove(this.targetId);
+    if (location.hash.split('/')[0] === '#cart') {
+      if (this.quantity === 0) {
+        this.target.remove();
+
+        const LS = localStorage.getItem('OnlineStoreCartGN');
+        if (LS) {
+          let data: Array<LocalStorage> = JSON.parse(LS);
+          data = data.filter((e) => e.id !== this.targetId);
+          localStorage.setItem('OnlineStoreCartGN', JSON.stringify(data));
+        }
+      }
+    }
   }
 
   private recount() {
@@ -71,6 +83,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   private recountDiscount() {
+    super.get();
     const promosStr = localStorage.getItem('OnlineStoreCartPromoGN');
     if (promosStr) {
       const promos = JSON.parse(promosStr);

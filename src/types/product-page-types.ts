@@ -20,10 +20,3 @@ type PartlylocalStorage = Pick<targetProduct, 'brand' | 'category' | 'id' | 'pri
 export interface LocalStorage extends PartlylocalStorage {
   quantity: number;
 }
-
-// brand: string;
-// category: string;
-// id: number;
-// price: number;
-// quantity: number;
-// title: string;
