@@ -57,11 +57,8 @@ export class PromoCode implements IPromoCode {
     this.getFromLocalStorage(this.key);
     const priceBox = this.valueBox?.querySelector('.product-value__sum_colored');
 
-    if (priceBox) {
+    if (this.usedPromocodes.length !== 0 && this.promoList?.children.length === 0 && priceBox) {
       priceBox.textContent = `€${this.getCartSumWithDiscount()?.toFixed(2)}`;
-    }
-
-    if (this.usedPromocodes.length !== 0 && this.promoList?.children.length === 0) {
       this.valueBox?.classList.remove('hidden');
       this.usedPromocodes.map((e) => {
         const totalArray: NodeListOf<HTMLSpanElement> = document.querySelectorAll('.product-value__sum');
