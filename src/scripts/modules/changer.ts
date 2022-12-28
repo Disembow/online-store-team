@@ -76,6 +76,9 @@ export class QuantityChanger extends CartView implements ICartChanger {
           (1 - 0.1 * promos.length)
         ).toFixed(2);
         total.textContent = `€${sum}`;
+        const headerTotal = document.querySelector('.header-total-price__sum');
+
+        if (headerTotal && sum) headerTotal.textContent = `€${sum}`;
       }
     }
   }

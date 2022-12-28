@@ -80,6 +80,8 @@ export class PromoCode implements IPromoCode {
         this.promoList?.append(clonePromo);
       });
     }
+
+    this.addTotalToHeader();
   }
 
   public apply() {
@@ -122,7 +124,7 @@ export class PromoCode implements IPromoCode {
       if (promoValue && this.input) promoValue.textContent = `Used promo code - ${this.input?.value}`;
       this.promoList?.append(clonePromo);
 
-      // console.log(this.discountRate);
+      this.addTotalToHeader();
     }
   }
 
@@ -144,5 +146,12 @@ export class PromoCode implements IPromoCode {
     }
 
     this.render();
+    this.addTotalToHeader();
+  }
+
+  private addTotalToHeader() {
+    const headerTotal = document.querySelector('.header-total-price__sum');
+    const sum = this.getCartSumWithDiscount();
+    if (headerTotal && sum) headerTotal.textContent = `€${sum.toFixed(2)}`;
   }
 }

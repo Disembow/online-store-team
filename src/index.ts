@@ -44,13 +44,10 @@ const callback = function (mutationsList: MutationRecord[]) {
           if (e.target instanceof HTMLElement && e.target.closest('.product')) {
             const item = <HTMLElement>e.target.closest('.product');
             const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
-            // const promo = new PromoCode('OnlineStoreCartPromoGN');
             if (e.target.classList.contains('minus')) {
               goodsQuantity.decrease();
-              // promo.render();
             } else if (e.target.classList.contains('plus')) {
               goodsQuantity.increase();
-              // promo.render();
             }
           }
         });

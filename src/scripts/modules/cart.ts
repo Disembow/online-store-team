@@ -67,15 +67,14 @@ export class CartView extends AddToCart {
 
   getTotal() {
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    const headerTotal = document.querySelector('.header-total-price__sum');
+    // const headerTotal = document.querySelector('.header-total-price__sum');
     const subtotalValue = document.querySelectorAll('.product__subtotal');
     const headerCounter = document.querySelector('.header-cart-block__count');
     const sum = Array.from(subtotalValue)
       .map((e) => e.textContent?.replace('€', ''))
       .reduce((a, c) => (a += Number(c)), 0);
-    if (total && headerTotal && headerCounter) {
+    if (total && headerCounter) {
       total.textContent = `€${sum.toFixed(2)}`;
-      headerTotal.textContent = `€${sum.toFixed(2)}`;
       headerCounter.textContent = `${subtotalValue.length}`;
     }
   }
