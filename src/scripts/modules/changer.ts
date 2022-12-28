@@ -24,19 +24,20 @@ export class QuantityChanger extends CartView implements ICartChanger {
   private setQuantity() {
     super.get();
 
-    const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
-    item.quantity = this.quantity;
+    if (location.hash.split('/')[0] === '#cart') {
+      const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
+      item.quantity = this.quantity;
+    }
 
     super.add();
   }
 
   public increase() {
     super.get();
+
     if (this.counter && this.stock && this.quantity < this.stock) {
       this.quantity += 1;
       this.counter.textContent = this.quantity.toString();
-
-      // console.log('+');
 
       this.recount();
       this.recountDiscount();

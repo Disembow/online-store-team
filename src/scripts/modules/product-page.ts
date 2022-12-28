@@ -53,12 +53,12 @@ export class ProductPage extends AddToCart implements IProductPage {
     stock.innerText = targetProduct.stock.toString();
 
     const price = document.querySelector('.prod__category_price') as HTMLDivElement;
-    price.innerText = `${targetProduct.price.toString()} USD`;
+    price.innerText = `€${targetProduct.price.toFixed(2).toString()}`;
 
     const fullPrice = document.querySelector('.prod__category_fullprice') as HTMLDivElement;
-    fullPrice.innerText = `${Math.round(
-      targetProduct.price / (1 - targetProduct.discountPercentage / 100)
-    ).toString()} USD`;
+    fullPrice.innerText = `€${Math.round(targetProduct.price / (1 - targetProduct.discountPercentage / 100))
+      .toFixed(2)
+      .toString()}`;
 
     // Check if the item is in the basket
     super.check(targetProduct);

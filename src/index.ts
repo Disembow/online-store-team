@@ -41,12 +41,17 @@ const callback = function (mutationsList: MutationRecord[]) {
       if (location.hash.split('/')[0] === '#cart' || location.hash.split('/')[0] === '#goods') {
         // Add products quantity counter
         document.addEventListener('click', (e) => {
-          if (e.target instanceof HTMLElement && e.target.closest('.product')) {
+          if (
+            e.target instanceof HTMLElement &&
+            (e.target.closest('.product') || e.target.closest('.prod-item__info'))
+          ) {
             const item = <HTMLElement>e.target.closest('.product');
+
             const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
             if (e.target.classList.contains('minus')) {
               goodsQuantity.decrease();
             } else if (e.target.classList.contains('plus')) {
+              // console.log(e.target.classList.contains('plus'));
               goodsQuantity.increase();
             }
             // console.log('GOODS');
