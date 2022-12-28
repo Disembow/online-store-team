@@ -20,6 +20,7 @@ export class CartView extends AddToCart {
     const image: HTMLDivElement | null | undefined = template?.content.querySelector('.product__image');
     const title = template?.content.querySelector('.product__title_item');
     const brand = template?.content.querySelector('.product__brand_item');
+    const mainId = template?.content.querySelector('.product__id_item');
     const category = template?.content.querySelector('.product__category_item');
     const description = template?.content.querySelector('.product__description_item');
     const rating = template?.content.querySelector('.product__rating_item');
@@ -36,6 +37,7 @@ export class CartView extends AddToCart {
         image &&
         title &&
         brand &&
+        mainId &&
         category &&
         description &&
         rating &&
@@ -47,6 +49,7 @@ export class CartView extends AddToCart {
         image.style.backgroundImage = `url(${targetProduct?.thumbnail})`;
         title.textContent = targetProduct.title;
         brand.textContent = targetProduct.brand;
+        mainId.textContent = targetProduct.id.toString();
         category.textContent = targetProduct.category;
         description.textContent = targetProduct.description;
         rating.textContent = targetProduct.rating.toString();

@@ -60,6 +60,8 @@ export class PromoCode implements IPromoCode {
     if (this.usedPromocodes.length !== 0 && this.promoList?.children.length === 0 && priceBox) {
       priceBox.textContent = `€${this.getCartSumWithDiscount()?.toFixed(2)}`;
       this.valueBox?.classList.remove('hidden');
+
+      // Render used promo codes
       this.usedPromocodes.map((e) => {
         const totalArray: NodeListOf<HTMLSpanElement> = document.querySelectorAll('.product-value__sum');
         totalArray.forEach((e, i, a) =>
@@ -119,6 +121,8 @@ export class PromoCode implements IPromoCode {
       const promoValue = clonePromo.querySelector('.promo-code__title');
       if (promoValue && this.input) promoValue.textContent = `Used promo code - ${this.input?.value}`;
       this.promoList?.append(clonePromo);
+
+      // console.log(this.discountRate);
     }
   }
 
