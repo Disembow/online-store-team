@@ -27,7 +27,6 @@ export class BuyNow implements IBuyNow {
   cardholder: HTMLInputElement;
   carddate: HTMLInputElement;
   cvv: HTMLInputElement;
-  submitFormButton: HTMLButtonElement | null | undefined;
 
   constructor() {
     this.billingForm = document.querySelector('.billing__form');
@@ -40,7 +39,6 @@ export class BuyNow implements IBuyNow {
     this.cardholder = this.billingForm?.cardholder;
     this.carddate = this.billingForm?.carddate;
     this.cvv = this.billingForm?.cvv;
-    this.submitFormButton = this.billingForm?.querySelector('.button__submit_order');
   }
 
   public test() {
@@ -51,8 +49,8 @@ export class BuyNow implements IBuyNow {
     const phone = this.itemTest(this.phone, this.phoneNumberLimit);
     const cardnumber = this.testCardData(this.cardnumber, this.cardNumberLength);
     const cardholder = this.testString(this.cardholder, this.cardHolderNameLimit);
-    const carddate = this.testCardData(this.cardnumber, this.carddateLength);
-    const cvv = this.testCardData(this.cardnumber, this.CVVlength);
+    const carddate = this.testCardData(this.carddate, this.carddateLength);
+    const cvv = this.testCardData(this.cvv, this.CVVlength);
 
     return firstname && lastname && email && address && phone && cardnumber && cardholder && carddate && cvv
       ? true
@@ -103,7 +101,6 @@ export class BuyNow implements IBuyNow {
     const errorMessage = e.closest('.form__item')?.querySelector('.input__billing_error');
 
     const arr = this.address.value.split(' ');
-    console.log(arr);
     const p = document.createElement('p');
     p.classList.add('input__billing_error');
 
@@ -125,10 +122,13 @@ export class BuyNow implements IBuyNow {
     const p = document.createElement('p');
     p.classList.add('input__billing_error');
 
-    if (this.cardnumber.value.length !== limit) {
+    if (e.value.length !== limit) {
       if (!errorMessage) {
-        p.textContent = `* card number requires ${this.cardNumberLength} digits`;
-        e.closest('.form__item_row')?.insertAdjacentElement('afterend', p);
+        p.textContent = `* requires ${limit} digits`;
+        if (e !== this.cvv || this.carddate) {
+          e.closest('.form__item_row')?.insertAdjacentElement('afterend', p);
+        }
+        e.closest('.form__item_column')?.insertAdjacentElement('afterend', p);
         return false;
       }
       return false;
@@ -136,8 +136,8 @@ export class BuyNow implements IBuyNow {
     return true;
   }
 
-  public noLetters(e: KeyboardEvent) {
-    if ('1234567890'.indexOf(e.key) < 0 || this.cardnumber.value.length >= this.cardNumberLength) e.preventDefault();
+  public noLetters(e: KeyboardEvent, element: HTMLInputElement, limit: number) {
+    if ('1234567890'.indexOf(e.key) < 0 || element.value.length >= limit) e.preventDefault();
   }
 
   public changePaymentSystemImage() {
@@ -183,7 +183,12 @@ export class BuyNow implements IBuyNow {
     let cardCode = this.carddate.value.replace(/[^\d]/g, '').substring(0, limit - 1);
     cardCode = cardCode !== '' ? <string>cardCode.match(/.{1,2}/g)?.join(splitter) : '';
     this.carddate.value = cardCode;
-    console.log(cardCode);
+  }
+
+  public cvvReduce(limit: number) {
+    if (this.cvv.value.length > limit) {
+      this.cvv.value = this.cvv.value.slice(0, limit);
+    }
   }
 
   private resetForm() {

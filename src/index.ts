@@ -56,6 +56,23 @@ const callback = function (mutationsList: MutationRecord[]) {
             }
           }
         });
+
+        // Test order popup on validity
+        const order = new BuyNow();
+        order.cardnumber.addEventListener('keypress', (e) =>
+          order.noLetters(e, order.cardnumber, order.cardNumberLength)
+        );
+        order.cardnumber.addEventListener('input', () => order.changePaymentSystemImage());
+        order.carddate.addEventListener('keypress', (e) => order.noLetters(e, order.carddate, order.carddateLength));
+        order.carddate.addEventListener('input', () => {
+          order.formatCardCode(order.carddateLength, order.carddateSplitter);
+        });
+        order.cvv.addEventListener('keypress', (e) => order.noLetters(e, order.cvv, order.CVVlength));
+        order.cvv.addEventListener('input', () => order.cvvReduce(order.CVVlength));
+
+        order.billingForm?.addEventListener('submit', (e) => {
+          if (!order.test()) e.preventDefault();
+        });
       }
 
       // Promo code
@@ -69,26 +86,6 @@ const callback = function (mutationsList: MutationRecord[]) {
       } else {
         promo.render();
       }
-
-      // Test order popup on validity
-      const order = new BuyNow();
-      order.cardnumber.addEventListener('keypress', (e) => order.noLetters(e));
-      order.cvv.addEventListener('keypress', (e) => order.noLetters(e));
-      order.carddate.addEventListener('keypress', (e) => order.noLetters(e));
-      order.cardnumber.addEventListener('input', () => order.changePaymentSystemImage());
-      order.carddate.addEventListener('input', () =>
-        order.formatCardCode(order.carddateLength, order.carddateSplitter)
-      );
-
-      order.billingForm?.addEventListener('submit', (e) => {
-        console.log('Sending...');
-        if (!order.test()) {
-          e.preventDefault();
-          console.log("Form doesn't fill!");
-        } else {
-          console.log('Send!');
-        }
-      });
 
       // Insert new product into goods-page
       const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
