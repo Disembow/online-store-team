@@ -20,8 +20,8 @@
   overflow: scroll;
 }
 
-.steps {
-}
+// .steps {
+// }
 
 .buy-now__title {
   font-weight: 600;
@@ -45,21 +45,31 @@
   line-height: 130%;
 }
 
-.billing__form {
-}
+// .billing__form {
+// }
 
-.customer__info {
-}
+// .customer__info {
+// }
 
 .form__item {
   display: flex;
   flex-direction: column;
   margin-bottom: 3.2rem;
+
   &_row {
     display: flex;
     flex-direction: row;
     gap: 1.6rem;
     align-items: flex-end;
+  }
+
+  &::placeholder {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 130%;
+    color: $textColor1;
   }
 }
 
@@ -70,8 +80,7 @@
   color: $primaryColor1;
 }
 
-.input__billing,
-.input__payment {
+.input__billing {
   width: 32rem;
   height: 4.2rem;
   font-family: 'Open Sans';
@@ -83,20 +92,38 @@
   border: 1px solid $borderColor1;
   border-radius: 1.2rem;
   padding: 1.1rem 1.6rem 1.2rem 2.1rem;
-}
+  color: $primaryColor1;
 
-.input__payment {
   &_date,
   &_cvv {
     width: 12rem;
   }
+
+  &_error {
+    font-size: 1.2rem;
+    color: $redCraft;
+    margin: 0.5rem 0 0 1.6rem;
+  }
+
+  &_valid {
+    color: $borderColor2;
+  }
+
+  &:focus {
+    border: solid 1px $borderColor2;
+    box-shadow: 0 0 4px 0.5px $borderColor2;
+  }
+
+  // &:valid {
+  // }
+}
+
+.input__payment {
+
 }
 
 .payment__image {
   width: 7.3rem;
   height: 5rem;
-}
-
-.payment__form {
-
+  border-radius: 1.2rem;
 }

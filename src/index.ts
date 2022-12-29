@@ -9,6 +9,7 @@ import { ProductPage } from './scripts/modules/product-page';
 import { AddToCart } from './scripts/modules/add-to-cart';
 import { CartView } from './scripts/modules/cart';
 import { PromoCode } from './scripts/modules/promocode';
+import { BuyNow } from './scripts/modules/modal-buy-now';
 
 // Hash-router
 const router = new Router();
@@ -69,6 +70,26 @@ const callback = function (mutationsList: MutationRecord[]) {
         promo.render();
       }
 
+      // Test order popup on validity
+      const order = new BuyNow();
+      order.cardnumber.addEventListener('keypress', (e) => order.noLetters(e));
+      order.cvv.addEventListener('keypress', (e) => order.noLetters(e));
+      order.carddate.addEventListener('keypress', (e) => order.noLetters(e));
+      order.cardnumber.addEventListener('input', () => order.changePaymentSystemImage());
+      order.carddate.addEventListener('input', () =>
+        order.formatCardCode(order.carddateLength, order.carddateSplitter)
+      );
+
+      order.billingForm?.addEventListener('submit', (e) => {
+        console.log('Sending...');
+        if (!order.test()) {
+          e.preventDefault();
+          console.log("Form doesn't fill!");
+        } else {
+          console.log('Send!');
+        }
+      });
+
       // Insert new product into goods-page
       const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
@@ -105,8 +126,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const cart = new CartView('OnlineStoreCartGN', []);
     cart.get();
     headerCounter.textContent = cart.localStorageValue.length.toString();
-
-    // const promo = new PromoCode('OnlineStoreCartPromoGN');
-    // promo.render();
   }
 });
