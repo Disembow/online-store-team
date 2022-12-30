@@ -56,9 +56,13 @@ const callback = function (mutationsList: MutationRecord[]) {
         order.cvv.addEventListener('input', () => order.numberReduce(order.CVVlength));
 
         order.billingForm?.addEventListener('submit', (e) => {
-          if (!order.test()) e.preventDefault();
-          e.preventDefault();
-          order.showRedirectPopup();
+          if (!order.test()) {
+            console.log(order.test());
+            e.preventDefault();
+          } else {
+            e.preventDefault();
+            order.showRedirectPopup();
+          }
         });
       }
     }
