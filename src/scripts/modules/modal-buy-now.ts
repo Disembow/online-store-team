@@ -4,6 +4,10 @@ interface IBuyNow {
 
 export class BuyNow implements IBuyNow {
   billingForm: HTMLFormElement | null;
+  showBillButton: HTMLButtonElement | null;
+  billPopup: HTMLElement | null;
+  closeButton: HTMLDivElement | null | undefined;
+  overlay: HTMLElement | null;
   firstNameMinLength = 3;
   lastNameMinLength = 4;
   emailLimit = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
@@ -30,6 +34,10 @@ export class BuyNow implements IBuyNow {
 
   constructor() {
     this.billingForm = document.querySelector('.billing__form');
+    this.showBillButton = document.querySelector('.button__submit_buynow');
+    this.billPopup = document.querySelector('.buy-now__popup');
+    this.closeButton = this.billPopup?.querySelector('.close__button');
+    this.overlay = document.querySelector('.overlay');
     this.firstName = this.billingForm?.firstName;
     this.lastName = this.billingForm?.lastName;
     this.email = this.billingForm?.email;
@@ -185,7 +193,7 @@ export class BuyNow implements IBuyNow {
     this.carddate.value = cardCode;
   }
 
-  public cvvReduce(limit: number) {
+  public numberReduce(limit: number) {
     if (this.cvv.value.length > limit) {
       this.cvv.value = this.cvv.value.slice(0, limit);
     }
@@ -193,5 +201,15 @@ export class BuyNow implements IBuyNow {
 
   private resetForm() {
     this.billingForm?.reset();
+  }
+
+  public showBillPopup() {
+    this.billPopup?.classList.remove('hidden');
+    this.overlay?.classList.add('overlay_active');
+  }
+
+  public hideBillPopup() {
+    this.billPopup?.classList.add('hidden');
+    this.overlay?.classList.remove('overlay_active');
   }
 }

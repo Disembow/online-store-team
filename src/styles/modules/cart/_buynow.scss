@@ -1,12 +1,6 @@
-.buy-now__wrapper {
-  display: flex;
-  flex-wrap: nowrap;
-  padding: 1rem;
-}
-
 .buy-now__popup {
   width: 100%;
-  max-width: 45rem;
+  max-width: 48rem;
   height: 70rem;
   position: fixed;
   top: 50%;
@@ -17,11 +11,26 @@
   background-color: $primaryColor3;
   padding: 3.2rem;
   z-index: 5;
-  overflow: scroll;
-}
+  overflow-x: hidden;
+  overflow-y: scroll;
 
-// .steps {
-// }
+  &::-webkit-scrollbar {
+    width: 0.35rem;
+    border-radius: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    background-color: $primaryColor2;
+    border-top: 0.65rem solid transparent;
+    border-bottom: 0.65rem solid transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 0.5rem;
+    background-color: transparent;
+  }
+}
 
 .buy-now__title {
   font-weight: 600;
@@ -45,12 +54,6 @@
   line-height: 130%;
 }
 
-// .billing__form {
-// }
-
-// .customer__info {
-// }
-
 .form__item {
   display: flex;
   flex-direction: column;
@@ -59,17 +62,14 @@
   &_row {
     display: flex;
     flex-direction: row;
-    gap: 1.6rem;
-    align-items: flex-end;
+    gap: 3rem;
+    align-items: flex-start;
+    flex: 0 1 40% ;
   }
 
-  &::placeholder {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.4rem;
-    line-height: 130%;
-    color: $textColor1;
+  &_column {
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -94,6 +94,25 @@
   padding: 1.1rem 1.6rem 1.2rem 2.1rem;
   color: $primaryColor1;
 
+  &::placeholder {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 130%;
+    color: $textColor1;
+    opacity: 1;
+  }
+
+  &:focus {
+    border: solid 1px $borderColor2;
+    box-shadow: 0 0 4px 0.5px $borderColor2;
+    &::placeholder {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+  }
+
   &_date,
   &_cvv {
     width: 12rem;
@@ -101,6 +120,7 @@
 
   &_error {
     font-size: 1.2rem;
+    line-height: 120%;
     color: $redCraft;
     margin: 0.5rem 0 0 1.6rem;
   }
@@ -109,21 +129,10 @@
     color: $borderColor2;
   }
 
-  &:focus {
-    border: solid 1px $borderColor2;
-    box-shadow: 0 0 4px 0.5px $borderColor2;
-  }
-
-  // &:valid {
-  // }
-}
-
-.input__payment {
-
 }
 
 .payment__image {
-  width: 7.3rem;
-  height: 5rem;
-  border-radius: 1.2rem;
+  width: 6.13rem;
+  height: 4.2rem;
+  border-radius: 0.6rem;
 }

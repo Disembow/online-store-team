@@ -10,7 +10,7 @@
       <input class="promo__input" type="search" id="search" name="search" placeholder="Apply promo code">
       <button class="promo__button" type="button" disabled="disabled">Apply now</button>
     </div>
-    <label class="form__label" class="promo__label" for="search">Promo code for testing: 'RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'. You can apply no more than 5 promo codes.</label>
+    <label class="promo__label" for="search">Promo code for testing: 'RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'. You can apply no more than 5 promo codes.</label>
   </div>
   <section class="summary__wrapper">
     <div class="summary__box">
@@ -94,82 +94,85 @@
   </template>
 
 
-  <section class="buy-now__wrapper">
-    <div class="buy-now__popup">
-      <form name="billing" class="billing__form" action="">
-        <div class="steps">
-          <h3 class="buy-now__title">Billing info</h3>
-          <div class="buy-now__subtitle">
-            <p class="subtitle__board">Please enter your billing info</p>
-            <p class="subtitle__step">Step 1 of 3</p>
-          </div>
-            <div class="customer__info">
-              <div class="form__item">
-                <label class="form__label" for="firstName">First Name</label>
-                <input class="input__billing" type="text" name="firstName" id="firstName" placeholder="First name">
-              </div>
-              <div class="form__item">
-                <label class="form__label" for="lastName">Last Name</label>
-                <input class="input__billing" type="text" name="lastName" id="lastName" placeholder="Last name">
-              </div>
-              <div class="form__item">
-                <label class="form__label" for="email">Email address</label>
-                <input class="input__billing" type="email" name="email" id="email" placeholder="Email addess">
-              </div>
-              <div class="form__item">
-                <label class="form__label" for="address">Address</label>
-                <input class="input__billing" type="text" name="address" id="address" placeholder="Address">
-              </div>
-              <div class="form__item">
-                <label class="form__label" for="phone">Phone number</label>
-                <input class="input__billing" type="tel" name="phone" id="phone" placeholder="Phone number">
-              </div>
+  <section class="buy-now__popup hidden">
+    <div class="close__button"></div>
+    <form name="billing" class="billing__form" action="">
+      <div class="steps">
+        <h3 class="buy-now__title">Billing info</h3>
+        <div class="buy-now__subtitle">
+          <p class="subtitle__board">Please enter your billing info</p>
+          <p class="subtitle__step">Step 1 of 3</p>
+        </div>
+          <div class="customer__info">
+            <div class="form__item">
+              <label class="form__label" for="firstName">First Name</label>
+              <input class="input__billing" type="text" name="firstName" id="firstName" placeholder="First name">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="lastName">Last Name</label>
+              <input class="input__billing" type="text" name="lastName" id="lastName" placeholder="Last name">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="email">Email address</label>
+              <input class="input__billing" type="email" name="email" id="email" placeholder="Email addess">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="address">Address</label>
+              <input class="input__billing" type="text" name="address" id="address" placeholder="Address">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="phone">Phone number</label>
+              <input class="input__billing" type="tel" name="phone" id="phone" placeholder="Phone number">
             </div>
           </div>
+        </div>
 
-          <div class="steps">
-            <h3 class="buy-now__title">Payment method</h3>
-            <div class="buy-now__subtitle">
-              <p class="subtitle__board">Please enter information below</p>
-              <p class="subtitle__step">Step 2 of 3</p>
-            </div>
-            <div class="form__item">
-              <label class="form__label" for="cardnumber">Card number</label>
-              <div class="form__item_row">
-                <input class="input__billing" type="cardnumber" name="cardnumber" id="cardnumber" placeholder="Card number">
-                <img class="payment__image" src="../assets/icons/payment/generic.svg" alt="payment system">
-              </div>
-            </div>
-            <div class="form__item">
-              <label class="form__label" for="cardholder">Card holder</label>
-              <input class="input__billing" type="text" name="cardholder" id="cardholder" placeholder="Card holder">
-            </div>
+        <div class="steps">
+          <h3 class="buy-now__title">Payment method</h3>
+          <div class="buy-now__subtitle">
+            <p class="subtitle__board">Please enter information below</p>
+            <p class="subtitle__step">Step 2 of 3</p>
+          </div>
+          <div class="form__item">
+            <label class="form__label" for="cardnumber">Card number</label>
             <div class="form__item_row">
-              <div class="form__item">
-                <div class="form__item_column">
-                  <label class="form__label" for="carddate">Expiration date</label>
-                  <input class="input__billing input__billing_date" type="text" name="carddate" id="carddate" placeholder="MM/YY">
-                </div>
-              </div>
-              <div class="form__item">
-                <div class="form__item_column">
-                  <label class="form__label" for="cvv">CVV</label>
-                  <input class="input__billing input__billing_cvv" type="text" name="cvv" id="cvv" placeholder="CVV">
-                </div>
+              <input class="input__billing" type="cardnumber" name="cardnumber" id="cardnumber" placeholder="Card number">
+              <img class="payment__image" src="../assets/icons/payment/generic.svg" alt="payment system">
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label" for="cardholder">Card holder</label>
+            <input class="input__billing" type="text" name="cardholder" id="cardholder" placeholder="Card holder">
+          </div>
+          <div class="form__item_row">
+            <div class="form__item">
+              <div class="form__item_column">
+                <label class="form__label" for="carddate">Expiration date</label>
+                <input class="input__billing input__billing_date" type="text" name="carddate" id="carddate" placeholder="MM/YY">
               </div>
             </div>
-        </div>
-
-        <div class="steps">
-          <h3 class="buy-now__title">Confirmation</h3>
-          <div class="buy-now__subtitle">
-            <p class="subtitle__board">Just one click and your order is ready!</p>
-            <p class="subtitle__step">Step 3 of 3</p>
+            <div class="form__item">
+              <div class="form__item_column">
+                <label class="form__label" for="cvv">CVV</label>
+                <input class="input__billing input__billing_cvv" type="text" name="cvv" id="cvv" placeholder="CVV">
+              </div>
+            </div>
           </div>
-          <button type="submit" class="button button__submit button__submit_order">Complete order</button>
-        </div>
+      </div>
 
-      </form>
-    </div>
+      <div class="steps">
+        <h3 class="buy-now__title">Confirmation</h3>
+        <div class="buy-now__subtitle">
+          <p class="subtitle__board">Just one click and your order is ready!</p>
+          <p class="subtitle__step">Step 3 of 3</p>
+        </div>
+        <button type="submit" class="button button__submit button__submit_order">Complete order</button>
+      </div>
+
+    </form>
   </section>
+
+  <div class="finish-order__popup">
+    
+  </div>
 </section>

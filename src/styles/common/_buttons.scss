@@ -96,3 +96,28 @@
   border: 1px solid $borderColor1;
   border-radius: 12px;
 }
+
+.close__button {
+  cursor: pointer;
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 2rem;
+    height: 0.3rem;
+    background: $primaryColor1;
+    border-radius: 0.2rem;
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
