@@ -57,6 +57,8 @@ const callback = function (mutationsList: MutationRecord[]) {
 
         order.billingForm?.addEventListener('submit', (e) => {
           if (!order.test()) e.preventDefault();
+          e.preventDefault();
+          order.showRedirectPopup();
         });
       }
     }

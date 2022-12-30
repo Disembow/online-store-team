@@ -6,6 +6,7 @@ export class BuyNow implements IBuyNow {
   billingForm: HTMLFormElement | null;
   showBillButton: HTMLButtonElement | null;
   billPopup: HTMLElement | null;
+  farewellPopup: HTMLDivElement | null;
   closeButton: HTMLDivElement | null | undefined;
   overlay: HTMLElement | null;
   firstNameMinLength = 3;
@@ -36,6 +37,7 @@ export class BuyNow implements IBuyNow {
     this.billingForm = document.querySelector('.billing__form');
     this.showBillButton = document.querySelector('.button__submit_buynow');
     this.billPopup = document.querySelector('.buy-now__popup');
+    this.farewellPopup = document.querySelector('.finish-order__popup');
     this.closeButton = this.billPopup?.querySelector('.close__button');
     this.overlay = document.querySelector('.overlay');
     this.firstName = this.billingForm?.firstName;
@@ -210,6 +212,22 @@ export class BuyNow implements IBuyNow {
 
   public hideBillPopup() {
     this.billPopup?.classList.add('hidden');
+    this.overlay?.classList.remove('overlay_active');
+  }
+
+  public showRedirectPopup() {
+    this.farewellPopup?.classList.remove('hidden');
+    this.hideBillPopup();
+    this.overlay?.classList.add('overlay_active');
+    setTimeout(() => this.redirect(), 3000);
+  }
+
+  public redirect() {
+    location.href = location.href
+      .split('/')
+      .splice(0, location.href.split('/').length - 1)
+      .join('/');
+    this.farewellPopup?.classList.add('hidden');
     this.overlay?.classList.remove('overlay_active');
   }
 }
