@@ -57,7 +57,6 @@ const callback = function (mutationsList: MutationRecord[]) {
 
         order.billingForm?.addEventListener('submit', (e) => {
           if (!order.test()) {
-            console.log(order.test());
             e.preventDefault();
           } else {
             e.preventDefault();
@@ -70,12 +69,18 @@ const callback = function (mutationsList: MutationRecord[]) {
       // Add products quantity counter
       document.addEventListener('click', (e) => {
         if (e.target instanceof HTMLElement && (e.target.closest('.product') || e.target.closest('.prod-item__info'))) {
-          const item = <HTMLElement>e.target.closest('.product');
-
+          // const item = <HTMLElement>e.target.closest('.product');
+          let item;
+          e.target.closest('.product')
+            ? (item = <HTMLElement>e.target.closest('.product'))
+            : (item = <HTMLElement>e.target.closest('.prod-item__info'));
           const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
           if (e.target.classList.contains('minus')) {
+            console.log('minus - index.ts', item);
             goodsQuantity.decrease();
           } else if (e.target.classList.contains('plus')) {
+            console.log('plus - index.ts', item);
+            console.log(location.href);
             goodsQuantity.increase();
           }
         }
