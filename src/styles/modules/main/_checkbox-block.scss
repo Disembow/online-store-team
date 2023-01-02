@@ -1,12 +1,6 @@
 .checkbox-block {
     user-select: none;
 
-    &__title {
-        font-weight: 600;
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-    }
-
     &__list {
         display: flex;
         flex-direction: column;
@@ -69,6 +63,7 @@
         align-items: center;
         gap: 8px;
         width: fit-content;
+        overflow: hidden;
 
         &:hover>.checkbox-block__text {
             color: lighten($primaryColor1, 45%);
@@ -111,8 +106,11 @@
     }
 
     &__text {
+        max-width: 130px;
+        height: 100%;
         font-family: "Open Sans", sans-serif;
         font-size: 1.4rem;
+        white-space: nowrap;
     }
 
     &__count-wrap {

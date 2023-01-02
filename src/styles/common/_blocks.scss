@@ -5,6 +5,11 @@
     border: 1px solid $borderColor1;
     border-radius: 12px;
 
+    @media screen and (max-width: 768px) {
+        height: 35px;
+        padding: 0 10px;
+    }
+
     &:hover {
         background-color: $background1;
     }
