@@ -2,6 +2,7 @@ import './style.scss';
 
 import { products } from './scripts/data';
 import clickHandlerDocument from './scripts/clickHandlerDocument';
+import inputHandlerDocument from './scripts/inputHandlerDocument';
 import { Router } from './scripts/hash-router';
 import { QuantityChanger } from './scripts/modules/changer';
 import { GoodsPopup } from './scripts/modules/goods-popup';
@@ -18,7 +19,9 @@ window.addEventListener('hashchange', router.locationHandler);
 router.locationHandler();
 
 // Delegating the click event
+
 document.addEventListener('click', (event: MouseEvent) => clickHandlerDocument(event));
+document.addEventListener('input', (event: Event) => inputHandlerDocument(event));
 
 // Add Mutation Observer on content change in <main> element
 const targetToObserve: HTMLElement | null = document.querySelector('#content');

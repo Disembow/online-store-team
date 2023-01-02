@@ -4,3 +4,225 @@
     margin: 0 auto;
     padding: 0 3.6%;
 }
+
+.flex-wrap-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-top: 20px;
+    gap: 30px;
+}
+
+.main-aside {
+    flex-basis: 260px;
+    min-width: 230px;
+    flex-shrink: 0.5;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    background-color: $primaryColor4;
+
+    @media screen and (max-width: 1023px) {
+        position: fixed;
+        top: 0;
+        left: -320px;
+        z-index: 100;
+        padding: 10px 15px 20px 15px;
+        height: 100%;
+        width: 320px;
+        overflow-y: auto;
+        box-shadow: 1px 1px 5px $borderColor1;
+        transition: all 0.5s ease;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    &_active {
+        display: flex;
+        left: 0px;
+    }
+}
+
+.aside-btn-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.aside-btn {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &_active {
+        display: block !important;
+    }
+}
+
+.dual-slider-block {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 100%;
+}
+
+.goods-list-wrap {
+    flex-grow: 1;
+}
+
+.goods-list-line {
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.sort-goods {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort-goods__dropdown {
+    flex-shrink: 0;
+    padding-left: 5px;
+    width: 110px;
+
+    &-selected {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        text-decoration-line: underline;
+        text-decoration-style: dashed;
+        text-decoration-color: $textColor1;
+        text-underline-offset: 5px;
+        text-decoration-thickness: 1px;
+
+        &[data-value="asc"]::after,
+        &[data-value="desc"]::after {
+            margin-left: 5px;
+            color: $textColor1;
+            font-size: 1.6rem;
+        }
+
+        &[data-value="asc"]::after {
+            content: '\2B06';
+        }
+
+        &[data-value="desc"]::after {
+            content: '\2B07';
+        }
+    }
+
+    &-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+
+        &[data-value="asc"]::after {
+            content: '\2B06';
+        }
+
+        &[data-value="desc"]::after {
+            content: '\2B07';
+        }
+    }
+}
+
+.flex-wrap-line {
+    display: flex;
+    column-gap: 15px;
+
+    @media screen and (max-width: 480px) {
+        column-gap: 5px;
+    }
+}
+
+.goods-list-filter {
+    display: none;
+    height: 100%;
+    width: 35px;
+    background-color: $primaryColor1;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-image: url(./assets/icons/filter-icon.svg);
+    mask-size: contain;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    @media screen and (max-width: 1023px) {
+        display: block;
+    }
+
+}
+
+.goods-list-total {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.4rem;
+
+    &__content {
+        padding: 7px;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    &__text {
+        @media screen and (max-width: 650px) {
+            display: none;
+        }
+    }
+}
+
+.goods-list-view {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &__text {
+        font-size: 1.2rem;
+
+        @media screen and (max-width: 650px) {
+            display: none;
+        }
+    }
+
+    &__item {
+        width: 25px;
+        height: 25px;
+        background-color: $primaryColor1;
+        mask-repeat: no-repeat;
+        cursor: pointer;
+        transition: all 0.15s ease;
+
+
+        &[data-view-value="grid"] {
+            mask-image: url(./assets/icons/view-grid.svg);
+        }
+
+        &[data-view-value="list"] {
+            mask-image: url(./assets/icons/view-list.svg);
+        }
+
+        &_active {
+            background-color: $primaryColor2;
+        }
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+}

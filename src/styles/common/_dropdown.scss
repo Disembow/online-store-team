@@ -1,8 +1,20 @@
 .dropdown {
     position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
     text-align: left;
+    font-size: 1.5rem;
     cursor: pointer;
     user-select: none;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1.4rem;
+    }
+
+    @media screen and (max-width: 450px) {
+        font-size: 1.3rem;
+    }
 
     &__arrow {
         position: absolute;
@@ -23,15 +35,16 @@
     }
 
     &__selected {
-        font-weight: 700;
-    }
+        font-weight: 500;
+        }
 
     &__list {
         position: absolute;
-        top: 32px;
-        left: 0;
+        top: 100%;
+        left: 0px;
+        margin-left: -5px;
         z-index: 10;
-        width: 150px;
+        width: 100%;
         background-color: $primaryColor3;
         border: 1px solid $borderColor1;
         border-radius: 6px;

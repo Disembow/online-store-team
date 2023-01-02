@@ -89,12 +89,20 @@
   background: #d1d0d0;
 }
 
-.light-block {
-  height: 42px;
-  padding: 0 15px;
-  background: $primaryColor3;
-  border: 1px solid $borderColor1;
-  border-radius: 12px;
+#main-aside-close {
+  display: none;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  width: 100%;
+  min-height: 45px;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  @media screen and (max-width: 1023px) {
+    display: block;
+  }
 }
 
 .close__button {
