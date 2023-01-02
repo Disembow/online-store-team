@@ -77,6 +77,7 @@
   font-size: 1.4rem;
   line-height: 130%;
   text-decoration: underline;
+  white-space: nowrap;
 
   &_price {
     font-size: 2.6rem;
@@ -88,7 +89,7 @@
 
   &_fullprice {
     text-decoration: line-through;
-    color: #a9a9a9;
+    color: $textColor1;
   }
 }
 
@@ -105,7 +106,7 @@
   line-height: 130%;
   text-decoration: none;
   text-transform: capitalize;
-  color: #a9a9a9;
+  color: $textColor1;
 }
 
 .prod__specs {
@@ -115,16 +116,14 @@
   margin: 0 0 4rem 0;
 }
 
-.prod-order__box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .prod__price {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.product__quantity {
+  margin-right: 1.6rem;
 }
 
 .prod-photo__popup {
@@ -147,3 +146,12 @@
   height: 100%;
   object-fit: cover;
 }
+
+.prod-order__box {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 0 0 3.2rem 0;
+}
+
+

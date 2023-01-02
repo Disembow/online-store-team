@@ -32,7 +32,8 @@ const routes: IRoutes = {
 export class Router implements IRouter {
   locationHandler = async () => {
     let location = window.location.hash.replace('#', '');
-    const mainlocation = window.location.hash.replace('#', '').split('/')[0];
+    let mainlocation = window.location.hash.replace('#', '').split('/')[0];
+    if (mainlocation === '') mainlocation = '/';
 
     if (location.length === 0) {
       location = '/';

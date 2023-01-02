@@ -109,6 +109,13 @@
 
 .header-cart-block {
     position: relative;
+    display: block;
+    cursor: pointer;
+    transition: ease-in 0.2s;
+    &:hover {
+      transform: scale(1.2);
+      transition: ease-in 0.2s;
+    }
 
     &__count {
         position: absolute;
@@ -147,6 +154,7 @@
 
     &__links {
         cursor: pointer;
+        text-transform: capitalize;
 
         &_colored {
             color: $textColor1;

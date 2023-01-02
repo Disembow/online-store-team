@@ -1,8 +1,15 @@
 import { targetProduct, IProductPage } from '../../types/product-page-types';
+import { AddToCart } from './add-to-cart';
 
-export class ProductPage implements IProductPage {
-  render(sublocation: string, targetProduct: targetProduct) {
-    console.log(sublocation, targetProduct);
+export class ProductPage extends AddToCart implements IProductPage {
+  render(targetProduct: targetProduct) {
+    const [, categoryLink, brandLink, itemLink]: NodeListOf<HTMLSpanElement> = document.querySelectorAll(
+      '.breadcrumbs__links'
+    );
+    if (categoryLink) categoryLink.innerText = targetProduct.category;
+    if (brandLink) brandLink.innerText = targetProduct.brand;
+    if (itemLink) itemLink.innerText = targetProduct.title;
+
     const photoBox = document.querySelector('.prod-photo__box');
     for (let i = 0; i < targetProduct.images.length; i++) {
       const div = document.createElement('div');
@@ -46,11 +53,14 @@ export class ProductPage implements IProductPage {
     stock.innerText = targetProduct.stock.toString();
 
     const price = document.querySelector('.prod__category_price') as HTMLDivElement;
-    price.innerText = `${targetProduct.price.toString()} USD`;
+    price.innerText = `€${targetProduct.price.toFixed(2).toString()}`;
 
     const fullPrice = document.querySelector('.prod__category_fullprice') as HTMLDivElement;
-    fullPrice.innerText = `${Math.round(
-      targetProduct.price / (1 - targetProduct.discountPercentage / 100)
-    ).toString()} USD`;
+    fullPrice.innerText = `€${Math.round(targetProduct.price / (1 - targetProduct.discountPercentage / 100))
+      .toFixed(2)
+      .toString()}`;
+
+    // Check if the item is in the basket
+    super.check(targetProduct);
   }
 }

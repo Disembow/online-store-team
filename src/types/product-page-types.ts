@@ -13,5 +13,10 @@ export type targetProduct = {
 };
 
 export interface IProductPage {
-  render(sublocation: string, targetProduct: targetProduct): void;
+  render(targetProduct: targetProduct): void;
+}
+
+type PartlylocalStorage = Pick<targetProduct, 'brand' | 'category' | 'id' | 'price' | 'title'>;
+export interface LocalStorage extends PartlylocalStorage {
+  quantity: number;
 }
