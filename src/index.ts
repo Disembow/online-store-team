@@ -34,10 +34,12 @@ const callback = function (mutationsList: MutationRecord[]) {
       const goodsPopup = new GoodsPopup();
       const photoBox = document.querySelector('.prod-photo__box');
       const overlay = document.querySelector('.overlay');
+      const closeButtonGoodsPopup = document.querySelector('.close__button_goods');
 
       if (location.hash.split('/')[0] === '#goods') {
         photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
         overlay?.addEventListener('click', () => goodsPopup.hide());
+        closeButtonGoodsPopup?.addEventListener('click', () => goodsPopup.hide());
       } else if (location.hash.split('/')[0] === '#cart') {
         // Test order popup on validity
         const order = new BuyNow();
