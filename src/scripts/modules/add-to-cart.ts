@@ -22,10 +22,12 @@ interface IAddToCart {
 export class AddToCart implements IAddToCart {
   public localStorageKey: string;
   public localStorageValue: Array<LocalStorageCartInfo>;
+  public addToCartButton: HTMLButtonElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     this.localStorageKey = localStorageKey;
     this.localStorageValue = localStorageValue;
+    this.addToCartButton = document.querySelector('.button__submit_cart');
   }
 
   public get() {
@@ -65,9 +67,9 @@ export class AddToCart implements IAddToCart {
 
   public check(target: targetProduct) {
     this.get();
-    const addToCartButton = document.querySelector('.button__submit_cart');
+    // const addToCartButton = document.querySelector('.button__submit_cart');
     this.localStorageValue.filter((e) => e.id === target.id).length > 0
-      ? addToCartButton?.setAttribute('disabled', '')
-      : addToCartButton?.removeAttribute('disabled');
+      ? this.addToCartButton?.setAttribute('disabled', '')
+      : this.addToCartButton?.removeAttribute('disabled');
   }
 }
