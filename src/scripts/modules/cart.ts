@@ -3,8 +3,11 @@ import { LocalStorageCartInfo } from './add-to-cart';
 import { products } from '../data';
 
 export class CartView extends AddToCart {
+  headerCounter: Element | null;
+
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     super(localStorageKey, localStorageValue);
+    this.headerCounter = document.querySelector('.header-cart-block__count');
   }
 
   render() {
@@ -67,15 +70,13 @@ export class CartView extends AddToCart {
 
   getTotal() {
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    // const headerTotal = document.querySelector('.header-total-price__sum');
     const subtotalValue = document.querySelectorAll('.product__subtotal');
-    const headerCounter = document.querySelector('.header-cart-block__count');
     const sum = Array.from(subtotalValue)
       .map((e) => e.textContent?.replace('€', ''))
       .reduce((a, c) => (a += Number(c)), 0);
-    if (total && headerCounter) {
+    if (total && this.headerCounter) {
       total.textContent = `€${sum.toFixed(2)}`;
-      headerCounter.textContent = `${subtotalValue.length}`;
+      this.headerCounter.textContent = `${subtotalValue.length}`;
     }
   }
 }

@@ -3,7 +3,7 @@ import { LocalStorage } from '../../types/product-page-types';
 
 export class PromoCode implements IPromoCode {
   public key: string;
-  private input: HTMLFormElement | null;
+  public input: HTMLFormElement | null;
   public button: HTMLButtonElement | null;
   public promoList: HTMLDivElement | null;
   private valueBox: HTMLDivElement | null;

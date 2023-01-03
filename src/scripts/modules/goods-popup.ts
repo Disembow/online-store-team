@@ -17,6 +17,7 @@ export class GoodsPopup implements IGoodsPopup {
       this.overlay?.classList.add('overlay_active');
     }
   }
+
   hide() {
     this.overlay?.classList.remove('overlay_active');
     this.popup?.classList.remove('prod-photo__popup_active');
