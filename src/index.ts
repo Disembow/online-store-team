@@ -11,6 +11,7 @@ import { AddToCart } from './scripts/modules/add-to-cart';
 import { CartView } from './scripts/modules/cart';
 import { PromoCode } from './scripts/modules/promocode';
 import { BuyNow } from './scripts/modules/modal-buy-now';
+// import { Pagiantor } from './scripts/modules/cart-paginator';
 
 // Hash-router
 const router = new Router();
@@ -68,6 +69,10 @@ const callback = function (mutationsList: MutationRecord[]) {
             order.showRedirectPopup();
           }
         });
+
+        // Add paginator on cart page
+        // const paginator = new Pagiantor();
+        // console.log(paginator);
       }
     }
 
@@ -110,7 +115,7 @@ const callback = function (mutationsList: MutationRecord[]) {
 
       if (sublocation && targetProduct) product.render(targetProduct);
 
-      //Add product from goos-page to cart
+      //Add product from goods-page to cart
       const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
       addToCart.addToCartButton?.addEventListener('click', () => {
         const quantity = document.querySelector('.product__counter');
