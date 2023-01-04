@@ -10,9 +10,7 @@ export class CartView extends AddToCart {
     this.headerCounter = document.querySelector('.header-cart-block__count');
   }
 
-  render() {
-    super.get();
-
+  render(array: number[]) {
     const productBox = document.querySelector('.products__container');
     while (productBox?.firstChild) {
       productBox.removeChild(productBox.firstChild);
@@ -32,9 +30,8 @@ export class CartView extends AddToCart {
     const stock = template?.content.querySelector('.product__stock_item');
     const subtotal = template?.content.querySelector('.product__subtotal');
 
-    for (let i = 0; i < this.localStorageValue.length; i++) {
-      const id = this.localStorageValue[i].id;
-      const targetProduct = products.products.find((e) => e.id === id);
+    for (let i = 0; i < array.length; i++) {
+      const targetProduct = products.products.find((e) => e.id === array[i]);
       if (
         targetProduct &&
         image &&
@@ -49,7 +46,7 @@ export class CartView extends AddToCart {
         stock &&
         subtotal
       ) {
-        image.style.backgroundImage = `url(${targetProduct?.thumbnail})`;
+        image.style.backgroundImage = `url(${targetProduct.thumbnail})`;
         title.textContent = targetProduct.title;
         brand.textContent = targetProduct.brand;
         mainId.textContent = targetProduct.id.toString();

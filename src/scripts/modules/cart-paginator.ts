@@ -1,52 +1,53 @@
-const cartData: string[] = [
-  'Item 1',
-  'Item 2',
-  'Item 3',
-  'Item 4',
-  'Item 5',
-  'Item 6',
-  'Item 7',
-  'Item 8',
-  'Item 9',
-  'Item 10',
-  'Item 11',
-  'Item 12',
-  'Item 13',
-  'Item 14',
-  'Item 15',
-  'Item 16',
-  'Item 17',
-  'Item 18',
-  'Item 19',
-  'Item 20',
-  'Item 21',
-  'Item 22',
-  'Item 23',
-  'Item 24',
-  'Item 25',
-  'Item 26',
-  'Item 27',
-  'Item 28',
-  'Item 29',
-  'Item 30',
-  'Item 31',
-  'Item 32',
-  'Item 33',
-  'Item 34',
-];
+import { CartView } from './cart';
+import { LocalStorageCartInfo } from './add-to-cart';
 
-export class Pagiantor {
-  cartData: string[];
+// const cartData: string[] = [
+//   'Item 1',
+//   'Item 2',
+//   'Item 3',
+//   'Item 4',
+//   'Item 5',
+//   'Item 6',
+//   'Item 7',
+//   'Item 8',
+//   'Item 9',
+//   'Item 10',
+//   'Item 11',
+//   'Item 12',
+//   'Item 13',
+//   'Item 14',
+//   'Item 15',
+//   'Item 16',
+//   'Item 17',
+//   'Item 18',
+//   'Item 19',
+//   'Item 20',
+//   'Item 21',
+//   'Item 22',
+//   'Item 23',
+//   'Item 24',
+//   'Item 25',
+//   'Item 26',
+//   'Item 27',
+//   'Item 28',
+//   'Item 29',
+//   'Item 30',
+//   'Item 31',
+//   'Item 32',
+//   'Item 33',
+//   'Item 34',
+// ];
+
+export class Pagiantor extends CartView {
   wrapper: HTMLDivElement | null;
   paginationElement: HTMLDivElement | null;
   itemPerPageSelect: HTMLSelectElement | null;
   currentPage: number;
   rows: number;
 
-  constructor(cartData: string[]) {
-    // constructor() {
-    this.cartData = cartData;
-    this.wrapper = document.querySelector('.list');
+  constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
+    super(localStorageKey, localStorageValue);
+    this.wrapper = document.querySelector('.products__container');
     this.paginationElement = document.querySelector('.pagenumbers');
     this.itemPerPageSelect = document.querySelector('.goods-per-page');
 
@@ -54,40 +55,28 @@ export class Pagiantor {
     this.rows = 4;
   }
 
-  getDataToDraw() {
-    const data = localStorage.getItem('OnlineStoreCartGN');
-    if (data) {
-      const dataToDraw: Array<string> = JSON.parse(data);
-      return dataToDraw;
-    }
-  }
-
   DisplayList() {
+    super.get();
     if (this.wrapper) {
       this.wrapper.innerHTML = '';
       this.currentPage;
 
       const start = this.rows * (this.currentPage - 1);
-      const end = start + +this.rows;
-      const paginatedItems = this.cartData.slice(start, end);
+      const end = start + this.rows;
+      const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
 
-      for (let i = 0; i < paginatedItems.length; i++) {
-        const item = paginatedItems[i];
-
-        const itemElement = document.createElement('div');
-        itemElement.classList.add('item');
-        itemElement.innerText = item; // TODO: add item drawing here!
-
-        this.wrapper.appendChild(itemElement);
-      }
+      super.render(paginatedItems);
     }
   }
 
   SetupPagination() {
+    super.get();
     if (this.paginationElement) {
       this.paginationElement.innerHTML = '';
 
-      const pageCount = Math.ceil(this.cartData.length / this.rows);
+      const pageCount = Math.ceil(this.localStorageValue.length / this.rows);
+      console.log('pageCount >>> ', pageCount);
+      // console.log('this.localStorageValue >>> ', this.localStorageValue);
 
       for (let i = 1; i <= pageCount; i++) {
         const button = this.PaginationButton(i);
@@ -99,7 +88,7 @@ export class Pagiantor {
   private PaginationButton(page: number): HTMLButtonElement {
     const button = document.createElement('button');
     button.innerText = page.toString();
-    button.classList.add('button');
+    button.classList.add('button', 'button_round');
 
     if (this.currentPage === page) button.classList.add('button_active');
 
@@ -117,20 +106,15 @@ export class Pagiantor {
   }
 
   ChangeItemPerPage() {
+    super.get();
     this.itemPerPageSelect?.addEventListener('change', () => {
       this.rows = Number(this.itemPerPageSelect?.value);
-      if (this.currentPage > Math.ceil(this.cartData.length / this.rows)) {
-        this.currentPage = Math.ceil(this.cartData.length / this.rows);
+      console.log('rows>>> ', this.rows);
+      if (this.currentPage > Math.ceil(this.localStorageValue.length / this.rows)) {
+        this.currentPage = Math.ceil(this.localStorageValue.length / this.rows);
       }
       this.SetupPagination();
       this.DisplayList();
     });
   }
 }
-
-const paginator = new Pagiantor(cartData);
-paginator.DisplayList();
-paginator.SetupPagination();
-paginator.ChangeItemPerPage();
-// const data = paginator.getDataToDraw();
-// console.log(data);

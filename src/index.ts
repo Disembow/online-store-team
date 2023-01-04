@@ -11,7 +11,7 @@ import { AddToCart } from './scripts/modules/add-to-cart';
 import { CartView } from './scripts/modules/cart';
 import { PromoCode } from './scripts/modules/promocode';
 import { BuyNow } from './scripts/modules/modal-buy-now';
-// import { Pagiantor } from './scripts/modules/cart-paginator';
+import { Pagiantor } from './scripts/modules/cart-paginator';
 
 // Hash-router
 const router = new Router();
@@ -71,8 +71,10 @@ const callback = function (mutationsList: MutationRecord[]) {
         });
 
         // Add paginator on cart page
-        // const paginator = new Pagiantor();
-        // console.log(paginator);
+        const paginator = new Pagiantor('OnlineStoreCartGN', []);
+        paginator.DisplayList();
+        paginator.SetupPagination();
+        paginator.ChangeItemPerPage();
       }
     }
 
@@ -123,10 +125,6 @@ const callback = function (mutationsList: MutationRecord[]) {
           addToCart.create(targetProduct, +quantity.innerText);
         }
       });
-
-      // Render products into cart from localStorage
-      const cart = new CartView('OnlineStoreCartGN', []); //TODO: refactor into one call
-      cart.render();
     }
   }
 };

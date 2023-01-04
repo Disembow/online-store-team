@@ -1,9 +1,22 @@
 <section class="cart-wrapper">
   <h2 class="cart__title">Shopping cart</h2>
   <span class="cart__separator"></span>
-  <div class="products__container">
+
+  <div class="products__container"></div>
+  <span class="cart__separator"></span>
+
+  <div class="pagination__box">
+    <div class="pagenumbers"></div>
+    <select name="goods-per-page" id="goods-per-page" class="goods-per-page">
+      <option value="4" selected>4</option>
+      <option value="8">8</option>
+      <option value="12">12</option>
+      <option value="16">16</option>
+      <option value="20">20</option>
+    </select>
   </div>
   <span class="cart__separator"></span>
+
   <h2 class="cart__title">Order summary</h2>
   <div class="promo">
     <div class="promo__group">
@@ -12,6 +25,7 @@
     </div>
     <label class="promo__label" for="search">Promo code for testing: 'RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'. You can apply no more than 5 promo codes.</label>
   </div>
+
   <section class="summary__wrapper">
     <div class="summary__box">
       <div class="product-value__sum">
@@ -26,6 +40,7 @@
     <div class="summary__promos"></div>
   </section>
   <span class="cart__separator"></span>
+
   <button class="button button__submit button__submit_cart" type="submit">
     <a href="/">Continue shopping</a>
   </button>

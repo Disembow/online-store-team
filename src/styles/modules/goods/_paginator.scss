@@ -1,0 +1,36 @@
+.pagination__box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.4rem 2rem 0 2rem;
+}
+
+.goods-per-page {
+  font: inherit;
+  font-size: 1.6rem;
+  line-height: 150%;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 5rem;
+  height: 5rem;
+  border: solid 1px $borderColor2;
+  border-radius: 1.2rem;
+  text-align: center;
+  cursor: pointer;
+
+  &:focus {
+    background-color: $background1;
+  }
+
+  &:not([multiple]) {
+    padding-right: 1.2em;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.75rem) 2.0rem;
+    background-size: 0.85rem auto;
+    background-image: url('./assets/icons/arrow-down.svg');
+  }
+}
