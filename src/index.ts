@@ -75,6 +75,9 @@ const callback = function (mutationsList: MutationRecord[]) {
         paginator.DisplayList();
         paginator.SetupPagination();
         paginator.ChangeItemPerPage();
+
+        // Parse pagination query
+        paginator.parseQueryParam();
       }
     }
 
@@ -115,7 +118,7 @@ const callback = function (mutationsList: MutationRecord[]) {
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
       const targetProduct = products.products.find((e) => e.id === +sublocation);
 
-      if (sublocation && targetProduct) product.render(targetProduct);
+      if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') product.render(targetProduct);
 
       //Add product from goods-page to cart
       const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call

@@ -1,9 +1,9 @@
 import { IRouter, IRoutes } from '../types/hash-router-types';
-import { products } from './data';
+// import { products } from './data';
 
 const pageTitle = 'Online store';
-const IdArray: number[] = [];
-products.products.map((e) => IdArray.push(e.id));
+// const IdArray: number[] = [];
+// products.products.map((e) => IdArray.push(e.id));
 
 const routes: IRoutes = {
   '/': {
@@ -25,7 +25,7 @@ const routes: IRoutes = {
     template: 'templates/goods.html',
     title: 'Goods | ' + pageTitle,
     description: 'Page for goods',
-    goodsID: IdArray,
+    // goodsID: IdArray,
   },
 };
 

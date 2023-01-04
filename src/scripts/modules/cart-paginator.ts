@@ -18,8 +18,9 @@ export class Pagiantor extends CartView {
     this.rows = 4;
   }
 
-  DisplayList() {
+  public DisplayList() {
     super.get();
+
     if (this.wrapper) {
       this.wrapper.innerHTML = '';
       this.currentPage;
@@ -32,8 +33,9 @@ export class Pagiantor extends CartView {
     }
   }
 
-  SetupPagination() {
+  public SetupPagination() {
     super.get();
+
     if (this.paginationElement) {
       this.paginationElement.innerHTML = '';
 
@@ -61,21 +63,41 @@ export class Pagiantor extends CartView {
       currentButton?.classList.remove('button_active');
 
       button.classList.add('button_active');
+
+      this.setQueryParams();
     });
 
     return button;
   }
 
-  ChangeItemPerPage() {
+  public ChangeItemPerPage() {
     super.get();
+
     this.itemPerPageSelect?.addEventListener('change', () => {
       this.rows = Number(this.itemPerPageSelect?.value);
-      console.log('rows>>> ', this.rows);
       if (this.currentPage > Math.ceil(this.localStorageValue.length / this.rows)) {
         this.currentPage = Math.ceil(this.localStorageValue.length / this.rows);
       }
+
       this.SetupPagination();
       this.DisplayList();
+      this.setQueryParams();
     });
+  }
+
+  public parseQueryParam() {
+    const searchState = location.hash.split('/')[1].split('&');
+
+    this.currentPage = +searchState[0].split('=')[1];
+    this.rows = +searchState[1].split('=')[1];
+    if (this.itemPerPageSelect) this.itemPerPageSelect.selectedIndex = this.rows / 4 - 1;
+
+    this.SetupPagination();
+    this.DisplayList();
+  }
+
+  private setQueryParams() {
+    const state = `#cart/page=${this.currentPage}&itemperpage=${this.rows}`;
+    window.history.pushState(null, '', state);
   }
 }
