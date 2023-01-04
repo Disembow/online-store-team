@@ -28,7 +28,7 @@ export class Render {
             alt="Chappals"></img></a>
         </div>
         <div class="goods-card-preview__info" data-view="grid">
-        <h3 class="goods-card-preview__title" data-view="grid"><a class="goods-card-preview__link" href="#goods/${prod.id}">${prod.title}</a></h3>
+        <h3 class="goods-card-preview__title" data-view="grid"><a class="goods-card-preview__link base-link" href="#goods/${prod.id}">${prod.title}</a></h3>
           <span class="goods-card-preview__description">${prod.description}</span>
           <div class="goods-card-preview__properties">
             <span>Category</span>

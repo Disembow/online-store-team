@@ -131,8 +131,6 @@
     &__link {
         width: fit-content;
         cursor: pointer;
-        text-decoration: none;
-        color: $primaryColor1;
 
         &:hover {
             text-decoration: underline;
