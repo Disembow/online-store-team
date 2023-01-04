@@ -1,5 +1,8 @@
 import { IRouter, IRoutes } from '../types/hash-router-types';
 import { products } from './data';
+import { Render } from './renderGoods';
+
+const renderGoodsList = new Render();
 
 const pageTitle = 'Online store';
 const IdArray: number[] = [];
@@ -44,6 +47,10 @@ export class Router implements IRouter {
       const html = await fetch(route.template).then((response) => response.text());
       const content: HTMLElement | null = document.getElementById('content');
       if (content) content.innerHTML = html;
+      if (mainlocation === '/') {
+        renderGoodsList.container = document.querySelector('.goods-card-preview-wrap');
+        renderGoodsList.start();
+      }
       document.title = route.title;
     }
 
