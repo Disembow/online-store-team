@@ -1,43 +1,6 @@
 import { CartView } from './cart';
 import { LocalStorageCartInfo } from './add-to-cart';
 
-// const cartData: string[] = [
-//   'Item 1',
-//   'Item 2',
-//   'Item 3',
-//   'Item 4',
-//   'Item 5',
-//   'Item 6',
-//   'Item 7',
-//   'Item 8',
-//   'Item 9',
-//   'Item 10',
-//   'Item 11',
-//   'Item 12',
-//   'Item 13',
-//   'Item 14',
-//   'Item 15',
-//   'Item 16',
-//   'Item 17',
-//   'Item 18',
-//   'Item 19',
-//   'Item 20',
-//   'Item 21',
-//   'Item 22',
-//   'Item 23',
-//   'Item 24',
-//   'Item 25',
-//   'Item 26',
-//   'Item 27',
-//   'Item 28',
-//   'Item 29',
-//   'Item 30',
-//   'Item 31',
-//   'Item 32',
-//   'Item 33',
-//   'Item 34',
-// ];
-
 export class Pagiantor extends CartView {
   wrapper: HTMLDivElement | null;
   paginationElement: HTMLDivElement | null;
@@ -75,8 +38,6 @@ export class Pagiantor extends CartView {
       this.paginationElement.innerHTML = '';
 
       const pageCount = Math.ceil(this.localStorageValue.length / this.rows);
-      console.log('pageCount >>> ', pageCount);
-      // console.log('this.localStorageValue >>> ', this.localStorageValue);
 
       for (let i = 1; i <= pageCount; i++) {
         const button = this.PaginationButton(i);

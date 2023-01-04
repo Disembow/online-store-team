@@ -148,7 +148,17 @@ export class PromoCode implements IPromoCode {
 
   private addTotalToHeader() {
     const headerTotal = document.querySelector('.header-total-price__sum');
-    const sum = this.getCartSumWithDiscount();
-    if (headerTotal && sum) headerTotal.textContent = `€${sum.toFixed(2)}`;
+    const sum = this.getCartSumWithDiscount()?.toFixed(2);
+    if (headerTotal && sum)
+      headerTotal.textContent = `€${
+        sum
+          .split('.')[0]
+          .split('')
+          .map((e, i) => (i % 3 === 0 ? e + ' ' : e))
+          .join('')
+          .trim() +
+        '.' +
+        sum.replace('€', '').split('.')[1]
+      }`;
   }
 }

@@ -88,11 +88,11 @@ const callback = function (mutationsList: MutationRecord[]) {
             : (item = <HTMLElement>e.target.closest('.prod-item__info'));
           const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
           if (e.target.classList.contains('minus')) {
-            console.log('minus - index.ts', item);
+            // console.log('minus - index.ts', item);
             goodsQuantity.decrease();
           } else if (e.target.classList.contains('plus')) {
-            console.log('plus - index.ts', item);
-            console.log(location.href);
+            // console.log('plus - index.ts', item);
+            // console.log(location.href);
             goodsQuantity.increase();
           }
         }

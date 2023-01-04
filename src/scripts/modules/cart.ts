@@ -61,19 +61,23 @@ export class CartView extends AddToCart {
 
       const node = template?.content.cloneNode(true);
       if (node) productBox?.append(node);
-      this.getTotal();
     }
+    this.getTotal();
   }
 
   getTotal() {
+    super.get();
+    const sum = this.localStorageValue.reduce((a, c) => (a += c.quantity * c.price), 0).toFixed(2);
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    const subtotalValue = document.querySelectorAll('.product__subtotal');
-    const sum = Array.from(subtotalValue)
-      .map((e) => e.textContent?.replace('€', ''))
-      .reduce((a, c) => (a += Number(c)), 0);
-    if (total && this.headerCounter) {
-      total.textContent = `€${sum.toFixed(2)}`;
-      this.headerCounter.textContent = `${subtotalValue.length}`;
-    }
+    total.textContent = `€${
+      sum
+        .split('.')[0]
+        .split('')
+        .map((e, i) => (i % 3 === 0 ? e + ' ' : e))
+        .join('')
+        .trim() +
+      '.' +
+      sum.replace('€', '').split('.')[1]
+    }`;
   }
 }
