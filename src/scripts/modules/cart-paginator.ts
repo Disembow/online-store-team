@@ -86,14 +86,16 @@ export class Pagiantor extends CartView {
   }
 
   public parseQueryParam() {
-    const searchState = location.hash.split('/')[1].split('&');
+    if (location.hash.includes('/')) {
+      const searchState = location.hash.split('/')[1].split('&');
 
-    this.currentPage = +searchState[0].split('=')[1];
-    this.rows = +searchState[1].split('=')[1];
-    if (this.itemPerPageSelect) this.itemPerPageSelect.selectedIndex = this.rows / 4 - 1;
+      this.currentPage = +searchState[0].split('=')[1];
+      this.rows = +searchState[1].split('=')[1];
+      if (this.itemPerPageSelect) this.itemPerPageSelect.selectedIndex = this.rows / 4 - 1;
 
-    this.SetupPagination();
-    this.DisplayList();
+      this.SetupPagination();
+      this.DisplayList();
+    }
   }
 
   private setQueryParams() {
