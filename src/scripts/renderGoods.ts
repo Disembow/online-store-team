@@ -40,6 +40,7 @@ export class Render {
     this._renderFilterBlocks('category');
     this._renderFilterBlocks('brand');
     this._renderCountCurrentFilter();
+    this._renderCountGoods();
   }
   public filter() {
     console.log('filter');
@@ -140,5 +141,11 @@ export class Render {
       }
     });
     console.log(this._goodsList);
+  }
+  _renderCountGoods() {
+    const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
+    if (totalBlock) {
+      totalBlock.textContent = String(this._goodsList.length);
+    }
   }
 }
