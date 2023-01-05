@@ -44,6 +44,7 @@ const callback = function (mutationsList: MutationRecord[]) {
         photoBox?.addEventListener('click', (e) => goodsPopup.show(e));
         overlay?.addEventListener('click', () => goodsPopup.hide());
         closeButtonGoodsPopup?.addEventListener('click', () => goodsPopup.hide());
+        window.scroll(0, 0);
       } else if (location.hash.split('/')[0] === '#cart') {
         // Test order popup on validity
         const order = new BuyNow();
@@ -78,6 +79,7 @@ const callback = function (mutationsList: MutationRecord[]) {
 
         // Parse pagination query
         paginator.parseQueryParam();
+        window.scroll(0, 0);
       }
     }
 

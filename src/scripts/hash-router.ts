@@ -1,5 +1,8 @@
 import { IRouter, IRoutes } from '../types/hash-router-types';
 // import { products } from './data';
+import { Render } from './renderGoods';
+
+const renderGoods = new Render();
 
 const pageTitle = 'Online store';
 // const IdArray: number[] = [];
@@ -38,13 +41,25 @@ export class Router implements IRouter {
     if (location.length === 0) {
       location = '/';
     }
-
+    console.log(mainlocation);
     const route = routes[mainlocation] || routes['404'];
     if (typeof route.template === 'string' && typeof route.title === 'string') {
       const html = await fetch(route.template).then((response) => response.text());
       const content: HTMLElement | null = document.getElementById('content');
       if (content) content.innerHTML = html;
       document.title = route.title;
+      if (mainlocation === '/') {
+        document.querySelector('.search')?.classList.remove('search_hidden');
+        renderGoods.container = document.querySelector('.goods-card-preview-wrap');
+        renderGoods.start();
+      } else {
+        document.querySelector('.search')?.classList.add('search_hidden');
+      }
+      if (mainlocation === 'goods') {
+        document.querySelector('.breadcrumbs')?.classList.remove('breadcrumbs_hidden');
+      } else {
+        document.querySelector('.breadcrumbs')?.classList.add('breadcrumbs_hidden');
+      }
     }
 
     const pageName: HTMLElement | null = document.querySelector('meta[name="description"]');

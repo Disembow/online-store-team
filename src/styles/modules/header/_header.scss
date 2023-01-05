@@ -7,6 +7,11 @@
 
 .header {
     @include mainBlock;
+    padding-bottom: 20px;
+
+    @media screen and (max-width: 768px) {
+        padding-bottom: 10px;
+    }
 
     &__contact-block {
         height: 48px;
@@ -18,15 +23,19 @@
     }
 
     &__main-block {
-        min-height: 130px;
+        min-height: 100px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         column-gap: 20px;
-        row-gap: 15px;
+        row-gap: 30px;
 
         @media screen and (max-width: 1024px) {
             flex-wrap: wrap;
+        }
+
+        @media screen and (max-width: 768px) {
+            row-gap: 15px;
         }
     }
 }
@@ -75,6 +84,10 @@
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+
+    &_hidden {
+        display: none;
+    }
 
     @media screen and (max-width: 1024px) {
         order: 4;
@@ -176,6 +189,10 @@
     gap: 8px;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-size: 1.4rem;
+
+    &_hidden {
+        display: none;
+    }
 
     &__links {
         cursor: pointer;
