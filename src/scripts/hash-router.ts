@@ -41,21 +41,25 @@ export class Router implements IRouter {
     if (location.length === 0) {
       location = '/';
     }
-
+    console.log(mainlocation);
     const route = routes[mainlocation] || routes['404'];
     if (typeof route.template === 'string' && typeof route.title === 'string') {
       const html = await fetch(route.template).then((response) => response.text());
       const content: HTMLElement | null = document.getElementById('content');
       if (content) content.innerHTML = html;
+      document.title = route.title;
       if (mainlocation === '/') {
         document.querySelector('.search')?.classList.remove('search_hidden');
         renderGoodsList.container = document.querySelector('.goods-card-preview-wrap');
         renderGoodsList.start();
-      }
-      if (mainlocation !== '/') {
+      } else {
         document.querySelector('.search')?.classList.add('search_hidden');
       }
-      document.title = route.title;
+      if (mainlocation === 'goods') {
+        document.querySelector('.breadcrumbs')?.classList.remove('breadcrumbs_hidden');
+      } else {
+        document.querySelector('.breadcrumbs')?.classList.add('breadcrumbs_hidden');
+      }
     }
 
     const pageName: HTMLElement | null = document.querySelector('meta[name="description"]');

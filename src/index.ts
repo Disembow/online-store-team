@@ -69,6 +69,7 @@ const callback = function (mutationsList: MutationRecord[]) {
             order.showRedirectPopup();
           }
         });
+        window.scroll(0, 0);
       }
     }
 

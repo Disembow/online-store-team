@@ -181,6 +181,10 @@
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-size: 1.4rem;
 
+    &_hidden {
+        display: none;
+    }
+
     &__links {
         cursor: pointer;
         text-transform: capitalize;
