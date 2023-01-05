@@ -48,8 +48,12 @@ export class Router implements IRouter {
       const content: HTMLElement | null = document.getElementById('content');
       if (content) content.innerHTML = html;
       if (mainlocation === '/') {
+        document.querySelector('.search')?.classList.remove('search_hidden');
         renderGoodsList.container = document.querySelector('.goods-card-preview-wrap');
         renderGoodsList.start();
+      }
+      if (mainlocation !== '/') {
+        document.querySelector('.search')?.classList.add('search_hidden');
       }
       document.title = route.title;
     }

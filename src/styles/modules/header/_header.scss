@@ -76,6 +76,10 @@
     justify-content: space-between;
     gap: 24px;
 
+    &_hidden {
+        display: none;
+    }
+
     @media screen and (max-width: 1024px) {
         order: 4;
         flex-basis: 100%;
