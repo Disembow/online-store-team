@@ -67,7 +67,6 @@ export class AddToCart implements IAddToCart {
 
   public check(target: targetProduct) {
     this.get();
-    // const addToCartButton = document.querySelector('.button__submit_cart');
     this.localStorageValue.filter((e) => e.id === target.id).length > 0
       ? this.addToCartButton?.setAttribute('disabled', '')
       : this.addToCartButton?.removeAttribute('disabled');

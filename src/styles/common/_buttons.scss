@@ -13,25 +13,39 @@
   &__submit {
     width: 17.6rem;
 
-  &_buynow {
-    margin: 0 1.6rem 1.6rem 0;
-  }
-
-  &_cart {
-    margin: 1.6rem;
-    & a {
-      text-decoration: none;
-      color: $primaryColor4;
+    &_buynow {
+      margin: 0 1.6rem 1.6rem 0;
     }
-  }
+
+    &_cart {
+      margin: 1.6rem;
+      & a {
+        text-decoration: none;
+        color: $primaryColor4;
+      }
+    }
   }
 
   &__delete_promo {
     height: 2.4rem;
     width: 2.4rem;
     text-align: center;
-    border: 1px solid $borderColor2;
+    border: 1px solid $primaryColor2;
     text-decoration: none;
+  }
+
+  &_round {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    margin: 0 0.5rem;
+    color: $primaryColor1;
+    background-color: $background1;
+  }
+
+  &_active {
+    color: $primaryColor3;
+    background-color: $primaryColor2;
   }
 
   &:hover {

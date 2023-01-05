@@ -10,9 +10,7 @@ export class CartView extends AddToCart {
     this.headerCounter = document.querySelector('.header-cart-block__count');
   }
 
-  render() {
-    super.get();
-
+  render(array: number[]) {
     const productBox = document.querySelector('.products__container');
     while (productBox?.firstChild) {
       productBox.removeChild(productBox.firstChild);
@@ -32,9 +30,8 @@ export class CartView extends AddToCart {
     const stock = template?.content.querySelector('.product__stock_item');
     const subtotal = template?.content.querySelector('.product__subtotal');
 
-    for (let i = 0; i < this.localStorageValue.length; i++) {
-      const id = this.localStorageValue[i].id;
-      const targetProduct = products.products.find((e) => e.id === id);
+    for (let i = 0; i < array.length; i++) {
+      const targetProduct = products.products.find((e) => e.id === array[i]);
       if (
         targetProduct &&
         image &&
@@ -49,7 +46,7 @@ export class CartView extends AddToCart {
         stock &&
         subtotal
       ) {
-        image.style.backgroundImage = `url(${targetProduct?.thumbnail})`;
+        image.style.backgroundImage = `url(${targetProduct.thumbnail})`;
         title.textContent = targetProduct.title;
         brand.textContent = targetProduct.brand;
         mainId.textContent = targetProduct.id.toString();
@@ -64,19 +61,23 @@ export class CartView extends AddToCart {
 
       const node = template?.content.cloneNode(true);
       if (node) productBox?.append(node);
-      this.getTotal();
     }
+    this.getTotal();
   }
 
   getTotal() {
+    super.get();
+    const sum = this.localStorageValue.reduce((a, c) => (a += c.quantity * c.price), 0).toFixed(2);
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    const subtotalValue = document.querySelectorAll('.product__subtotal');
-    const sum = Array.from(subtotalValue)
-      .map((e) => e.textContent?.replace('€', ''))
-      .reduce((a, c) => (a += Number(c)), 0);
-    if (total && this.headerCounter) {
-      total.textContent = `€${sum.toFixed(2)}`;
-      this.headerCounter.textContent = `${subtotalValue.length}`;
-    }
+    total.textContent = `€${
+      sum
+        .split('.')[0]
+        .split('')
+        .map((e, i) => (i % 3 === 0 ? e + ' ' : e))
+        .join('')
+        .trim() +
+      '.' +
+      sum.replace('€', '').split('.')[1]
+    }`;
   }
 }
