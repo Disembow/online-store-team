@@ -7,6 +7,7 @@ export class Render {
   private _filters: {
     category: string[];
     brand: string[];
+    view?: string;
   };
   constructor() {
     this._container = null;
@@ -34,8 +35,7 @@ export class Render {
     if (elem) this._container = elem;
   }
   public start() {
-    console.log('start');
-    this._checkURLSearchParams();
+    Render._getURLSearchParams();
     this._renderGoods();
     this._renderFilterBlocks('category');
     this._renderFilterBlocks('brand');
@@ -49,8 +49,9 @@ export class Render {
   public sort() {
     console.log('sort');
   }
-  private _checkURLSearchParams() {
-    console.log(window.location.search);
+  static _getURLSearchParams() {
+    const params = new URLSearchParams(window.location.search);
+    console.log(params.getAll('view'));
   }
   private _renderGoods() {
     if (!this._container) throw new Error('Goods container not found');
@@ -61,11 +62,11 @@ export class Render {
       <div class="goods-card-preview" data-view="grid">
         <div class="goods-card-preview__discount light-block-2">-${prod.discountPercentage}%</div>
         <div class="goods-card-preview__img-wrap" data-view="grid">
-        <a href="#goods/${prod.id}"><img class="goods-card-preview__img" src="${prod.thumbnail}"
+        <a href="#goods/${prod.id}" onclick="window.history.replaceState({}, '', window.location.origin);"><img class="goods-card-preview__img" src="${prod.thumbnail}"
             alt="Chappals"></img></a>
         </div>
         <div class="goods-card-preview__info" data-view="grid">
-        <h3 class="goods-card-preview__title" data-view="grid"><a class="goods-card-preview__link base-link" href="#goods/${prod.id}">${prod.title}</a></h3>
+        <h3 class="goods-card-preview__title" data-view="grid"><a class="goods-card-preview__link base-link" onclick="window.history.replaceState({}, '', window.location.origin);" href="#goods/${prod.id}">${prod.title}</a></h3>
           <span class="goods-card-preview__description">${prod.description}</span>
           <div class="goods-card-preview__properties">
             <span>Category</span>
@@ -143,13 +144,13 @@ export class Render {
     });
     console.log(this._goodsList);
   }
-  _renderCountGoods() {
+  private _renderCountGoods() {
     const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
     if (totalBlock) {
       totalBlock.textContent = String(this._goodsList.length);
     }
   }
-  _renderNoGoodsMessage() {
+  private _renderNoGoodsMessage() {
     if (!this._goodsList.length) {
       if (!this._container) throw new Error('Goods container not found');
       this._container.innerHTML = `<div class='no-found-goods'>No products found &#128554;</div>`;
