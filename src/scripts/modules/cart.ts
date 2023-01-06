@@ -4,17 +4,16 @@ import { products } from '../data';
 
 export class CartView extends AddToCart {
   headerCounter: Element | null;
+  productBox: HTMLDivElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     super(localStorageKey, localStorageValue);
     this.headerCounter = document.querySelector('.header-cart-block__count');
+    this.productBox = document.querySelector('.products__container');
   }
 
-  render(array: number[]) {
-    const productBox = document.querySelector('.products__container');
-    while (productBox?.firstChild) {
-      productBox.removeChild(productBox.firstChild);
-    }
+  public render(array: number[]) {
+    this.clean();
 
     const template = <HTMLTemplateElement | null>document.getElementById('product-template');
 
@@ -60,12 +59,12 @@ export class CartView extends AddToCart {
       }
 
       const node = template?.content.cloneNode(true);
-      if (node) productBox?.append(node);
+      if (node) this.productBox?.append(node);
     }
     this.getTotal();
   }
 
-  getTotal() {
+  public getTotal() {
     super.get();
     const sum = this.localStorageValue.reduce((a, c) => (a += c.quantity * c.price), 0).toFixed(2);
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
@@ -79,5 +78,11 @@ export class CartView extends AddToCart {
       '.' +
       sum.replace('€', '').split('.')[1]
     }`;
+  }
+
+  private clean() {
+    while (this.productBox?.firstChild) {
+      this.productBox.removeChild(this.productBox.firstChild);
+    }
   }
 }

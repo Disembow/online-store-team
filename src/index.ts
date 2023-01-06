@@ -32,6 +32,7 @@ const config = {
 };
 
 const callback = function (mutationsList: MutationRecord[]) {
+  const addToCart = new AddToCart('OnlineStoreCartGN', []);
   for (const mutation of mutationsList) {
     if (mutation.type === 'childList') {
       // Image popup on goods page
@@ -68,6 +69,7 @@ const callback = function (mutationsList: MutationRecord[]) {
           } else {
             e.preventDefault();
             order.showRedirectPopup();
+            addToCart.cleanCart();
           }
         });
 
@@ -93,11 +95,8 @@ const callback = function (mutationsList: MutationRecord[]) {
             : (item = <HTMLElement>e.target.closest('.prod-item__info'));
           const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
           if (e.target.classList.contains('minus')) {
-            // console.log('minus - index.ts', item);
             goodsQuantity.decrease();
           } else if (e.target.classList.contains('plus')) {
-            // console.log('plus - index.ts', item);
-            // console.log(location.href);
             goodsQuantity.increase();
           }
         }
@@ -123,7 +122,7 @@ const callback = function (mutationsList: MutationRecord[]) {
       if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') product.render(targetProduct);
 
       //Add product from goods-page to cart
-      const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
+      // const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
       addToCart.addToCartButton?.addEventListener('click', () => {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
