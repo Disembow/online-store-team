@@ -14,8 +14,8 @@ export class Render {
       category: ['smartphones'],
       brand: [],
     };
-    this._goodsList = products.products.map((prod) => prod);
-    /* this._goodsList = products.products
+    // this._goodsList = products.products.map((prod) => prod);
+    this._goodsList = products.products
       .map((prod) => prod)
       .filter((item) => {
         if (this._filters.category.length && this._filters.brand.length) {
@@ -28,7 +28,7 @@ export class Render {
         } else if (this._filters.category.length && !this._filters.brand.length) {
           return this._filters.category.includes(item.category.toLowerCase());
         }
-      }); */
+      });
   }
   public set container(elem: HTMLElement | null) {
     if (elem) this._container = elem;
@@ -41,6 +41,7 @@ export class Render {
     this._renderFilterBlocks('brand');
     this._renderCountCurrentFilter();
     this._renderCountGoods();
+    this._renderNoGoodsMessage();
   }
   public filter() {
     console.log('filter');
@@ -146,6 +147,12 @@ export class Render {
     const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
     if (totalBlock) {
       totalBlock.textContent = String(this._goodsList.length);
+    }
+  }
+  _renderNoGoodsMessage() {
+    if (!this._goodsList.length) {
+      if (!this._container) throw new Error('Goods container not found');
+      this._container.innerHTML = `<div class='no-found-goods'>No products found &#128554;</div>`;
     }
   }
 }
