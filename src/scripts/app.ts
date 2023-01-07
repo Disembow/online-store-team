@@ -5,35 +5,12 @@ import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
 class App {
   private _container: HTMLElement | null;
   private _goodsList: targetProduct[];
-  private _filters: {
-    category: string[];
-    brand: string[];
-    view?: string;
-  };
   constructor() {
     this._container = null;
-    this._filters = {
-      category: ['smartphones', 'laptops'],
-      brand: ['infinix'],
-    };
     this._goodsList = products.products.map((prod) => prod);
-    /* this._goodsList = products.products
-      .map((prod) => prod)
-      .filter((item) => {
-        if (this._filters.category.length && this._filters.brand.length) {
-          return (
-            this._filters.category.includes(item.category.toLowerCase()) &&
-            this._filters.brand.includes(item.brand.toLowerCase())
-          );
-        } else if (!this._filters.category.length && this._filters.brand.length) {
-          return this._filters.brand.includes(item.brand.toLowerCase());
-        } else if (this._filters.category.length && !this._filters.brand.length) {
-          return this._filters.category.includes(item.category.toLowerCase());
-        }
-      }); */
   }
   public start(): void {
-    // this._filter();
+    this._filter();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderFilterBlocks('category');
@@ -67,6 +44,12 @@ class App {
     }
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
+    this._filter();
+    this._renderGoods();
+    this._setViewGoodsList();
+    this._renderCountCurrentFilter();
+    this._renderCountGoods();
+    this._renderNoGoodsMessage();
   }
   public setViewURLSearchParams(view: string): void {
     const url = new URL(window.location.href);
@@ -76,6 +59,49 @@ class App {
   }
   public sort(): void {
     console.log('sort');
+  }
+  private _filter() {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    let categoryList: string[] = [];
+    let brandList: string[] = [];
+    if (params.has('category')) {
+      const categoryParams = params.get('category');
+      if (categoryParams) categoryList = categoryParams.split('↕');
+    }
+    if (params.has('brand')) {
+      const brandParams = params.get('brand');
+      if (brandParams) brandList = brandParams.split('↕');
+    }
+    // Фильтрация
+    this._goodsList = products.products
+      .map((prod) => prod)
+      .filter((item) => {
+        if (categoryList.length && brandList.length) {
+          return categoryList.includes(item.category.toLowerCase()) && brandList.includes(item.brand.toLowerCase());
+        } else if (!categoryList.length && brandList.length) {
+          return brandList.includes(item.brand.toLowerCase());
+        } else if (categoryList.length && !brandList.length) {
+          return categoryList.includes(item.category.toLowerCase());
+        } else return true;
+      });
+  }
+  private _checkedActiveInputFilter(name: string) {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    let list: string[] = [];
+    if (params.has(name)) {
+      const nameParams = params.get(name);
+      if (nameParams) list = nameParams.split('↕');
+    }
+    const inputsCategory = document.querySelectorAll(`[name="${name}"]`);
+    if (inputsCategory) {
+      inputsCategory.forEach((input) => {
+        if (input instanceof HTMLInputElement && list.includes(input.value)) {
+          input.checked = true;
+        }
+      });
+    }
   }
   private _setViewGoodsList(): void {
     const url = new URL(window.location.href);
@@ -153,6 +179,7 @@ class App {
       );
     }, '');
     filterBlock.innerHTML = content;
+    this._checkedActiveInputFilter(prop);
   }
   private _renderCountCurrentFilter(): void {
     const currentCountBlocks: NodeListOf<HTMLElement> = document.querySelectorAll('.checkbox-block__count-current');
