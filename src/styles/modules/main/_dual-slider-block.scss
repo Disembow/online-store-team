@@ -32,6 +32,10 @@
         &::-webkit-slider-thumb:hover {
             box-shadow: 0 0 0 2px #C6C6C6;
         }
+
+        &_active::-webkit-slider-thumb{
+            z-index: 5;
+        }
     }
 
     &__between-track {
@@ -51,5 +55,10 @@
 
     &__text {
         font-size: 1.6rem;
+    }
+
+    &[data-name="price"] &__text::after {
+        content: '$';
+        display: inline;
     }
 }
