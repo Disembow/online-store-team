@@ -1,11 +1,11 @@
-import renderGoods from '../../renderGoods';
+import app from '../../app';
 
 export default function toggleViewGoods(target?: HTMLElement, view?: string) {
   const buttons = document.querySelectorAll('.goods-list-view__item');
   buttons?.forEach((btn) => btn.classList.remove('goods-list-view__item_active'));
 
   target?.classList.add('goods-list-view__item_active');
-  if (target?.dataset.viewValue) renderGoods.setViewURLSearchParams(target.dataset.viewValue);
+  if (target?.dataset.viewValue) app.setViewURLSearchParams(target.dataset.viewValue);
 
   const btnActive = document.querySelector(`[data-view-value="${view}"]`);
   btnActive?.classList.add('goods-list-view__item_active');

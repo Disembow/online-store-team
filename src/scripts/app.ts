@@ -2,7 +2,7 @@ import { products } from './data';
 import { targetProduct } from '../types/product-page-types';
 import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
 
-class Render {
+class App {
   private _container: HTMLElement | null;
   private _goodsList: targetProduct[];
   private _filters: {
@@ -13,11 +13,11 @@ class Render {
   constructor() {
     this._container = null;
     this._filters = {
-      category: ['smartphones'],
-      brand: [],
+      category: ['smartphones', 'laptops'],
+      brand: ['infinix'],
     };
-    // this._goodsList = products.products.map((prod) => prod);
-    this._goodsList = products.products
+    this._goodsList = products.products.map((prod) => prod);
+    /* this._goodsList = products.products
       .map((prod) => prod)
       .filter((item) => {
         if (this._filters.category.length && this._filters.brand.length) {
@@ -30,12 +30,9 @@ class Render {
         } else if (this._filters.category.length && !this._filters.brand.length) {
           return this._filters.category.includes(item.category.toLowerCase());
         }
-      });
+      }); */
   }
-  public set container(elem: HTMLElement | null) {
-    if (elem) this._container = elem;
-  }
-  public start() {
+  public start(): void {
     // this._filter();
     this._renderGoods();
     this._setViewGoodsList();
@@ -45,30 +42,50 @@ class Render {
     this._renderCountGoods();
     this._renderNoGoodsMessage();
   }
-  public setViewURLSearchParams(view: string) {
-    const params = this._getURLSearchParams();
-    params.set('view', view);
-    // params.set('category', `smartphone`);
-    // params.set('brand', `apple`);
-    params.sort();
-    const url = new URL(`?${params.toString()}`, window.location.origin);
+  public set container(element: HTMLElement) {
+    if (element) this._container = element;
+  }
+  public filterCheckbox(name: string, value: string, checked: boolean): void {
+    // Установка query параметров
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    if (params.has(name)) {
+      let paramsList = params.get(name)?.split('↕');
+      if (!paramsList) throw new Error('paramsList is null');
+      if (checked) {
+        paramsList.push(value);
+      } else {
+        paramsList = paramsList.filter((item) => item !== value);
+      }
+      if (paramsList.length) {
+        url.searchParams.set(name, paramsList.sort().join('↕'));
+      } else {
+        url.searchParams.delete(name);
+      }
+    } else {
+      url.searchParams.set(name, value);
+    }
+    url.searchParams.sort();
     window.history.replaceState({}, '', url);
   }
-  public sort() {
+  public setViewURLSearchParams(view: string): void {
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', view);
+    url.searchParams.sort();
+    window.history.replaceState({}, '', url);
+  }
+  public sort(): void {
     console.log('sort');
   }
-  private _setViewGoodsList() {
-    const params = this._getURLSearchParams();
+  private _setViewGoodsList(): void {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
     const view = params.get('view');
     if (view === 'list' || view === 'grid') {
       toggleViewGoods(undefined, view);
     }
   }
-  private _getURLSearchParams() {
-    const params = new URLSearchParams(window.location.search);
-    return params;
-  }
-  private _renderGoods() {
+  private _renderGoods(): void {
     if (!this._container) throw new Error('Goods container not found');
     const list: string = this._goodsList.reduce((acc, prod) => {
       return (
@@ -105,7 +122,7 @@ class Render {
     }, '');
     this._container.innerHTML = list;
   }
-  private _renderFilterBlocks(prop: string) {
+  private _renderFilterBlocks(prop: string): void {
     const filterBlock: HTMLElement | null = document.querySelector(`[data-filter-list="${prop.toLowerCase()}"]`);
     if (!filterBlock) throw new Error('Goods container not found');
     const filters: { [key: string]: number } = products.products.reduce((acc: { [key: string]: number }, cur) => {
@@ -137,7 +154,7 @@ class Render {
     }, '');
     filterBlock.innerHTML = content;
   }
-  private _renderCountCurrentFilter() {
+  private _renderCountCurrentFilter(): void {
     const currentCountBlocks: NodeListOf<HTMLElement> = document.querySelectorAll('.checkbox-block__count-current');
     currentCountBlocks.forEach((item) => {
       const currentCount = this._goodsList.filter((prod) => {
@@ -157,15 +174,14 @@ class Render {
         itemWrap?.classList.remove('checkbox-block__item_disabled');
       }
     });
-    console.log(this._goodsList);
   }
-  private _renderCountGoods() {
+  private _renderCountGoods(): void {
     const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
     if (totalBlock) {
       totalBlock.textContent = String(this._goodsList.length);
     }
   }
-  private _renderNoGoodsMessage() {
+  private _renderNoGoodsMessage(): void {
     if (!this._goodsList.length) {
       if (!this._container) throw new Error('Goods container not found');
       this._container.innerHTML = `<div class='no-found-goods'>No products found &#128554;</div>`;
@@ -173,6 +189,6 @@ class Render {
   }
 }
 
-const renderGoods = new Render();
+const app = new App();
 
-export default renderGoods;
+export default app;

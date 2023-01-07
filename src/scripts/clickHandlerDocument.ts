@@ -7,21 +7,7 @@ export default function clickHandlerDocument(event: MouseEvent): void {
 
   if (target === null) throw new Error('target is null');
 
-  if (target instanceof HTMLAnchorElement) {
-    console.dir(target.hash);
-    // Действия при нажатии на ссылки страниц/товаров
-  }
-
   if (target instanceof HTMLElement) {
-    // console.dir(target.className);
-    //
-    // Блок с выбранными фильтрами
-    //
-    if (target.classList.contains('selected-filters-block__item')) {
-      // Удаление при нажатии на крестик
-      target.remove();
-      // Дальнейшие действия с query параметрами --->
-    }
     //
     // Dropdown Search - выпадающий список для поисковой строки
     //
@@ -45,7 +31,10 @@ export default function clickHandlerDocument(event: MouseEvent): void {
     //
     // Переключение вида отображения товаров на главной странице
     //
-    if (target.classList.contains('goods-list-view__item')) {
+    if (
+      target.classList.contains('goods-list-view__item') &&
+      !target.classList.contains('goods-list-view__item_active')
+    ) {
       toggleViewGoods(target);
     }
     //

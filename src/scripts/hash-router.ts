@@ -1,8 +1,8 @@
 import { IRouter, IRoutes } from '../types/hash-router-types';
 // import { products } from './data';
-import { Render } from './renderGoods';
+import app from './app';
 
-const renderGoods = new Render();
+// const renderGoods = new Render();
 
 const pageTitle = 'Online store';
 // const IdArray: number[] = [];
@@ -50,8 +50,9 @@ export class Router implements IRouter {
       document.title = route.title;
       if (mainlocation === '/') {
         document.querySelector('.search')?.classList.remove('search_hidden');
-        renderGoods.container = document.querySelector('.goods-card-preview-wrap');
-        renderGoods.start();
+        const container = document.querySelector('.goods-card-preview-wrap');
+        if (container && container instanceof HTMLElement) app.container = container;
+        app.start();
       } else {
         document.querySelector('.search')?.classList.add('search_hidden');
       }
