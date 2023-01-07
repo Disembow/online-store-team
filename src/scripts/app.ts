@@ -77,13 +77,16 @@ class App {
     this._goodsList = products.products
       .map((prod) => prod)
       .filter((item) => {
+        let isCheckbox = true;
         if (categoryList.length && brandList.length) {
-          return categoryList.includes(item.category.toLowerCase()) && brandList.includes(item.brand.toLowerCase());
+          isCheckbox =
+            categoryList.includes(item.category.toLowerCase()) && brandList.includes(item.brand.toLowerCase());
         } else if (!categoryList.length && brandList.length) {
-          return brandList.includes(item.brand.toLowerCase());
+          isCheckbox = brandList.includes(item.brand.toLowerCase());
         } else if (categoryList.length && !brandList.length) {
-          return categoryList.includes(item.category.toLowerCase());
-        } else return true;
+          isCheckbox = categoryList.includes(item.category.toLowerCase());
+        }
+        return isCheckbox;
       });
   }
   private _checkedActiveInputFilter(name: string) {
