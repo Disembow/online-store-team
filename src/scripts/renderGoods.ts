@@ -1,7 +1,8 @@
 import { products } from './data';
 import { targetProduct } from '../types/product-page-types';
+import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
 
-export class Render {
+class Render {
   private _container: HTMLElement | null;
   private _goodsList: targetProduct[];
   private _filters: {
@@ -35,23 +36,37 @@ export class Render {
     if (elem) this._container = elem;
   }
   public start() {
-    Render._getURLSearchParams();
+    // this._filter();
     this._renderGoods();
+    this._setViewGoodsList();
     this._renderFilterBlocks('category');
     this._renderFilterBlocks('brand');
     this._renderCountCurrentFilter();
     this._renderCountGoods();
     this._renderNoGoodsMessage();
   }
-  public filter() {
-    console.log('filter');
+  public setViewURLSearchParams(view: string) {
+    const params = this._getURLSearchParams();
+    params.set('view', view);
+    // params.set('category', `smartphone`);
+    // params.set('brand', `apple`);
+    params.sort();
+    const url = new URL(`?${params.toString()}`, window.location.origin);
+    window.history.replaceState({}, '', url);
   }
   public sort() {
     console.log('sort');
   }
-  static _getURLSearchParams() {
+  private _setViewGoodsList() {
+    const params = this._getURLSearchParams();
+    const view = params.get('view');
+    if (view === 'list' || view === 'grid') {
+      toggleViewGoods(undefined, view);
+    }
+  }
+  private _getURLSearchParams() {
     const params = new URLSearchParams(window.location.search);
-    console.log(params.getAll('view'));
+    return params;
   }
   private _renderGoods() {
     if (!this._container) throw new Error('Goods container not found');
@@ -157,3 +172,7 @@ export class Render {
     }
   }
 }
+
+const renderGoods = new Render();
+
+export default renderGoods;
