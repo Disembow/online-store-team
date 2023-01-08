@@ -41,7 +41,7 @@ export class Router implements IRouter {
     if (location.length === 0) {
       location = '/';
     }
-    console.log(mainlocation);
+
     const route = routes[mainlocation] || routes['404'];
     if (typeof route.template === 'string' && typeof route.title === 'string') {
       const html = await fetch(route.template).then((response) => response.text());
