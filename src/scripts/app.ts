@@ -177,7 +177,7 @@ class App {
           </div>
         </div>
         <div class="goods-card-preview__buy" data-view="grid">
-          <span class="goods-card-preview__price">${prod.price} USD</span>
+          <span class="goods-card-preview__price">${prod.price} EUR</span>
           <div class="goods-card-preview__buy-info" data-view="grid">
             <span class="goods-card-preview__ship">Free Shipping</span>
             <span class="goods-card-preview__delivery">Delivery in 1 day</span>

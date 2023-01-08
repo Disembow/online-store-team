@@ -58,7 +58,7 @@
     }
 
     &[data-name="price"] &__text::after {
-        content: '$';
+        content: '\20AC';
         display: inline;
     }
 }
