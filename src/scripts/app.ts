@@ -1,6 +1,7 @@
 import { products } from './data';
 import { targetProduct } from '../types/product-page-types';
 import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
+import fillInputTrack from './modules/dual-slider/fillInputTrack';
 
 class App {
   private _container: HTMLElement | null;
@@ -13,10 +14,13 @@ class App {
     this._filter();
     this._renderGoods();
     this._setViewGoodsList();
+    this._renderCountGoods();
     this._renderFilterBlocks('category');
     this._renderFilterBlocks('brand');
     this._renderCountCurrentFilter();
-    this._renderCountGoods();
+    this._renderDualSliderBlocks('price');
+    this._renderDualSliderBlocks('stock');
+    this._setDualSliderBlock();
     this._renderNoGoodsMessage();
   }
   public set container(element: HTMLElement) {
@@ -49,6 +53,21 @@ class App {
     this._setViewGoodsList();
     this._renderCountCurrentFilter();
     this._renderCountGoods();
+    this._setDualSliderBlock();
+    this._renderNoGoodsMessage();
+  }
+  public filterDualSlider(name: string, lowerInputValue: number, upperInputValue: number) {
+    // Установка query параметров
+    const url = new URL(window.location.href);
+    url.searchParams.set(name, `${lowerInputValue}↕${upperInputValue}`);
+    url.searchParams.sort();
+    window.history.replaceState({}, '', url);
+    this._filter();
+    this._renderGoods();
+    this._setViewGoodsList();
+    this._renderCountCurrentFilter();
+    this._renderCountGoods();
+    this._setDualSliderBlock(name === 'price' ? 'stock' : 'price');
     this._renderNoGoodsMessage();
   }
   public setViewURLSearchParams(view: string): void {
@@ -63,6 +82,7 @@ class App {
   private _filter() {
     const url = new URL(window.location.href);
     const params = url.searchParams;
+    // Парсинг категорий и брэндов
     let categoryList: string[] = [];
     let brandList: string[] = [];
     if (params.has('category')) {
@@ -73,21 +93,37 @@ class App {
       const brandParams = params.get('brand');
       if (brandParams) brandList = brandParams.split('↕');
     }
+    // Парсинг цен и стока
+    let priceList: string[] = [];
+    let stockList: string[] = [];
+    if (params.has('price')) {
+      const priceParams = params.get('price');
+      if (priceParams) priceList = priceParams.split('↕');
+    }
+    if (params.has('stock')) {
+      const stockParams = params.get('stock');
+      if (stockParams) stockList = stockParams.split('↕');
+    }
     // Фильтрация
-    this._goodsList = products.products
-      .map((prod) => prod)
-      .filter((item) => {
-        let isCheckbox = true;
-        if (categoryList.length && brandList.length) {
-          isCheckbox =
-            categoryList.includes(item.category.toLowerCase()) && brandList.includes(item.brand.toLowerCase());
-        } else if (!categoryList.length && brandList.length) {
-          isCheckbox = brandList.includes(item.brand.toLowerCase());
-        } else if (categoryList.length && !brandList.length) {
-          isCheckbox = categoryList.includes(item.category.toLowerCase());
-        }
-        return isCheckbox;
-      });
+    this._goodsList = products.products.filter((item) => {
+      // Фильтрация | Чекбоксы категорий и брэндов
+      let isCheckbox = true;
+      if (categoryList.length && brandList.length) {
+        isCheckbox = categoryList.includes(item.category.toLowerCase()) && brandList.includes(item.brand.toLowerCase());
+      } else if (!categoryList.length && brandList.length) {
+        isCheckbox = brandList.includes(item.brand.toLowerCase());
+      } else if (categoryList.length && !brandList.length) {
+        isCheckbox = categoryList.includes(item.category.toLowerCase());
+      }
+      // Фильтрация | price и stock
+      const isPriceTrue = priceList.length
+        ? item.price >= Number(priceList[0]) && item.price <= Number(priceList[1])
+        : true;
+      const isStockTrue = stockList.length
+        ? item.stock >= Number(stockList[0]) && item.stock <= Number(stockList[1])
+        : true;
+      return isCheckbox && isPriceTrue && isStockTrue;
+    });
   }
   private _checkedActiveInputFilter(name: string) {
     const url = new URL(window.location.href);
@@ -136,6 +172,8 @@ class App {
             <span class="goods-card-preview__properties-item">${prod.brand}</span>
             <span>Stock</span>
             <span class="goods-card-preview__properties-item">${prod.stock}</span>
+            <span>Rating</span>
+            <span class="goods-card-preview__properties-item">${prod.rating}</span>
           </div>
         </div>
         <div class="goods-card-preview__buy" data-view="grid">
@@ -204,6 +242,85 @@ class App {
         itemWrap?.classList.remove('checkbox-block__item_disabled');
       }
     });
+  }
+  private _renderDualSliderBlocks(name: string): void {
+    // min и max значения для слайдеров
+    let values: number[] = [];
+    if (name === 'price') values = products.products.map((item) => item.price);
+    if (name === 'stock') values = products.products.map((item) => item.stock);
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    // рендеринг
+    const dualSliderBlock: HTMLElement | null = document.querySelector(`[data-name="${name.toLowerCase()}"]`);
+    if (!dualSliderBlock) throw new Error('Goods container not found');
+    dualSliderBlock.innerHTML = `
+    <div class="dual-slider__display">
+      <span class="dual-slider__text" data-display="lower">${min}</span>
+      <span class="dual-slider__text" data-display="upper">${max}</span>
+    </div>
+    <input class="dual-slider__input" type="range" min="${min}" max="${max}" value="${min}" step="1" data-name="lower">
+    <input class="dual-slider__input" type="range" min="${min}" max="${max}" value="${max}" step="1" data-name="upper">
+    <div class="dual-slider__between-track"></div>`;
+  }
+  private _setDualSliderBlock(name?: string) {
+    if (!name || name === 'price') {
+      // Определение элементов
+      const sliderPrice: HTMLElement | null = document.querySelector('[data-name="price"]');
+      if (!sliderPrice) throw new Error('sliderPrice not found');
+      const lowerTextBlock: HTMLElement | null = sliderPrice.querySelector('[data-display="lower"]');
+      if (!lowerTextBlock) throw new Error('lowerTextBlock not found');
+      const upperTextBlock: HTMLElement | null = sliderPrice.querySelector('[data-display="upper"]');
+      if (!upperTextBlock) throw new Error('upperTextBlock not found');
+      const inputLower: HTMLInputElement | null = sliderPrice.querySelector('input[data-name="lower"]');
+      if (!inputLower) throw new Error('inputLower not found');
+      const inputUpper: HTMLInputElement | null = sliderPrice.querySelector('input[data-name="upper"]');
+      if (!inputUpper) throw new Error('inputUpper not found');
+      const inputTrack: HTMLElement | null = sliderPrice.querySelector('.dual-slider__between-track');
+      if (!inputTrack) throw new Error('inputTrack not found');
+      // Получение значений min и max
+      const valuesPrice = this._goodsList.map((item) => item.price);
+      const minPrice = valuesPrice.length ? Math.min(...valuesPrice) : Number(inputLower.min);
+      const maxPrice = valuesPrice.length ? Math.max(...valuesPrice) : Number(inputLower.max);
+      const maxInputValue = parseInt(inputLower.max);
+      const lowerInputValuePercent = (minPrice / maxInputValue) * 100;
+      const upperInputValuePercent = (maxPrice / maxInputValue) * 100;
+      // Рендеринг текстовых значений
+      lowerTextBlock.textContent = `${Math.round(minPrice)}`;
+      upperTextBlock.textContent = `${Math.round(maxPrice)}`;
+      // Рендеринг положения ползунка и трека инпута
+      inputLower.value = String(minPrice);
+      inputUpper.value = String(maxPrice);
+      fillInputTrack(inputTrack, lowerInputValuePercent, upperInputValuePercent);
+    }
+    if (!name || name === 'stock') {
+      // Определение элементов
+      const sliderStock: HTMLElement | null = document.querySelector('[data-name="stock"]');
+      if (!sliderStock) throw new Error('sliderStock not found');
+      const lowerTextBlock: HTMLElement | null = sliderStock.querySelector('[data-display="lower"]');
+      if (!lowerTextBlock) throw new Error('lowerTextBlock not found');
+      const upperTextBlock: HTMLElement | null = sliderStock.querySelector('[data-display="upper"]');
+      if (!upperTextBlock) throw new Error('upperTextBlock not found');
+      const inputLower: HTMLInputElement | null = sliderStock.querySelector('input[data-name="lower"]');
+      if (!inputLower) throw new Error('inputLower not found');
+      const inputUpper: HTMLInputElement | null = sliderStock.querySelector('input[data-name="upper"]');
+      if (!inputUpper) throw new Error('inputUpper not found');
+      const inputTrack: HTMLElement | null = sliderStock.querySelector('.dual-slider__between-track');
+      if (!inputTrack) throw new Error('inputTrack not found');
+      // Получение значений min и max
+      const valuesStock = this._goodsList.map((item) => item.stock);
+      const minStock = valuesStock.length ? Math.min(...valuesStock) : Number(inputLower.min);
+      const maxStock = valuesStock.length ? Math.max(...valuesStock) : Number(inputLower.max);
+      const maxInputValue = parseInt(inputLower.max);
+      const lowerInputValuePercent = (minStock / maxInputValue) * 100;
+      const upperInputValuePercent = (maxStock / maxInputValue) * 100;
+      // Рендеринг текстовых значений
+      lowerTextBlock.textContent = `${Math.round(minStock)}`;
+      upperTextBlock.textContent = `${Math.round(maxStock)}`;
+      // Рендеринг положения ползунка и трека инпута
+      inputLower.value = String(minStock);
+      inputUpper.value = String(maxStock);
+      fillInputTrack(inputTrack, lowerInputValuePercent, upperInputValuePercent);
+    }
   }
   private _renderCountGoods(): void {
     const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
