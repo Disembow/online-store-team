@@ -13,4 +13,8 @@ export default function inputHandlerDocument(event: Event): void {
   if (target.classList.contains('dual-slider__input')) {
     controlDualSlider(target);
   }
+
+  if (target.id === 'search-input') {
+    app.filterSearch(target.value);
+  }
 }

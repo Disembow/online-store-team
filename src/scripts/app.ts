@@ -15,6 +15,7 @@ class App {
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountGoods();
+    this._setSearchInputValue();
     this._renderFilterBlocks('category');
     this._renderFilterBlocks('brand');
     this._renderCountCurrentFilter();
@@ -70,6 +71,21 @@ class App {
     this._setDualSliderBlock(name === 'price' ? 'stock' : 'price');
     this._renderNoGoodsMessage();
   }
+  public filterSearch(value: string) {
+    const url = new URL(window.location.href);
+    value = value.replace(/^\s+/g, '');
+    if (value) url.searchParams.set('search', value);
+    else url.searchParams.delete('search');
+    url.searchParams.sort();
+    window.history.replaceState({}, '', url);
+    this._filter();
+    this._renderGoods();
+    this._setViewGoodsList();
+    this._renderCountCurrentFilter();
+    this._renderCountGoods();
+    this._setDualSliderBlock();
+    this._renderNoGoodsMessage();
+  }
   public setViewURLSearchParams(view: string): void {
     const url = new URL(window.location.href);
     url.searchParams.set('view', view);
@@ -104,6 +120,12 @@ class App {
       const stockParams = params.get('stock');
       if (stockParams) stockList = stockParams.split('↕');
     }
+    // Парсинг поиска
+    let searchValue = '';
+    if (params.has('search')) {
+      const paramSearch = params.get('search');
+      if (paramSearch) searchValue = paramSearch.toLowerCase();
+    }
     // Фильтрация
     this._goodsList = products.products.filter((item) => {
       // Фильтрация | Чекбоксы категорий и брэндов
@@ -122,7 +144,29 @@ class App {
       const isStockTrue = stockList.length
         ? item.stock >= Number(stockList[0]) && item.stock <= Number(stockList[1])
         : true;
-      return isCheckbox && isPriceTrue && isStockTrue;
+      // Фильтрация | поиск
+      let isSearchTrue: boolean;
+      {
+        const isTitleTrue = item.title.toLowerCase().includes(searchValue);
+        const isDescriptionTrue = item.description.toLowerCase().includes(searchValue);
+        const isCategoryTrue = item.category.toLowerCase().includes(searchValue);
+        const isBrandTrue = item.brand.toLowerCase().includes(searchValue);
+        const isPriceTrue = String(item.price).replace(/\.+/g, '').includes(searchValue);
+        const isDiscountTrue = String(item.discountPercentage).replace(/\.+/g, '').includes(searchValue);
+        const isRatingTrue = String(item.rating).replace(/\.+/g, '').includes(searchValue);
+        const isStockTrue = String(item.stock).replace(/\.+/g, '').includes(searchValue);
+        isSearchTrue =
+          isTitleTrue ||
+          isDescriptionTrue ||
+          isCategoryTrue ||
+          isBrandTrue ||
+          isPriceTrue ||
+          isDiscountTrue ||
+          isRatingTrue ||
+          isStockTrue;
+      }
+
+      return isCheckbox && isPriceTrue && isStockTrue && isSearchTrue;
     });
   }
   private _checkedActiveInputFilter(name: string) {
@@ -326,6 +370,16 @@ class App {
     const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
     if (totalBlock) {
       totalBlock.textContent = String(this._goodsList.length);
+    }
+  }
+  private _setSearchInputValue() {
+    const searchInput = document.getElementById('search-input');
+    if (!(searchInput && searchInput instanceof HTMLInputElement)) throw new Error('searchInput is null');
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    if (params.has('search')) {
+      const paramSearch = params.get('search');
+      if (paramSearch) searchInput.value = paramSearch;
     }
   }
   private _renderNoGoodsMessage(): void {
