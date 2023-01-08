@@ -12,6 +12,7 @@ class App {
   }
   public start(): void {
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountGoods();
@@ -22,6 +23,7 @@ class App {
     this._renderDualSliderBlocks('price');
     this._renderDualSliderBlocks('stock');
     this._setDualSliderBlock();
+    this._setSortBlock();
     this._renderNoGoodsMessage();
   }
   public set container(element: HTMLElement) {
@@ -50,6 +52,7 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountCurrentFilter();
@@ -64,6 +67,7 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountCurrentFilter();
@@ -79,6 +83,7 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountCurrentFilter();
@@ -92,8 +97,14 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
   }
-  public sort(): void {
-    console.log('sort');
+  public sort(name: string, value: string): void {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', `${name}-${value}`);
+    url.searchParams.sort();
+    window.history.replaceState({}, '', url);
+    this._setSortGoods();
+    this._renderGoods();
+    this._setViewGoodsList();
   }
   private _filter() {
     const url = new URL(window.location.href);
@@ -380,6 +391,58 @@ class App {
     if (params.has('search')) {
       const paramSearch = params.get('search');
       if (paramSearch) searchInput.value = paramSearch;
+    }
+  }
+  private _setSortGoods() {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    let sortValue: string[] = [];
+    if (params.has('sort')) {
+      const paramSort = params.get('sort');
+      if (paramSort) sortValue = paramSort.split('-');
+      const name = sortValue[0].toLowerCase();
+      const value = sortValue[1].toLowerCase();
+      if (name === 'price') {
+        if (value === 'asc') {
+          this._goodsList.sort((a, b) => a.price - b.price);
+        } else if (value === 'desc') {
+          this._goodsList.sort((a, b) => b.price - a.price);
+        }
+      } else if (name === 'rating') {
+        if (value === 'asc') {
+          this._goodsList.sort((a, b) => a.rating - b.rating);
+        } else if (value === 'desc') {
+          this._goodsList.sort((a, b) => b.rating - a.rating);
+        }
+      } else if (name === 'discount') {
+        if (value === 'asc') {
+          this._goodsList.sort((a, b) => a.discountPercentage - b.discountPercentage);
+        } else if (value === 'desc') {
+          this._goodsList.sort((a, b) => b.discountPercentage - a.discountPercentage);
+        }
+      }
+    }
+  }
+  private _setSortBlock() {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    let sortValue: string[] = [];
+    if (params.has('sort')) {
+      // Парсинг параметров сортировки
+      const paramSort = params.get('sort');
+      if (paramSort) sortValue = paramSort.split('-');
+      const name = sortValue[0].toLowerCase();
+      const value = sortValue[1].toLowerCase();
+      // Определение элементов
+      const blockSelected: HTMLElement | null = document.querySelector('.sort-goods__dropdown-selected');
+      const itemSortSelected: HTMLElement | null = document.querySelector(
+        `[data-sort-name="${name}"][data-value="${value}"]`
+      );
+      if (blockSelected) {
+        blockSelected.innerText = name[0].toUpperCase() + name.slice(1);
+        blockSelected.dataset.value = value;
+      }
+      itemSortSelected?.classList.add('dropdown__item_selected');
     }
   }
   private _renderNoGoodsMessage(): void {
