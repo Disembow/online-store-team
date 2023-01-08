@@ -45,6 +45,10 @@ export class AddToCart implements IAddToCart {
     this.add();
   }
 
+  public cleanCart() {
+    localStorage.removeItem(this.localStorageKey);
+  }
+
   public create(target: targetProduct, quantity: number) {
     this.get();
     if (this.localStorageValue.filter((e) => e.id === target.id).length === 0) {
