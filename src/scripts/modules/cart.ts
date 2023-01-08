@@ -3,13 +3,15 @@ import { LocalStorageCartInfo } from './add-to-cart';
 import { products } from '../data';
 
 export class CartView extends AddToCart {
-  headerCounter: Element | null;
+  headerCounter: HTMLDivElement | null;
+  headerValue: HTMLSpanElement | null;
   productBox: HTMLDivElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     super(localStorageKey, localStorageValue);
     this.headerCounter = document.querySelector('.header-cart-block__count');
     this.productBox = document.querySelector('.products__container');
+    this.headerValue = document.querySelector('.header-total-price__sum');
   }
 
   public render(array: number[]) {
@@ -78,6 +80,9 @@ export class CartView extends AddToCart {
       '.' +
       sum.replace('€', '').split('.')[1]
     }`;
+    localStorage.setItem('OnlineStoreTotalValueGN', sum);
+    if (this.headerValue) this.headerValue.textContent = `€${sum}`;
+    return sum;
   }
 
   private clean() {

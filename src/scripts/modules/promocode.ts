@@ -149,7 +149,8 @@ export class PromoCode implements IPromoCode {
   private addTotalToHeader() {
     const headerTotal = document.querySelector('.header-total-price__sum');
     const sum = this.getCartSumWithDiscount()?.toFixed(2);
-    if (headerTotal && sum)
+    if (headerTotal && sum) {
+      localStorage.setItem('OnlineStoreTotalValueGN', sum);
       headerTotal.textContent = `€${
         sum
           .split('.')[0]
@@ -160,5 +161,6 @@ export class PromoCode implements IPromoCode {
         '.' +
         sum.replace('€', '').split('.')[1]
       }`;
+    }
   }
 }

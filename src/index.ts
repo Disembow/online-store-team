@@ -115,31 +115,32 @@ const callback = function (mutationsList: MutationRecord[]) {
       }
 
       // Insert new product into goods-page
-      const product = new ProductPage('OnlineStoreCartGN', []); //TODO: refactor into one call
+      const product = new ProductPage('OnlineStoreCartGN', []);
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
       const targetProduct = products.products.find((e) => e.id === +sublocation);
 
       if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') product.render(targetProduct);
 
       //Add product from goods-page to cart
-      // const addToCart = new AddToCart('OnlineStoreCartGN', []); //TODO: refactor into one call
       addToCart.addToCartButton?.addEventListener('click', () => {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
+          if (cart.headerCounter) cart.headerCounter.textContent = `${+cart.headerCounter.innerText + 1}`;
         }
       });
     }
   }
 };
 
-const observer = new MutationObserver(callback);
+const observer: MutationObserver = new MutationObserver(callback);
 
 if (targetToObserve) observer.observe(targetToObserve, config);
 
 // Add cart length into header;
+const cart = new CartView('OnlineStoreCartGN', []);
 document.addEventListener('DOMContentLoaded', () => {
-  const cart = new CartView('OnlineStoreCartGN', []);
   cart.get();
   if (cart.headerCounter) cart.headerCounter.textContent = cart.localStorageValue.length.toString();
+  if (cart.headerValue) cart.headerValue.textContent = `€${localStorage.getItem('OnlineStoreTotalValueGN')}`;
 });

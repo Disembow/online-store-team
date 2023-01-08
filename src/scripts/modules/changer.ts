@@ -40,9 +40,9 @@ export class QuantityChanger extends CartView implements ICartChanger {
       console.log('plus', this.quantity);
       this.counter.textContent = this.quantity.toString();
 
+      this.setQuantity();
       this.recount();
       this.recountDiscount();
-      this.setQuantity();
     }
   }
 
@@ -58,9 +58,10 @@ export class QuantityChanger extends CartView implements ICartChanger {
         p.DisplayList();
         p.SetupPagination();
       }
+
+      this.setQuantity();
       this.recount();
       this.recountDiscount();
-      this.setQuantity();
     }
   }
 
@@ -88,20 +89,12 @@ export class QuantityChanger extends CartView implements ICartChanger {
     if (promosStr) {
       const promos = JSON.parse(promosStr);
       const total = document.querySelector('.product-value__sum_current')?.querySelector('.product-value__sum_colored');
-      if (promos.length > 0 && total) {
-        const sum = (
-          Number(
-            document
-              .querySelector('.product-value__sum_previous')
-              ?.querySelector('.product-value__sum_colored')
-              ?.textContent?.replace('€', '')
-          ) *
-          (1 - 0.1 * promos.length)
-        ).toFixed(2);
+      if (promos.length > 0) {
+        const sum = (+super.getTotal() * (1 - 0.1 * promos.length)).toFixed(2);
+        if (total) total.textContent = `€${sum}`;
 
-        total.textContent = `€${sum}`;
         const headerTotal = document.querySelector('.header-total-price__sum');
-
+        localStorage.setItem('OnlineStoreTotalValueGN', sum);
         if (headerTotal && sum) headerTotal.textContent = `€${sum}`;
       }
     }
