@@ -2,6 +2,7 @@ import { ICartChanger } from '../../types/changer-types';
 import { LocalStorage } from '../../types/product-page-types';
 import { LocalStorageCartInfo } from './add-to-cart';
 import { CartView } from './cart';
+import { Pagiantor } from './cart-paginator';
 
 export class QuantityChanger extends CartView implements ICartChanger {
   private target: HTMLElement;
@@ -34,8 +35,6 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   public increase() {
-    // super.get();
-
     if (this.counter && this.stock && this.quantity < this.stock) {
       this.quantity += 1;
       console.log('plus', this.quantity);
@@ -48,14 +47,17 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   public decrease() {
-    // super.get();
-
     if (this.counter && this.quantity > 0) {
       this.quantity -= 1;
       console.log('minus', this.quantity);
       this.counter.textContent = this.quantity.toString();
 
-      this.deleteFromCart();
+      if (location.hash.split('/')[0] === '#cart' && this.quantity === 0) {
+        this.deleteFromCart();
+        const p = new Pagiantor('OnlineStoreCartGN', []);
+        p.DisplayList();
+        p.SetupPagination();
+      }
       this.recount();
       this.recountDiscount();
       this.setQuantity();
@@ -63,17 +65,13 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   deleteFromCart() {
-    if (location.hash.split('/')[0] === '#cart') {
-      if (this.quantity === 0) {
-        this.target.remove();
+    this.target.remove();
 
-        const LS = localStorage.getItem('OnlineStoreCartGN');
-        if (LS) {
-          let data: Array<LocalStorage> = JSON.parse(LS);
-          data = data.filter((e) => e.id !== this.targetId);
-          localStorage.setItem('OnlineStoreCartGN', JSON.stringify(data));
-        }
-      }
+    const LS = localStorage.getItem('OnlineStoreCartGN');
+    if (LS) {
+      let data: Array<LocalStorage> = JSON.parse(LS);
+      data = data.filter((e) => e.id !== this.targetId);
+      localStorage.setItem('OnlineStoreCartGN', JSON.stringify(data));
     }
   }
 
