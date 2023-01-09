@@ -23,8 +23,8 @@ export class CartView extends AddToCart {
 
     const template = <HTMLTemplateElement | null>document.getElementById('product-template');
 
-    const image: HTMLDivElement | null | undefined = template?.content.querySelector('.product__image');
-    const title = template?.content.querySelector('.product__title_item');
+    const image: HTMLAnchorElement | null | undefined = template?.content.querySelector('.product__image');
+    const title: HTMLAnchorElement | null | undefined = template?.content.querySelector('.product__title_item');
     const brand = template?.content.querySelector('.product__brand_item');
     const mainId = template?.content.querySelector('.product__id_item');
     const category = template?.content.querySelector('.product__category_item');
@@ -52,7 +52,10 @@ export class CartView extends AddToCart {
         subtotal
       ) {
         image.style.backgroundImage = `url(${targetProduct.thumbnail})`;
+        image.href = `#goods/${targetProduct.id}`;
         title.textContent = targetProduct.title;
+        title.href = `#goods/${targetProduct.id}`;
+
         brand.textContent = targetProduct.brand;
         mainId.textContent = targetProduct.id.toString();
         category.textContent = targetProduct.category;
