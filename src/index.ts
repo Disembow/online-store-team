@@ -135,10 +135,17 @@ const callback = function (mutationsList: MutationRecord[]) {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
-          if (addToCart.headerCounter && cart.headerValue) {
+          const LS = localStorage.getItem('OnlineStoreCartPromoGN');
+          if (addToCart.headerCounter && cart.headerValue && LS) {
             addToCart.headerCounter.textContent = addToCart.getItemsCount();
-            // cart.headerValue.textContent = cart.getTotal().toString();
-            console.log(cart.getTotal());
+            const promoCount = JSON.parse(LS).length;
+            let sum: number;
+            if (promoCount) {
+              sum = +cart.getTotal() * (1 - 0.1 * promoCount);
+            } else {
+              sum = +cart.getTotal();
+            }
+            cart.headerValue.textContent = `€${sum.toFixed(2)}`;
           }
         }
       });
@@ -156,7 +163,5 @@ document.addEventListener('DOMContentLoaded', () => {
   cart.get();
   if (cart.headerCounter && cart.headerValue) {
     cart.headerCounter.textContent = cart.getItemsCount();
-    cart.headerValue.textContent = `€${localStorage.getItem('OnlineStoreTotalValueGN')}`;
-    if (!localStorage.getItem('OnlineStoreTotalValueGN')) cart.headerValue.textContent = `€0.00`;
   }
 });
