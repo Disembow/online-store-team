@@ -94,7 +94,7 @@ export class Pagiantor extends CartView {
 
   public parseQueryParam() {
     if (location.hash.includes('/')) {
-      const searchState = location.hash.split('/')[1].split('&');
+      const searchState = location.hash.split('/?')[1].split('&');
 
       this.currentPage = +searchState[0].split('=')[1];
       this.rows = +searchState[1].split('=')[1];
@@ -106,7 +106,7 @@ export class Pagiantor extends CartView {
   }
 
   private setQueryParams() {
-    const state = `#cart/page=${this.currentPage}&itemperpage=${this.rows}`;
+    const state = `#cart/?page=${this.currentPage}&itemperpage=${this.rows}`;
     window.history.pushState(null, '', state);
   }
 }
