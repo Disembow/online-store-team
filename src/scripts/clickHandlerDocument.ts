@@ -1,6 +1,7 @@
 import dropdownSearch from './modules/dropdown/dropdownSearch';
 import dropdownSortGoods from './modules/dropdown/dropdownSortGoods';
 import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
+import copyUrl from './modules/copy-url/copyUrl';
 import app from './app';
 
 export default function clickHandlerDocument(event: MouseEvent): void {
@@ -59,6 +60,12 @@ export default function clickHandlerDocument(event: MouseEvent): void {
     //
     if (target.id === 'reset') {
       app.reset();
+    }
+    //
+    // Кнопка COPY
+    //
+    if (target.id === 'copy') {
+      copyUrl(target);
     }
   }
 }
