@@ -135,15 +135,16 @@ const callback = function (mutationsList: MutationRecord[]) {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
-          const LS = localStorage.getItem('OnlineStoreCartPromoGN');
-          if (addToCart.headerCounter && cart.headerValue && LS) {
+          if (addToCart.headerCounter && cart.headerValue) {
+            console.log('click');
             addToCart.headerCounter.textContent = addToCart.getItemsCount();
-            const promoCount = JSON.parse(LS).length;
-            let sum: number;
-            if (promoCount) {
-              sum = +cart.getTotal() * (1 - 0.1 * promoCount);
-            } else {
-              sum = +cart.getTotal();
+            let sum: number = +cart.getTotal();
+            const LS = localStorage.getItem('OnlineStoreCartPromoGN');
+            if (LS) {
+              const promoCount = JSON.parse(LS).length;
+              if (promoCount) {
+                sum = +cart.getTotal() * (1 - 0.1 * promoCount);
+              }
             }
             cart.headerValue.textContent = `€${sum.toFixed(2)}`;
           }
