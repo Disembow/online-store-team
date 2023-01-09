@@ -53,8 +53,11 @@ export class AddToCart implements IAddToCart {
 
   public check(target: targetProduct) {
     this.get();
-    this.localStorageValue.filter((e) => e.id === target.id).length > 0
-      ? this.addToCartButton?.setAttribute('disabled', '')
-      : this.addToCartButton?.removeAttribute('disabled');
+    if (this.localStorageValue.filter((e) => e.id === target.id).length > 0 && this.addToCartButton) {
+      this.addToCartButton?.setAttribute('disabled', '');
+      this.addToCartButton.textContent = 'Already in cart';
+    } else {
+      this.addToCartButton?.removeAttribute('disabled');
+    }
   }
 }
