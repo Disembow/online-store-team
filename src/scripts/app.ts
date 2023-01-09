@@ -1,5 +1,6 @@
 import { products } from './data';
 import { targetProduct } from '../types/product-page-types';
+import { CartView } from './modules/cart';
 import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
 import fillInputTrack from './modules/dual-slider/fillInputTrack';
 
@@ -224,7 +225,13 @@ class App {
   }
   private _renderGoods(): void {
     if (!this._container) throw new Error('Goods container not found');
+    const cart = new CartView('OnlineStoreCartGN', []);
+    cart.get();
+    const idInCart = cart.localStorageValue.map((e) => e.id);
+
     const list: string = this._goodsList.reduce((acc, prod) => {
+      const isItemInCart = idInCart.indexOf(prod.id) !== -1 ? 'disabled' : '';
+
       return (
         acc +
         `
@@ -254,7 +261,7 @@ class App {
             <span class="goods-card-preview__ship">Free Shipping</span>
             <span class="goods-card-preview__delivery">Delivery in 1 day</span>
           </div>
-          <button class="button button__submit_cart goods-card-preview__button" data-id="${prod.id}" type="button">+ Add to cart</button>
+          <button class="button button__submit_cart goods-card-preview__button" data-id="${prod.id}" ${isItemInCart} type="button">+ Add to cart</button>
         </div>
       </div>`
       );
