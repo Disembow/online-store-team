@@ -1,17 +1,21 @@
 import { AddToCart } from './add-to-cart';
-import { LocalStorageCartInfo } from './add-to-cart';
+import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { products } from '../data';
 
 export class CartView extends AddToCart {
-  headerCounter: HTMLDivElement | null;
   headerValue: HTMLSpanElement | null;
   productBox: HTMLDivElement | null;
+  mainCartTitle: HTMLHeadingElement | null;
+  emptyCartTitle: HTMLHeadingElement | null;
+  innerWrapper: HTMLDivElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     super(localStorageKey, localStorageValue);
-    this.headerCounter = document.querySelector('.header-cart-block__count');
     this.productBox = document.querySelector('.products__container');
     this.headerValue = document.querySelector('.header-total-price__sum');
+    this.mainCartTitle = document.querySelector('.cart__title');
+    this.emptyCartTitle = document.querySelector('.cart__title_empty');
+    this.innerWrapper = document.querySelector('.inner-wrapper');
   }
 
   public render(array: number[]) {
@@ -70,16 +74,7 @@ export class CartView extends AddToCart {
     super.get();
     const sum = this.localStorageValue.reduce((a, c) => (a += c.quantity * c.price), 0).toFixed(2);
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    total.textContent = `€${
-      sum
-        .split('.')[0]
-        .split('')
-        .map((e, i) => (i % 3 === 0 ? e + ' ' : e))
-        .join('')
-        .trim() +
-      '.' +
-      sum.replace('€', '').split('.')[1]
-    }`;
+    total.textContent = `€${sum}`;
     localStorage.setItem('OnlineStoreTotalValueGN', sum);
     if (this.headerValue) this.headerValue.textContent = `€${sum}`;
     return sum;
@@ -88,6 +83,12 @@ export class CartView extends AddToCart {
   private clean() {
     while (this.productBox?.firstChild) {
       this.productBox.removeChild(this.productBox.firstChild);
+    }
+
+    if (!this.localStorageValue || this.localStorageValue.length === 0) {
+      this.mainCartTitle?.classList.add('hidden');
+      this.emptyCartTitle?.classList.remove('hidden');
+      this.innerWrapper?.classList.add('hidden');
     }
   }
 }

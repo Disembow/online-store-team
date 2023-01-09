@@ -1,10 +1,12 @@
 import { CartView } from './cart';
-import { LocalStorageCartInfo } from './add-to-cart';
+import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 
 export class Pagiantor extends CartView {
   wrapper: HTMLDivElement | null;
   paginationElement: HTMLDivElement | null;
   itemPerPageSelect: HTMLSelectElement | null;
+  itemNumber: NodeListOf<HTMLSpanElement> | null;
+  itemCount: HTMLSpanElement | null;
   currentPage: number;
   rows: number;
 
@@ -13,6 +15,8 @@ export class Pagiantor extends CartView {
     this.wrapper = document.querySelector('.products__container');
     this.paginationElement = document.querySelector('.pagenumbers');
     this.itemPerPageSelect = document.querySelector('.goods-per-page');
+    this.itemNumber = document.querySelectorAll('.product__number');
+    this.itemCount = document.querySelector('.product-items__count');
 
     this.currentPage = 1;
     this.rows = 4;
@@ -21,16 +25,19 @@ export class Pagiantor extends CartView {
   public DisplayList() {
     super.get();
 
+    const start = this.rows * (this.currentPage - 1);
+    const end = start + this.rows;
+    const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
+
     if (this.wrapper) {
       this.wrapper.innerHTML = '';
-      this.currentPage;
-
-      const start = this.rows * (this.currentPage - 1);
-      const end = start + this.rows;
-      const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
 
       super.render(paginatedItems);
     }
+
+    if (this.itemCount) this.itemCount.textContent = `${this.localStorageValue.length}`;
+    if (this.headerCounter) this.headerCounter.textContent = super.getItemsCount();
+    document.querySelectorAll('.product__number')?.forEach((e, i) => (e.textContent = `${start + i + 1}`));
   }
 
   public SetupPagination() {
@@ -87,7 +94,7 @@ export class Pagiantor extends CartView {
 
   public parseQueryParam() {
     if (location.hash.includes('/')) {
-      const searchState = location.hash.split('/')[1].split('&');
+      const searchState = location.hash.split('/?')[1].split('&');
 
       this.currentPage = +searchState[0].split('=')[1];
       this.rows = +searchState[1].split('=')[1];
@@ -99,7 +106,7 @@ export class Pagiantor extends CartView {
   }
 
   private setQueryParams() {
-    const state = `#cart/page=${this.currentPage}&itemperpage=${this.rows}`;
+    const state = `#cart/?page=${this.currentPage}&itemperpage=${this.rows}`;
     window.history.pushState(null, '', state);
   }
 }

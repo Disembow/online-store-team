@@ -16,7 +16,10 @@ import { Pagiantor } from './scripts/modules/cart-paginator';
 // Hash-router
 const router = new Router();
 
-window.addEventListener('hashchange', router.locationHandler);
+window.addEventListener('hashchange', () => {
+  router.locationHandler();
+  window.location.reload();
+});
 router.locationHandler();
 
 // Delegating the click event
@@ -49,6 +52,9 @@ const callback = function (mutationsList: MutationRecord[]) {
       } else if (location.hash.split('/')[0] === '#cart') {
         // Test order popup on validity
         const order = new BuyNow();
+        if (localStorage.getItem('OnlineStoreBuyNow') === 'true') {
+          order.showBillPopup();
+        }
         order.showBillButton?.addEventListener('click', () => order.showBillPopup());
         order.overlay?.addEventListener('click', () => order.hideBillPopup());
         order.closeButton?.addEventListener('click', () => order.hideBillPopup());
@@ -119,14 +125,17 @@ const callback = function (mutationsList: MutationRecord[]) {
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
       const targetProduct = products.products.find((e) => e.id === +sublocation);
 
-      if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') product.render(targetProduct);
+      if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') {
+        product.render(targetProduct);
+        product.buynow(targetProduct);
+      }
 
       //Add product from goods-page to cart
       addToCart.addToCartButton?.addEventListener('click', () => {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
-          if (cart.headerCounter) cart.headerCounter.textContent = `${+cart.headerCounter.innerText + 1}`;
+          if (addToCart.headerCounter) addToCart.headerCounter.textContent = addToCart.getItemsCount();
         }
       });
     }
@@ -141,6 +150,6 @@ if (targetToObserve) observer.observe(targetToObserve, config);
 const cart = new CartView('OnlineStoreCartGN', []);
 document.addEventListener('DOMContentLoaded', () => {
   cart.get();
-  if (cart.headerCounter) cart.headerCounter.textContent = cart.localStorageValue.length.toString();
+  if (cart.headerCounter) cart.headerCounter.textContent = cart.getItemsCount();
   if (cart.headerValue) cart.headerValue.textContent = `€${localStorage.getItem('OnlineStoreTotalValueGN')}`;
 });

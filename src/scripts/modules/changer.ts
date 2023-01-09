@@ -1,6 +1,6 @@
 import { ICartChanger } from '../../types/changer-types';
 import { LocalStorage } from '../../types/product-page-types';
-import { LocalStorageCartInfo } from './add-to-cart';
+import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { CartView } from './cart';
 import { Pagiantor } from './cart-paginator';
 
@@ -24,20 +24,18 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   private setQuantity() {
-    super.get();
-
     if (location.hash.split('/')[0] === '#cart') {
+      super.get();
       const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
       item.quantity = this.quantity;
+      if (this.headerCounter) this.headerCounter.textContent = super.getItemsCount();
+      super.add();
     }
-
-    super.add();
   }
 
   public increase() {
     if (this.counter && this.stock && this.quantity < this.stock) {
       this.quantity += 1;
-      console.log('plus', this.quantity);
       this.counter.textContent = this.quantity.toString();
 
       this.setQuantity();
@@ -49,7 +47,6 @@ export class QuantityChanger extends CartView implements ICartChanger {
   public decrease() {
     if (this.counter && this.quantity > 0) {
       this.quantity -= 1;
-      console.log('minus', this.quantity);
       this.counter.textContent = this.quantity.toString();
 
       if (location.hash.split('/')[0] === '#cart' && this.quantity === 0) {
@@ -57,11 +54,11 @@ export class QuantityChanger extends CartView implements ICartChanger {
         const p = new Pagiantor('OnlineStoreCartGN', []);
         p.DisplayList();
         p.SetupPagination();
+      } else {
+        this.setQuantity();
+        this.recount();
+        this.recountDiscount();
       }
-
-      this.setQuantity();
-      this.recount();
-      this.recountDiscount();
     }
   }
 

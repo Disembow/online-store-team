@@ -1,33 +1,17 @@
 import { targetProduct } from '../../types/product-page-types';
-
-export type LocalStorageCartInfo = {
-  id: number;
-  title: string;
-  price: number;
-  brand: string;
-  category: string;
-  quantity: number;
-};
-
-interface IAddToCart {
-  localStorageKey: string;
-  localStorageValue: Array<LocalStorageCartInfo>;
-  create(target: targetProduct, quantity: number): void;
-  add(): void;
-  get(): void;
-  remove(id: number): void;
-  check(target: targetProduct): void;
-}
+import { LocalStorageCartInfo, IAddToCart } from '../../types/add-to-cart-types';
 
 export class AddToCart implements IAddToCart {
   public localStorageKey: string;
   public localStorageValue: Array<LocalStorageCartInfo>;
   public addToCartButton: HTMLButtonElement | null;
+  public headerCounter: HTMLDivElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     this.localStorageKey = localStorageKey;
     this.localStorageValue = localStorageValue;
     this.addToCartButton = document.querySelector('.button__submit_cart');
+    this.headerCounter = document.querySelector('.header-cart-block__count');
   }
 
   public get() {
@@ -71,8 +55,15 @@ export class AddToCart implements IAddToCart {
 
   public check(target: targetProduct) {
     this.get();
-    this.localStorageValue.filter((e) => e.id === target.id).length > 0
-      ? this.addToCartButton?.setAttribute('disabled', '')
-      : this.addToCartButton?.removeAttribute('disabled');
+    if (this.localStorageValue.filter((e) => e.id === target.id).length > 0 && this.addToCartButton) {
+      this.addToCartButton?.setAttribute('disabled', '');
+      this.addToCartButton.textContent = 'Already in cart';
+    } else {
+      this.addToCartButton?.removeAttribute('disabled');
+    }
+  }
+
+  public getItemsCount(): string {
+    return this.localStorageValue.reduce((a, c) => a + c.quantity, 0).toString();
   }
 }

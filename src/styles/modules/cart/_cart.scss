@@ -49,6 +49,7 @@
 }
 
 .product__image {
+  position: relative;
   background: no-repeat url('https://i.dummyjson.com/data/products/1/1.jpg');
   background-size: cover;
   border-radius: 0.8rem;
@@ -56,6 +57,15 @@
   max-height: 100%;
   height: 24rem;
   flex: 1 0 50%;
+}
+
+.product__number {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: $primaryColor2;
 }
 
 .product__info {
