@@ -187,25 +187,30 @@
 }
 
 .breadcrumbs {
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 8px;
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
-    font-size: 1.6rem;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 8px;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
 
-    &_hidden {
-        display: none;
+  @media (max-width: 640px) {
+    flex-wrap: wrap;
+    font-size: 1.4rem;
+    gap: 0.4rem;
+    margin: 1rem 0 1rem 0;
+  }
+
+  &_hidden {
+      display: none;
+  }
+
+  &__links {
+    text-transform: capitalize;
+
+    &_colored {
+      color: $textColor1;
     }
-
-    &__links {
-        text-transform: capitalize;
-
-        &_colored {
-            color: $textColor1;
-        }
-    }
-
-
+  }
 }

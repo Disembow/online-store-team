@@ -9,6 +9,10 @@
   background-color: $primaryColor3;
   padding: 3.2rem;
   z-index: 25;
+
+  @media (max-width: 640px) {
+    padding: 1rem;
+  }
 }
 
 .finish-order__popup {
@@ -34,6 +38,9 @@
   height: 70rem;
   overflow-x: hidden;
   overflow-y: scroll;
+  @media (max-width: 640px) {
+    height: 46rem;
+  }
 
   &::-webkit-scrollbar {
     width: 0.35rem;
@@ -115,6 +122,10 @@
   padding: 1.1rem 1.6rem 1.2rem 2.1rem;
   color: $primaryColor1;
 
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+
   &::placeholder {
     font-family: 'Open Sans';
     font-style: normal;
@@ -132,6 +143,14 @@
       opacity: 0;
       transition: opacity 0.4s ease;
     }
+  }
+
+  &_email {
+    text-transform: none;
+  }
+
+  &_cardholder {
+    text-transform: uppercase;
   }
 
   &_date,
