@@ -7,13 +7,15 @@ export default function toggleViewGoods(target?: HTMLElement, view?: string) {
   target?.classList.add('goods-list-view__item_active');
   if (target?.dataset.viewValue) app.setViewURLSearchParams(target.dataset.viewValue);
 
-  const btnActive = document.querySelector(`[data-view-value="${view}"]`);
-  btnActive?.classList.add('goods-list-view__item_active');
+  if (!target) {
+    const btnActive = document.querySelector(`[data-view-value="${view || 'grid'}"]`);
+    btnActive?.classList.add('goods-list-view__item_active');
+  }
 
   const products = document.querySelectorAll('[data-view]');
   products?.forEach((product) => {
     if (product instanceof HTMLElement) {
-      product.dataset.view = target?.dataset.viewValue || view;
+      product.dataset.view = target?.dataset.viewValue || view || 'grid';
     }
   });
 }
