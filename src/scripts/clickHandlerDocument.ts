@@ -3,10 +3,12 @@ import dropdownSortGoods from './modules/dropdown/dropdownSortGoods';
 import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
 import copyUrl from './modules/copy-url/copyUrl';
 import { AddToCart } from './modules/add-to-cart';
+import { CartView } from './modules/cart';
 import { products } from './data';
 import app from './app';
 
 const addToCart = new AddToCart('OnlineStoreCartGN', []);
+const cart = new CartView('OnlineStoreCartGN', []);
 
 export default function clickHandlerDocument(event: MouseEvent): void {
   const target = event.target;
@@ -77,6 +79,17 @@ export default function clickHandlerDocument(event: MouseEvent): void {
     if (target.classList.contains('goods-card-preview__button')) {
       const currentProduct = products.products.filter((item) => item.id === Number(target.dataset.id))[0];
       addToCart.create(currentProduct, 1);
+      if (localStorage.getItem('OnlineStoreCartGN')) {
+        cart.getTotal();
+      }
+      const LS = localStorage.getItem('OnlineStoreCartPromoGN');
+      if (LS && cart.headerValue && cart.headerCounter) {
+        const length = JSON.parse(LS).length;
+        const sum = (+cart.getTotal() * (1 - 0.1 * length)).toFixed(2);
+        cart.headerValue.textContent = `€${sum}`;
+
+        cart.headerCounter.textContent = `${cart.getItemsCount()}`;
+      }
     }
   }
 }

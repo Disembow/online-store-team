@@ -46,15 +46,21 @@ export class QuantityChanger extends CartView implements ICartChanger {
 
   public decrease() {
     if (this.counter && this.quantity > 0) {
-      this.quantity -= 1;
-      this.counter.textContent = this.quantity.toString();
-
-      if (location.hash.split('/')[0] === '#cart' && this.quantity === 0) {
-        this.deleteFromCart();
-        const p = new Pagiantor('OnlineStoreCartGN', []);
-        p.DisplayList();
-        p.SetupPagination();
+      if (location.hash.split('/')[0] === '#goods' && this.quantity > 1) {
+        this.quantity -= 1;
+        this.counter.textContent = this.quantity.toString();
+      } else if (location.hash.split('/')[0] === '#cart') {
+        this.quantity -= 1;
+        this.counter.textContent = this.quantity.toString();
+        if (this.quantity === 0) {
+          this.deleteFromCart();
+          const p = new Pagiantor('OnlineStoreCartGN', []);
+          p.DisplayList();
+          p.SetupPagination();
+        }
       } else {
+        this.quantity -= 1;
+        this.counter.textContent = this.quantity.toString();
         this.setQuantity();
         this.recount();
         this.recountDiscount();
