@@ -1,5 +1,5 @@
 import { CartView } from './cart';
-import { LocalStorageCartInfo } from './add-to-cart';
+import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 
 export class Pagiantor extends CartView {
   wrapper: HTMLDivElement | null;

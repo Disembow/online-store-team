@@ -1,6 +1,6 @@
 import { ICartChanger } from '../../types/changer-types';
 import { LocalStorage } from '../../types/product-page-types';
-import { LocalStorageCartInfo } from './add-to-cart';
+import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { CartView } from './cart';
 import { Pagiantor } from './cart-paginator';
 

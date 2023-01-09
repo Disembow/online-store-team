@@ -1,5 +1,5 @@
 import { AddToCart } from './add-to-cart';
-import { LocalStorageCartInfo } from './add-to-cart';
+import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { products } from '../data';
 
 export class CartView extends AddToCart {

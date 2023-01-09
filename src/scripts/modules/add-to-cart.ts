@@ -1,23 +1,5 @@
 import { targetProduct } from '../../types/product-page-types';
-
-export type LocalStorageCartInfo = {
-  id: number;
-  title: string;
-  price: number;
-  brand: string;
-  category: string;
-  quantity: number;
-};
-
-interface IAddToCart {
-  localStorageKey: string;
-  localStorageValue: Array<LocalStorageCartInfo>;
-  create(target: targetProduct, quantity: number): void;
-  add(): void;
-  get(): void;
-  remove(id: number): void;
-  check(target: targetProduct): void;
-}
+import { LocalStorageCartInfo, IAddToCart } from '../../types/add-to-cart-types';
 
 export class AddToCart implements IAddToCart {
   public localStorageKey: string;

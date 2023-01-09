@@ -1,6 +1,4 @@
-interface IBuyNow {
-  test(): boolean;
-}
+import IBuyNow from '../../types/modal-buy-now-types';
 
 export class BuyNow implements IBuyNow {
   billingForm: HTMLFormElement | null;
@@ -201,10 +199,6 @@ export class BuyNow implements IBuyNow {
     }
   }
 
-  private resetForm() {
-    this.billingForm?.reset();
-  }
-
   public showBillPopup() {
     this.billPopup?.classList.remove('hidden');
     this.overlay?.classList.add('overlay_active');
@@ -222,7 +216,7 @@ export class BuyNow implements IBuyNow {
     setTimeout(() => this.redirect(), 3000);
   }
 
-  public redirect() {
+  private redirect() {
     location.href = location.href
       .split('/')
       .splice(0, location.href.split('/').length - 1)
