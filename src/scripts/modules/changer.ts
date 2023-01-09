@@ -24,14 +24,12 @@ export class QuantityChanger extends CartView implements ICartChanger {
   }
 
   private setQuantity() {
-    super.get();
-
     if (location.hash.split('/')[0] === '#cart') {
+      super.get();
       const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
       item.quantity = this.quantity;
+      super.add();
     }
-
-    super.add();
   }
 
   public increase() {
@@ -55,11 +53,11 @@ export class QuantityChanger extends CartView implements ICartChanger {
         const p = new Pagiantor('OnlineStoreCartGN', []);
         p.DisplayList();
         p.SetupPagination();
+      } else {
+        this.setQuantity();
+        this.recount();
+        this.recountDiscount();
       }
-
-      this.setQuantity();
-      this.recount();
-      this.recountDiscount();
     }
   }
 

@@ -1,50 +1,53 @@
 <section class="cart-wrapper">
   <h2 class="cart__title">Shopping cart</h2>
+  <h2 class="cart__title cart__title_empty hidden">Shopping cart is empty</h2>
   <span class="cart__separator"></span>
 
-  <div class="products__container"></div>
-  <span class="cart__separator"></span>
+  <div class="inner-wrapper">
+    <div class="products__container"></div>
+    <span class="cart__separator"></span>
 
-  <div class="pagination__box">
-    <div class="pagenumbers"></div>
-    <select name="goods-per-page" id="goods-per-page" class="goods-per-page">
-      <option value="4" selected>4</option>
-      <option value="8">8</option>
-      <option value="12">12</option>
-      <option value="16">16</option>
-      <option value="20">20</option>
-    </select>
-  </div>
-  <span class="cart__separator"></span>
-
-  <h2 class="cart__title">Order summary</h2>
-  <div class="promo">
-    <div class="promo__group">
-      <input class="promo__input" type="search" id="search" name="search" placeholder="Apply promo code">
-      <button class="promo__button" type="button" disabled="disabled">Apply now</button>
+    <div class="pagination__box">
+      <div class="pagenumbers"></div>
+      <select name="goods-per-page" id="goods-per-page" class="goods-per-page">
+        <option value="4" selected>4</option>
+        <option value="8">8</option>
+        <option value="12">12</option>
+        <option value="16">16</option>
+        <option value="20">20</option>
+      </select>
     </div>
-    <label class="promo__label" for="search">Promo code for testing: 'RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'. You can apply no more than 5 promo codes.</label>
-  </div>
+    <span class="cart__separator"></span>
 
-  <section class="summary__wrapper">
-    <div class="summary__box">
-      <div class="product-value__sum">
-        <span>Total:&nbsp;</span>
-        <span class="product-value__sum_colored"></span>
+    <h2 class="cart__title">Order summary</h2>
+    <div class="promo">
+      <div class="promo__group">
+        <input class="promo__input" type="search" id="search" name="search" placeholder="Apply promo code">
+        <button class="promo__button" type="button" disabled="disabled">Apply now</button>
       </div>
-      <div class="product-value__sum product-value__sum_current hidden">
-        <span>Total:&nbsp;</span>
-        <span class="product-value__sum_colored"></span>
-      </div>
+      <label class="promo__label" for="search">Promo code for testing: 'RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'. You can apply no more than 5 promo codes.</label>
     </div>
-    <div class="summary__promos"></div>
-  </section>
-  <span class="cart__separator"></span>
 
-  <button class="button button__submit button__submit_cart" type="submit">
-    <a href="/">Continue shopping</a>
-  </button>
-  <button class="button button__submit button__submit_buynow" type="submit">Buy now ></button>
+    <section class="summary__wrapper">
+      <div class="summary__box">
+        <div class="product-value__sum">
+          <span>Total:&nbsp;</span>
+          <span class="product-value__sum_colored"></span>
+        </div>
+        <div class="product-value__sum product-value__sum_current hidden">
+          <span>Total:&nbsp;</span>
+          <span class="product-value__sum_colored"></span>
+        </div>
+      </div>
+      <div class="summary__promos"></div>
+    </section>
+    <span class="cart__separator"></span>
+
+    <button class="button button__submit button__submit_cart" type="submit">
+      <a href="/">Continue shopping</a>
+    </button>
+    <button class="button button__submit button__submit_buynow" type="submit">Buy now ></button>
+  </div>
 
   <template id="product-template">
     <div class="product">

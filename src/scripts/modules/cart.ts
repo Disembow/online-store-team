@@ -6,12 +6,18 @@ export class CartView extends AddToCart {
   headerCounter: HTMLDivElement | null;
   headerValue: HTMLSpanElement | null;
   productBox: HTMLDivElement | null;
+  mainCartTitle: HTMLHeadingElement | null;
+  emptyCartTitle: HTMLHeadingElement | null;
+  innerWrapper: HTMLDivElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     super(localStorageKey, localStorageValue);
     this.headerCounter = document.querySelector('.header-cart-block__count');
     this.productBox = document.querySelector('.products__container');
     this.headerValue = document.querySelector('.header-total-price__sum');
+    this.mainCartTitle = document.querySelector('.cart__title');
+    this.emptyCartTitle = document.querySelector('.cart__title_empty');
+    this.innerWrapper = document.querySelector('.inner-wrapper');
   }
 
   public render(array: number[]) {
@@ -73,13 +79,18 @@ export class CartView extends AddToCart {
     total.textContent = `€${sum}`;
     localStorage.setItem('OnlineStoreTotalValueGN', sum);
     if (this.headerValue) this.headerValue.textContent = `€${sum}`;
-    console.log(sum);
     return sum;
   }
 
   private clean() {
     while (this.productBox?.firstChild) {
       this.productBox.removeChild(this.productBox.firstChild);
+    }
+
+    if (!this.localStorageValue || this.localStorageValue.length === 0) {
+      this.mainCartTitle?.classList.add('hidden');
+      this.emptyCartTitle?.classList.remove('hidden');
+      this.innerWrapper?.classList.add('hidden');
     }
   }
 }
