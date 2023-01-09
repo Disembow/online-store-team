@@ -16,6 +16,7 @@ export default function toggleDropdown(target: HTMLElement): void {
     if (blockSelected instanceof HTMLElement) {
       blockSelected.innerText = target.innerText;
       blockSelected.dataset.value = target.dataset.value;
+      console.log('toggleDropdown');
     }
   }
 }

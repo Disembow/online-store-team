@@ -12,15 +12,18 @@ class App {
   }
   public start(): void {
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountGoods();
+    this._setSearchInputValue();
     this._renderFilterBlocks('category');
     this._renderFilterBlocks('brand');
     this._renderCountCurrentFilter();
     this._renderDualSliderBlocks('price');
     this._renderDualSliderBlocks('stock');
     this._setDualSliderBlock();
+    this._setSortBlock();
     this._renderNoGoodsMessage();
   }
   public set container(element: HTMLElement) {
@@ -49,6 +52,7 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountCurrentFilter();
@@ -63,11 +67,28 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
     this._filter();
+    this._setSortGoods();
     this._renderGoods();
     this._setViewGoodsList();
     this._renderCountCurrentFilter();
     this._renderCountGoods();
     this._setDualSliderBlock(name === 'price' ? 'stock' : 'price');
+    this._renderNoGoodsMessage();
+  }
+  public filterSearch(value: string) {
+    const url = new URL(window.location.href);
+    value = value.replace(/^\s+/g, '');
+    if (value) url.searchParams.set('search', value);
+    else url.searchParams.delete('search');
+    url.searchParams.sort();
+    window.history.replaceState({}, '', url);
+    this._filter();
+    this._setSortGoods();
+    this._renderGoods();
+    this._setViewGoodsList();
+    this._renderCountCurrentFilter();
+    this._renderCountGoods();
+    this._setDualSliderBlock();
     this._renderNoGoodsMessage();
   }
   public setViewURLSearchParams(view: string): void {
@@ -76,8 +97,28 @@ class App {
     url.searchParams.sort();
     window.history.replaceState({}, '', url);
   }
-  public sort(): void {
-    console.log('sort');
+  public sort(name: string, value: string): void {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', `${name}-${value}`);
+    url.searchParams.sort();
+    window.history.replaceState({}, '', url);
+    this._setSortGoods();
+    this._renderGoods();
+    this._setViewGoodsList();
+  }
+  public reset() {
+    window.history.replaceState({}, '', window.location.origin);
+    this._goodsList = products.products.map((prod) => prod);
+    this._setSortGoods();
+    this._renderGoods();
+    this._setViewGoodsList();
+    this._setSearchInputValue();
+    this._setSortBlock();
+    this._renderCountCurrentFilter();
+    this._checkedActiveInputFilter('category');
+    this._checkedActiveInputFilter('brand');
+    this._renderCountGoods();
+    this._setDualSliderBlock();
   }
   private _filter() {
     const url = new URL(window.location.href);
@@ -104,6 +145,12 @@ class App {
       const stockParams = params.get('stock');
       if (stockParams) stockList = stockParams.split('↕');
     }
+    // Парсинг поиска
+    let searchValue = '';
+    if (params.has('search')) {
+      const paramSearch = params.get('search');
+      if (paramSearch) searchValue = paramSearch.toLowerCase();
+    }
     // Фильтрация
     this._goodsList = products.products.filter((item) => {
       // Фильтрация | Чекбоксы категорий и брэндов
@@ -122,7 +169,29 @@ class App {
       const isStockTrue = stockList.length
         ? item.stock >= Number(stockList[0]) && item.stock <= Number(stockList[1])
         : true;
-      return isCheckbox && isPriceTrue && isStockTrue;
+      // Фильтрация | поиск
+      let isSearchTrue: boolean;
+      {
+        const isTitleTrue = item.title.toLowerCase().includes(searchValue);
+        const isDescriptionTrue = item.description.toLowerCase().includes(searchValue);
+        const isCategoryTrue = item.category.toLowerCase().includes(searchValue);
+        const isBrandTrue = item.brand.toLowerCase().includes(searchValue);
+        const isPriceTrue = String(item.price).replace(/\.+/g, '').includes(searchValue);
+        const isDiscountTrue = String(item.discountPercentage).replace(/\.+/g, '').includes(searchValue);
+        const isRatingTrue = String(item.rating).replace(/\.+/g, '').includes(searchValue);
+        const isStockTrue = String(item.stock).replace(/\.+/g, '').includes(searchValue);
+        isSearchTrue =
+          isTitleTrue ||
+          isDescriptionTrue ||
+          isCategoryTrue ||
+          isBrandTrue ||
+          isPriceTrue ||
+          isDiscountTrue ||
+          isRatingTrue ||
+          isStockTrue;
+      }
+
+      return isCheckbox && isPriceTrue && isStockTrue && isSearchTrue;
     });
   }
   private _checkedActiveInputFilter(name: string) {
@@ -136,8 +205,9 @@ class App {
     const inputsCategory = document.querySelectorAll(`[name="${name}"]`);
     if (inputsCategory) {
       inputsCategory.forEach((input) => {
-        if (input instanceof HTMLInputElement && list.includes(input.value)) {
-          input.checked = true;
+        if (input instanceof HTMLInputElement) {
+          if (list.includes(input.value)) input.checked = true;
+          else input.checked = false;
         }
       });
     }
@@ -145,10 +215,12 @@ class App {
   private _setViewGoodsList(): void {
     const url = new URL(window.location.href);
     const params = url.searchParams;
-    const view = params.get('view');
-    if (view === 'list' || view === 'grid') {
-      toggleViewGoods(undefined, view);
-    }
+    if (params.has('view')) {
+      const view = params.get('view');
+      if (view === 'list' || view === 'grid') {
+        toggleViewGoods(undefined, view);
+      }
+    } else toggleViewGoods();
   }
   private _renderGoods(): void {
     if (!this._container) throw new Error('Goods container not found');
@@ -326,6 +398,81 @@ class App {
     const totalBlock: HTMLElement | null = document.querySelector('.goods-list-total__content');
     if (totalBlock) {
       totalBlock.textContent = String(this._goodsList.length);
+    }
+  }
+  private _setSearchInputValue() {
+    const searchInput = document.getElementById('search-input');
+    if (!(searchInput && searchInput instanceof HTMLInputElement)) throw new Error('searchInput is null');
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    if (params.has('search')) {
+      const paramSearch = params.get('search');
+      if (paramSearch) searchInput.value = paramSearch;
+    } else searchInput.value = '';
+  }
+  private _setSortGoods() {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    let sortValue: string[] = [];
+    if (params.has('sort')) {
+      const paramSort = params.get('sort');
+      if (paramSort) sortValue = paramSort.split('-');
+      const name = sortValue[0].toLowerCase();
+      const value = sortValue[1].toLowerCase();
+      if (name === 'price') {
+        if (value === 'asc') {
+          this._goodsList.sort((a, b) => a.price - b.price);
+        } else if (value === 'desc') {
+          this._goodsList.sort((a, b) => b.price - a.price);
+        }
+      } else if (name === 'rating') {
+        if (value === 'asc') {
+          this._goodsList.sort((a, b) => a.rating - b.rating);
+        } else if (value === 'desc') {
+          this._goodsList.sort((a, b) => b.rating - a.rating);
+        }
+      } else if (name === 'discount') {
+        if (value === 'asc') {
+          this._goodsList.sort((a, b) => a.discountPercentage - b.discountPercentage);
+        } else if (value === 'desc') {
+          this._goodsList.sort((a, b) => b.discountPercentage - a.discountPercentage);
+        }
+      }
+    }
+  }
+  private _setSortBlock() {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    let sortValue: string[] = [];
+    const names = ['price', 'rating', 'discount'];
+    const values = ['asc', 'desc'];
+    const blockSelected: HTMLElement | null = document.querySelector('.sort-goods__dropdown-selected');
+    if (params.has('sort')) {
+      // Парсинг параметров сортировки
+      const paramSort = params.get('sort');
+      if (paramSort) sortValue = paramSort.split('-');
+      const name = sortValue[0].toLowerCase();
+      const value = sortValue[1].toLowerCase();
+      // Определение элементов
+      const itemSortSelected: HTMLElement | null = document.querySelector(
+        `[data-sort-name="${name}"][data-value="${value}"]`
+      );
+      itemSortSelected?.classList.add('dropdown__item_selected');
+      if (blockSelected && names.includes(name) && values.includes(value)) {
+        blockSelected.innerText = name[0].toUpperCase() + name.slice(1);
+        blockSelected.dataset.value = value;
+      } else if (blockSelected) {
+        blockSelected.innerText = 'Sort options:';
+      }
+    } else {
+      if (blockSelected) {
+        const dropdownItems = document.querySelectorAll('.sort-goods__dropdown-item');
+        dropdownItems?.forEach((item: Element) => {
+          item.classList.remove('dropdown__item_selected');
+        });
+        blockSelected.innerText = 'Sort options:';
+        blockSelected.removeAttribute('data-value');
+      }
     }
   }
   private _renderNoGoodsMessage(): void {

@@ -91,8 +91,8 @@
 
 
     <div class="aside-btn-wrap">
-      <button class="light-block aside-btn" type="button">Reset filter</button>
-      <button class="light-block aside-btn" type="button">Copy link</button>
+      <button class="light-block aside-btn" id="reset" type="button">Reset filter</button>
+      <button class="light-block aside-btn" id="copy" type="button">Copy link</button>
     </div>
 
   </aside>
@@ -103,18 +103,30 @@
         <div class="dropdown sort-goods__dropdown">
           <div class="dropdown__selected sort-goods__dropdown-selected">Sort options:</div>
           <ul class="dropdown__list sort-goods__dropdown-list dropdown__list_hidden">
-            <li class="dropdown__item sort-goods__dropdown-item" data-name="price" data-value="asc">Price
-            </li>
-            <li class="dropdown__item sort-goods__dropdown-item" data-name="price" data-value="desc">Price
-            </li>
-            <li class="dropdown__item sort-goods__dropdown-item" data-name="rating" data-value="asc">Rating
-            </li>
-            <li class="dropdown__item sort-goods__dropdown-item" data-name="rating" data-value="desc">Rating
-            </li>
-            <li class="dropdown__item sort-goods__dropdown-item" data-name="discount" data-value="asc">
-              Discount</li>
-            <li class="dropdown__item sort-goods__dropdown-item" data-name="discount" data-value="desc">
-              Discount</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="price"
+            data-value="asc">Price</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="price"
+            data-value="desc">Price</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="rating"
+            data-value="asc">Rating</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="rating"
+            data-value="desc">Rating</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="discount"
+            data-value="asc">Discount</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="discount"
+            data-value="desc">Discount</li>
           </ul>
         </div>
       </div>
@@ -127,7 +139,7 @@
       </div>
       <div class="goods-list-view">
         <div class="goods-list-view__text">View</div>
-        <div class="goods-list-view__item goods-list-view__item_active" data-view-value="grid"></div>
+        <div class="goods-list-view__item" data-view-value="grid"></div>
         <div class="goods-list-view__item" data-view-value="list"></div>
       </div>
     </div>

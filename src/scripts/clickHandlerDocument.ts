@@ -1,6 +1,8 @@
 import dropdownSearch from './modules/dropdown/dropdownSearch';
 import dropdownSortGoods from './modules/dropdown/dropdownSortGoods';
 import toggleViewGoods from './modules/toggleViewGoods/toggleViewGoods';
+import copyUrl from './modules/copy-url/copyUrl';
+import app from './app';
 
 export default function clickHandlerDocument(event: MouseEvent): void {
   const target = event.target;
@@ -52,6 +54,18 @@ export default function clickHandlerDocument(event: MouseEvent): void {
       if (asideBlock) asideBlock.classList.remove('main-aside_active');
       const overlayBlock: HTMLElement | null = document.querySelector('.overlay');
       if (overlayBlock) overlayBlock.classList.remove('overlay_active');
+    }
+    //
+    // Кнопка RESET
+    //
+    if (target.id === 'reset') {
+      app.reset();
+    }
+    //
+    // Кнопка COPY
+    //
+    if (target.id === 'copy') {
+      copyUrl(target);
     }
   }
 }
