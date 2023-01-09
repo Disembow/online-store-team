@@ -61,10 +61,10 @@ export class QuantityChanger extends CartView implements ICartChanger {
       } else {
         this.quantity -= 1;
         this.counter.textContent = this.quantity.toString();
-        this.setQuantity();
-        this.recount();
-        this.recountDiscount();
       }
+      this.setQuantity();
+      this.recount();
+      this.recountDiscount();
     }
   }
 
