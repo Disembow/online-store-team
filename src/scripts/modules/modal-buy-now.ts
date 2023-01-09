@@ -207,6 +207,7 @@ export class BuyNow implements IBuyNow {
   public hideBillPopup() {
     this.billPopup?.classList.add('hidden');
     this.overlay?.classList.remove('overlay_active');
+    localStorage.removeItem('OnlineStoreBuyNow');
   }
 
   public showRedirectPopup() {
@@ -223,5 +224,6 @@ export class BuyNow implements IBuyNow {
       .join('/');
     this.farewellPopup?.classList.add('hidden');
     this.overlay?.classList.remove('overlay_active');
+    localStorage.removeItem('OnlineStoreBuyNow');
   }
 }
