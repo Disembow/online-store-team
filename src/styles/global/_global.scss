@@ -7,3 +7,82 @@ html {
     cursor: default;
 }
 
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: $widthTemplate;
+    min-height: 50px;
+    margin: 50px auto 0px;
+    padding: 20px 3.6% 20px;
+    border-top: 1px solid $primaryColor3;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1.4rem;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 1.3rem;
+    }
+
+    @media screen and (max-width: 470px) {
+        gap: 8px;
+        font-size: 1.2rem;
+    }
+
+    &__title {
+        font-size: 110%;
+    }
+
+    &__links:hover {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-color: lighten($primaryColor1, 50%);
+    }
+
+    &__separator {
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+    }
+}
+
+.year {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: $textColor2;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1.4rem;
+    }
+
+    @media screen and (max-width: 470px) {
+        font-size: 1.3rem;
+    }
+
+    @media screen and (max-width: 380px) {
+        font-size: 1.2rem;
+    }
+}
+
+.rsschool {
+    display: block;
+    width: 80px;
+    aspect-ratio: 552/205;
+    background: center/cover no-repeat url('./assets/icons/rs_school_js.svg');
+
+    @media screen and (max-width: 768px) {
+        width: 70px;
+    }
+
+    @media screen and (max-width: 380px) {
+        width: 50px;
+    }
+}
