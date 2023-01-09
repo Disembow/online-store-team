@@ -5,6 +5,7 @@ export class Pagiantor extends CartView {
   wrapper: HTMLDivElement | null;
   paginationElement: HTMLDivElement | null;
   itemPerPageSelect: HTMLSelectElement | null;
+  itemNumber: NodeListOf<HTMLSpanElement> | null;
   currentPage: number;
   rows: number;
 
@@ -13,6 +14,7 @@ export class Pagiantor extends CartView {
     this.wrapper = document.querySelector('.products__container');
     this.paginationElement = document.querySelector('.pagenumbers');
     this.itemPerPageSelect = document.querySelector('.goods-per-page');
+    this.itemNumber = document.querySelectorAll('.product__number');
 
     this.currentPage = 1;
     this.rows = 4;
@@ -21,16 +23,17 @@ export class Pagiantor extends CartView {
   public DisplayList() {
     super.get();
 
+    const start = this.rows * (this.currentPage - 1);
+    const end = start + this.rows;
+    const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
+
     if (this.wrapper) {
       this.wrapper.innerHTML = '';
-      this.currentPage;
-
-      const start = this.rows * (this.currentPage - 1);
-      const end = start + this.rows;
-      const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
 
       super.render(paginatedItems);
     }
+
+    document.querySelectorAll('.product__number')?.forEach((e, i) => (e.textContent = `${start + i + 1}`));
   }
 
   public SetupPagination() {
