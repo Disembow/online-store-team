@@ -70,18 +70,10 @@ export class CartView extends AddToCart {
     super.get();
     const sum = this.localStorageValue.reduce((a, c) => (a += c.quantity * c.price), 0).toFixed(2);
     const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    total.textContent = `€${
-      sum
-        .split('.')[0]
-        .split('')
-        .map((e, i) => (i % 3 === 0 ? e + ' ' : e))
-        .join('')
-        .trim() +
-      '.' +
-      sum.replace('€', '').split('.')[1]
-    }`;
+    total.textContent = `€${sum}`;
     localStorage.setItem('OnlineStoreTotalValueGN', sum);
     if (this.headerValue) this.headerValue.textContent = `€${sum}`;
+    console.log(sum);
     return sum;
   }
 

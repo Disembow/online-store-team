@@ -1,12 +1,7 @@
 import { IRouter, IRoutes } from '../types/hash-router-types';
-// import { products } from './data';
 import app from './app';
 
-// const renderGoods = new Render();
-
 const pageTitle = 'Online store';
-// const IdArray: number[] = [];
-// products.products.map((e) => IdArray.push(e.id));
 
 const routes: IRoutes = {
   '/': {
@@ -28,7 +23,6 @@ const routes: IRoutes = {
     template: 'templates/goods.html',
     title: 'Goods | ' + pageTitle,
     description: 'Page for goods',
-    // goodsID: IdArray,
   },
 };
 
@@ -48,6 +42,7 @@ export class Router implements IRouter {
       const content: HTMLElement | null = document.getElementById('content');
       if (content) content.innerHTML = html;
       document.title = route.title;
+
       if (mainlocation === '/') {
         document.querySelector('.search')?.classList.remove('search_hidden');
         const container = document.querySelector('.goods-card-preview-wrap');

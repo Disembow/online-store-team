@@ -37,7 +37,6 @@ export class QuantityChanger extends CartView implements ICartChanger {
   public increase() {
     if (this.counter && this.stock && this.quantity < this.stock) {
       this.quantity += 1;
-      console.log('plus', this.quantity);
       this.counter.textContent = this.quantity.toString();
 
       this.setQuantity();
@@ -49,7 +48,6 @@ export class QuantityChanger extends CartView implements ICartChanger {
   public decrease() {
     if (this.counter && this.quantity > 0) {
       this.quantity -= 1;
-      console.log('minus', this.quantity);
       this.counter.textContent = this.quantity.toString();
 
       if (location.hash.split('/')[0] === '#cart' && this.quantity === 0) {

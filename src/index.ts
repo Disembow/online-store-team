@@ -16,7 +16,10 @@ import { Pagiantor } from './scripts/modules/cart-paginator';
 // Hash-router
 const router = new Router();
 
-window.addEventListener('hashchange', router.locationHandler);
+window.addEventListener('hashchange', () => {
+  router.locationHandler();
+  window.location.reload();
+});
 router.locationHandler();
 
 // Delegating the click event
@@ -88,7 +91,10 @@ const callback = function (mutationsList: MutationRecord[]) {
     if (location.hash.split('/')[0] === '#cart' || location.hash.split('/')[0] === '#goods') {
       // Add products quantity counter
       document.addEventListener('click', (e) => {
-        if (e.target instanceof HTMLElement && (e.target.closest('.product') || e.target.closest('.prod-item__info'))) {
+        if (
+          e.target instanceof HTMLElement &&
+          e.target.closest('.product') /*|| e.target.closest('.prod-item__info')*/
+        ) {
           let item;
           e.target.closest('.product')
             ? (item = <HTMLElement>e.target.closest('.product'))

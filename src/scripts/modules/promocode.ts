@@ -151,16 +151,7 @@ export class PromoCode implements IPromoCode {
     const sum = this.getCartSumWithDiscount()?.toFixed(2);
     if (headerTotal && sum) {
       localStorage.setItem('OnlineStoreTotalValueGN', sum);
-      headerTotal.textContent = `€${
-        sum
-          .split('.')[0]
-          .split('')
-          .map((e, i) => (i % 3 === 0 ? e + ' ' : e))
-          .join('')
-          .trim() +
-        '.' +
-        sum.replace('€', '').split('.')[1]
-      }`;
+      headerTotal.textContent = `€${sum}`;
     }
   }
 }
