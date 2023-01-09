@@ -52,6 +52,9 @@ const callback = function (mutationsList: MutationRecord[]) {
       } else if (location.hash.split('/')[0] === '#cart') {
         // Test order popup on validity
         const order = new BuyNow();
+        if (localStorage.getItem('OnlineStoreBuyNow') === 'true') {
+          order.showBillPopup();
+        }
         order.showBillButton?.addEventListener('click', () => order.showBillPopup());
         order.overlay?.addEventListener('click', () => order.hideBillPopup());
         order.closeButton?.addEventListener('click', () => order.hideBillPopup());
@@ -122,7 +125,10 @@ const callback = function (mutationsList: MutationRecord[]) {
       const sublocation = window.location.hash.replace('#', '').split('/')[1];
       const targetProduct = products.products.find((e) => e.id === +sublocation);
 
-      if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') product.render(targetProduct);
+      if (sublocation && targetProduct && location.hash.split('/')[0] === '#goods') {
+        product.render(targetProduct);
+        product.buynow(targetProduct);
+      }
 
       //Add product from goods-page to cart
       addToCart.addToCartButton?.addEventListener('click', () => {

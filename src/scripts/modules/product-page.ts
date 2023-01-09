@@ -63,4 +63,14 @@ export class ProductPage extends AddToCart implements IProductPage {
     // Check if the item is in the basket
     super.check(targetProduct);
   }
+
+  public buynow(target: targetProduct) {
+    const button = document.querySelector('.button__submit_buynow');
+    button?.addEventListener('click', () => {
+      const quantity = Number(document.querySelector('.product__counter')?.textContent);
+      super.create(target, quantity);
+      location.href = location.href.split('#')[0] + '#cart';
+      localStorage.setItem('OnlineStoreBuyNow', 'true');
+    });
+  }
 }
