@@ -254,7 +254,7 @@ class App {
             <span class="goods-card-preview__ship">Free Shipping</span>
             <span class="goods-card-preview__delivery">Delivery in 1 day</span>
           </div>
-          <button class="button goods-card-preview__button" type="button">+ Add to cart</button>
+          <button class="button button__submit_cart goods-card-preview__button" data-id="${prod.id}" type="button">+ Add to cart</button>
         </div>
       </div>`
       );
