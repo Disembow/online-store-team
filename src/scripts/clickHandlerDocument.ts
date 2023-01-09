@@ -78,18 +78,21 @@ export default function clickHandlerDocument(event: MouseEvent): void {
     //
     if (target.classList.contains('goods-card-preview__button')) {
       const currentProduct = products.products.filter((item) => item.id === Number(target.dataset.id))[0];
+      target.setAttribute('disabled', 'disabled');
+
       addToCart.create(currentProduct, 1);
       if (localStorage.getItem('OnlineStoreCartGN')) {
         cart.getTotal();
       }
+
       const LS = localStorage.getItem('OnlineStoreCartPromoGN');
-      if (LS && cart.headerValue && cart.headerCounter) {
+      if (LS && cart.headerValue) {
         const length = JSON.parse(LS).length;
         const sum = (+cart.getTotal() * (1 - 0.1 * length)).toFixed(2);
         cart.headerValue.textContent = `€${sum}`;
-
-        cart.headerCounter.textContent = `${cart.getItemsCount()}`;
       }
+
+      if (cart.headerCounter) cart.headerCounter.textContent = `${cart.getItemsCount()}`;
     }
   }
 }

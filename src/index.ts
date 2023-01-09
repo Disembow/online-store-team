@@ -162,12 +162,14 @@ const cart = new CartView('OnlineStoreCartGN', []);
 document.addEventListener('DOMContentLoaded', () => {
   cart.get();
   const LS = localStorage.getItem('OnlineStoreCartPromoGN');
-  if (cart.headerCounter && cart.headerValue && LS) {
+  if (cart.headerCounter && cart.headerValue) {
     cart.headerCounter.textContent = cart.getItemsCount();
-    const promoCount = JSON.parse(LS).length;
     let sum = +cart.getTotal();
-    if (promoCount) {
-      sum = sum * (1 - 0.1 * promoCount);
+    if (LS) {
+      const promoCount = JSON.parse(LS).length;
+      if (promoCount) {
+        sum = sum * (1 - 0.1 * promoCount);
+      }
     }
     cart.headerValue.textContent = `€${sum.toFixed(2)}`;
   }
