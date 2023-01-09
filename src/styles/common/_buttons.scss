@@ -15,10 +15,21 @@
 
     &_buynow {
       margin: 0 1.6rem 1.6rem 1.6rem;
+
+      @media (max-width: 640px) {
+        width: 13rem;
+        margin: 1rem;
+      }
     }
 
     &_cart {
       margin: 1.6rem;
+
+      @media (max-width: 640px) {
+        width: 13rem;
+        margin: 1rem;
+      }
+
       & a {
         text-decoration: none;
         color: $primaryColor4;
