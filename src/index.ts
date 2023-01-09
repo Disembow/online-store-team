@@ -135,7 +135,11 @@ const callback = function (mutationsList: MutationRecord[]) {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
-          if (addToCart.headerCounter) addToCart.headerCounter.textContent = addToCart.getItemsCount();
+          if (addToCart.headerCounter && cart.headerValue) {
+            addToCart.headerCounter.textContent = addToCart.getItemsCount();
+            // cart.headerValue.textContent = cart.getTotal().toString();
+            console.log(cart.getTotal());
+          }
         }
       });
     }
