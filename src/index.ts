@@ -161,7 +161,14 @@ if (targetToObserve) observer.observe(targetToObserve, config);
 const cart = new CartView('OnlineStoreCartGN', []);
 document.addEventListener('DOMContentLoaded', () => {
   cart.get();
-  if (cart.headerCounter && cart.headerValue) {
+  const LS = localStorage.getItem('OnlineStoreCartPromoGN');
+  if (cart.headerCounter && cart.headerValue && LS) {
     cart.headerCounter.textContent = cart.getItemsCount();
+    const promoCount = JSON.parse(LS).length;
+    let sum = +cart.getTotal();
+    if (promoCount) {
+      sum = sum * (1 - 0.1 * promoCount);
+    }
+    cart.headerValue.textContent = `€${sum.toFixed(2)}`;
   }
 });
