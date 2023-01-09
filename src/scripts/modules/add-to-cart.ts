@@ -5,11 +5,13 @@ export class AddToCart implements IAddToCart {
   public localStorageKey: string;
   public localStorageValue: Array<LocalStorageCartInfo>;
   public addToCartButton: HTMLButtonElement | null;
+  public headerCounter: HTMLDivElement | null;
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     this.localStorageKey = localStorageKey;
     this.localStorageValue = localStorageValue;
     this.addToCartButton = document.querySelector('.button__submit_cart');
+    this.headerCounter = document.querySelector('.header-cart-block__count');
   }
 
   public get() {
@@ -59,5 +61,9 @@ export class AddToCart implements IAddToCart {
     } else {
       this.addToCartButton?.removeAttribute('disabled');
     }
+  }
+
+  public getItemsCount(): string {
+    return this.localStorageValue.reduce((a, c) => a + c.quantity, 0).toString();
   }
 }

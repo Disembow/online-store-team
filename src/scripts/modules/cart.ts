@@ -3,7 +3,6 @@ import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { products } from '../data';
 
 export class CartView extends AddToCart {
-  headerCounter: HTMLDivElement | null;
   headerValue: HTMLSpanElement | null;
   productBox: HTMLDivElement | null;
   mainCartTitle: HTMLHeadingElement | null;
@@ -12,7 +11,6 @@ export class CartView extends AddToCart {
 
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>) {
     super(localStorageKey, localStorageValue);
-    this.headerCounter = document.querySelector('.header-cart-block__count');
     this.productBox = document.querySelector('.products__container');
     this.headerValue = document.querySelector('.header-total-price__sum');
     this.mainCartTitle = document.querySelector('.cart__title');

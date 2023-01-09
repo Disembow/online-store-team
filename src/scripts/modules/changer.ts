@@ -28,6 +28,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
       super.get();
       const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
       item.quantity = this.quantity;
+      if (this.headerCounter) this.headerCounter.textContent = super.getItemsCount();
       super.add();
     }
   }

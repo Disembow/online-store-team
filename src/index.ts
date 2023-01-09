@@ -135,7 +135,7 @@ const callback = function (mutationsList: MutationRecord[]) {
         const quantity = document.querySelector('.product__counter');
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
-          if (cart.headerCounter) cart.headerCounter.textContent = `${+cart.headerCounter.innerText + 1}`;
+          if (addToCart.headerCounter) addToCart.headerCounter.textContent = addToCart.getItemsCount();
         }
       });
     }
@@ -150,6 +150,6 @@ if (targetToObserve) observer.observe(targetToObserve, config);
 const cart = new CartView('OnlineStoreCartGN', []);
 document.addEventListener('DOMContentLoaded', () => {
   cart.get();
-  if (cart.headerCounter) cart.headerCounter.textContent = cart.localStorageValue.length.toString();
+  if (cart.headerCounter) cart.headerCounter.textContent = cart.getItemsCount();
   if (cart.headerValue) cart.headerValue.textContent = `€${localStorage.getItem('OnlineStoreTotalValueGN')}`;
 });
