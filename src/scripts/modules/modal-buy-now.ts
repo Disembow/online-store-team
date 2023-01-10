@@ -152,37 +152,37 @@ export class BuyNow implements IBuyNow {
     const img: HTMLImageElement | null | undefined = this.billingForm?.querySelector('.payment__image');
     switch (this.cardnumber.value[0]) {
       case undefined:
-        if (img) img.src = './assets/icons/generic.svg';
+        if (img) img.src = './assets/generic.svg';
         break;
       case '0':
-        if (img) img.src = './assets/icons/alipay.svg';
+        if (img) img.src = './assets/alipay.svg';
         break;
       case '1':
-        if (img) img.src = './assets/icons/amex.svg';
+        if (img) img.src = './assets/amex.svg';
         break;
       case '2':
-        if (img) img.src = './assets/icons/discover.svg';
+        if (img) img.src = './assets/discover.svg';
         break;
       case '3':
-        if (img) img.src = './assets/icons/elo.svg';
+        if (img) img.src = './assets/elo.svg';
         break;
       case '4':
-        if (img) img.src = './assets/icons/visa.svg';
+        if (img) img.src = './assets/visa.svg';
         break;
       case '5':
-        if (img) img.src = './assets/icons/hipercard.svg';
+        if (img) img.src = './assets/hipercard.svg';
         break;
       case '6':
-        if (img) img.src = './assets/icons/jcb.svg';
+        if (img) img.src = './assets/jcb.svg';
         break;
       case '7':
-        if (img) img.src = './assets/icons/mastercard.svg';
+        if (img) img.src = './assets/mastercard.svg';
         break;
       case '8':
-        if (img) img.src = './assets/icons/paypal.svg';
+        if (img) img.src = './assets/paypal.svg';
         break;
       case '9':
-        if (img) img.src = './assets/icons/unionpay.svg';
+        if (img) img.src = './assets/unionpay.svg';
         break;
     }
   }
@@ -190,6 +190,9 @@ export class BuyNow implements IBuyNow {
   public formatCardCode(limit: number, splitter: string) {
     let cardCode = this.carddate.value.replace(/[^\d]/g, '').substring(0, limit - 1);
     cardCode = cardCode !== '' ? <string>cardCode.match(/.{1,2}/g)?.join(splitter) : '';
+    if (+cardCode.split('/')[0] > 12 && cardCode.length === this.carddateLength) {
+      cardCode = `${12}/${cardCode.split('/')[1]}`;
+    }
     this.carddate.value = cardCode;
   }
 
