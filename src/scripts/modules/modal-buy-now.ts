@@ -13,6 +13,7 @@ export class BuyNow implements IBuyNow {
   addressWordsCount = 3;
   addressWordsLength = 5;
   addressLimit = [this.addressWordsCount, this.addressWordsLength];
+  nameLimit = new RegExp(`^([a-zA-Za-яА-Я]{3,30})$`);
   phoneNumberLimit = new RegExp('[+]+[0-9]{9}');
   cardNumberLength = 16;
   cardNumberSplitter = ' ';
@@ -50,8 +51,8 @@ export class BuyNow implements IBuyNow {
   }
 
   public test() {
-    const firstname = this.itemTest(this.firstName, this.firstNameMinLength);
-    const lastname = this.itemTest(this.lastName, this.lastNameMinLength);
+    const firstname = this.nameTest(this.firstName, this.nameLimit);
+    const lastname = this.nameTest(this.lastName, this.nameLimit);
     const email = this.itemTest(this.email, this.emailLimit);
     const address = this.testString(this.address, this.addressLimit);
     const phone = this.itemTest(this.phone, this.phoneNumberLimit);
@@ -63,6 +64,21 @@ export class BuyNow implements IBuyNow {
     return firstname && lastname && email && address && phone && cardnumber && cardholder && carddate && cvv
       ? true
       : false;
+  }
+
+  private nameTest(e: HTMLInputElement, limit: RegExp) {
+    const errorMessage = e.closest('.form__item')?.querySelector('.input__billing_error');
+    const p = document.createElement('p');
+    p.classList.add('input__billing_error');
+    if (limit instanceof RegExp) {
+      if (!errorMessage && !limit.test(e.value)) {
+        p.textContent = `* name must be at least three letters length and not contain digits`;
+        e.insertAdjacentElement('afterend', p);
+        return false;
+      }
+      console.log(true);
+      return true;
+    }
   }
 
   private itemTest(e: HTMLInputElement, limit: number | RegExp) {
