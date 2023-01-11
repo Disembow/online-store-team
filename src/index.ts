@@ -84,6 +84,7 @@ const callback = function (mutationsList: MutationRecord[]) {
         paginator.DisplayList();
         paginator.SetupPagination();
         paginator.ChangeItemPerPage();
+        // console.log('click');
 
         // Parse pagination query
         paginator.parseQueryParam();

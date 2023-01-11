@@ -29,14 +29,22 @@ export class Pagiantor extends CartView {
     const end = start + this.rows;
     const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
 
-    if (this.wrapper) {
-      this.wrapper.innerHTML = '';
+    if (paginatedItems.length === 0) {
+      this.currentPage--;
+      this.setQueryParams();
+      this.parseQueryParam();
+    }
 
+    const wrapper = document.querySelector('.products__container');
+    if (wrapper) {
+      console.log(paginatedItems);
+      wrapper.innerHTML = '';
       super.render(paginatedItems);
     }
 
     if (this.itemCount) this.itemCount.textContent = `${this.localStorageValue.length}`;
     if (this.headerCounter) this.headerCounter.textContent = super.getItemsCount();
+
     document.querySelectorAll('.product__number')?.forEach((e, i) => (e.textContent = `${start + i + 1}`));
   }
 
@@ -105,7 +113,7 @@ export class Pagiantor extends CartView {
     }
   }
 
-  private setQueryParams() {
+  public setQueryParams() {
     const state = `#cart/?page=${this.currentPage}&itemperpage=${this.rows}`;
     window.history.pushState(null, '', state);
   }

@@ -3,7 +3,7 @@ import { LocalStorage } from '../../types/product-page-types';
 import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { CartView } from './cart';
 import { Pagiantor } from './cart-paginator';
-
+// const p = new Pagiantor('OnlineStoreCartGN', []);
 export class QuantityChanger extends CartView implements ICartChanger {
   private target: HTMLElement;
   private counter: HTMLElement | null;
@@ -55,8 +55,10 @@ export class QuantityChanger extends CartView implements ICartChanger {
         if (this.quantity === 0) {
           this.deleteFromCart();
           const p = new Pagiantor('OnlineStoreCartGN', []);
+          p.parseQueryParam();
           p.DisplayList();
           p.SetupPagination();
+          // p.setQueryParams();
         }
       } else {
         this.quantity -= 1;
