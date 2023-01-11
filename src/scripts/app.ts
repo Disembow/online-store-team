@@ -230,7 +230,8 @@ class App {
     const idInCart = cart.localStorageValue.map((e) => e.id);
 
     const list: string = this._goodsList.reduce((acc, prod) => {
-      const isItemInCart = idInCart.indexOf(prod.id) !== -1 ? 'disabled' : '';
+      const isItemInCart: string = idInCart.indexOf(prod.id) !== -1 ? 'disabled' : '';
+      const textPayBtn: string = idInCart.indexOf(prod.id) !== -1 ? 'Already in cart' : '+ Add to cart';
 
       return (
         acc +
@@ -261,7 +262,7 @@ class App {
             <span class="goods-card-preview__ship">Free Shipping</span>
             <span class="goods-card-preview__delivery">Delivery in 1 day</span>
           </div>
-          <button class="button button__submit_cart goods-card-preview__button" data-id="${prod.id}" ${isItemInCart} type="button">+ Add to cart</button>
+          <button class="button goods-card-preview__button" data-id="${prod.id}" ${isItemInCart} type="button">${textPayBtn}</button>
         </div>
       </div>`
       );
