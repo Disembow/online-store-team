@@ -174,3 +174,5 @@ document.addEventListener('DOMContentLoaded', () => {
     cart.headerValue.textContent = `€${sum.toFixed(2)}`;
   }
 });
+
+localStorage.setItem('OnlineStoreCartPromoGN', '[]');
