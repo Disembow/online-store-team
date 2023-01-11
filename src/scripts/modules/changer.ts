@@ -97,19 +97,23 @@ export class QuantityChanger extends CartView implements ICartChanger {
 
     if (promosStr) {
       const promos = JSON.parse(promosStr);
-      const total = document.querySelector('.product-value__sum_current')?.querySelector('.product-value__sum_colored');
-      const prev = document.querySelector('.product-value__sum_previous')?.querySelector('.product-value__sum_colored');
+      // const total = document.querySelector('.product-value__sum_colored');
+      const curr = document.querySelectorAll('.product-value__sum_colored')[1];
+      const prev = document.querySelectorAll('.product-value__sum_colored')[0];
       const headerTotal = document.querySelector('.header-total-price__sum');
 
-      if (promos.length > 0) {
-        const sum = (+super.getTotal() * (1 - 0.1 * promos.length)).toFixed(2);
-        if (total) total.textContent = `€${sum}`;
-
-        if (headerTotal && prev) {
+      console.log(prev);
+      if (headerTotal && prev && curr) {
+        if (promos.length > 0) {
+          const sum = (+super.getTotal() * (1 - 0.1 * promos.length)).toFixed(2);
+          curr.textContent = `€${sum}`;
           headerTotal.textContent = `€${sum}`;
-          console.log('changer from promo', sum);
-          prev.textContent = `€${super.getTotal()}`;
+          console.log('click');
+        } else if (promos.length === 0) {
+          headerTotal.textContent = `€${super.getTotal()}`;
+          curr.textContent = `€${super.getTotal()}`;
         }
+        prev.textContent = `€${super.getTotal()}`;
       }
     }
   }

@@ -29,7 +29,7 @@ export class Pagiantor extends CartView {
     const end = start + this.rows;
     const paginatedItems = this.localStorageValue.slice(start, end).map((e) => e.id);
 
-    if (paginatedItems.length === 0) {
+    if (paginatedItems.length === 0 && this.localStorageValue.length !== 0) {
       this.currentPage--;
       this.setQueryParams();
       this.parseQueryParam();
@@ -104,6 +104,7 @@ export class Pagiantor extends CartView {
       const searchState = location.hash.split('/?')[1].split('&');
 
       this.currentPage = +searchState[0].split('=')[1];
+      console.log(this.currentPage);
       this.rows = +searchState[1].split('=')[1];
       if (this.itemPerPageSelect) this.itemPerPageSelect.selectedIndex = this.rows / 4 - 1;
 
