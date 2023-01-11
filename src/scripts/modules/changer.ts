@@ -104,12 +104,13 @@ export class QuantityChanger extends CartView implements ICartChanger {
         if (promos.length > 0) {
           const sum = (+super.getTotal() * (1 - 0.1 * promos.length)).toFixed(2);
           curr.textContent = `€${sum}`;
+          prev.textContent = `€${super.getTotal()}`;
           headerTotal.textContent = `€${sum}`;
         } else if (promos.length === 0) {
           headerTotal.textContent = `€${super.getTotal()}`;
           curr.textContent = `€${super.getTotal()}`;
+          prev.textContent = `€${super.getTotal()}`;
         }
-        prev.textContent = `€${super.getTotal()}`;
       }
     } else if (headerTotal) {
       headerTotal.textContent = `€${super.getTotal()}`;
