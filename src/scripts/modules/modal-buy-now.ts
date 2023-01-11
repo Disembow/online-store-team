@@ -9,7 +9,8 @@ export class BuyNow implements IBuyNow {
   overlay: HTMLElement | null;
   firstNameMinLength = 3;
   lastNameMinLength = 4;
-  emailLimit = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
+  // eslint-disable-next-line prettier/prettier, no-useless-escape
+  emailLimit = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
   addressWordsCount = 3;
   addressWordsLength = 5;
   addressLimit = [this.addressWordsCount, this.addressWordsLength];
@@ -96,6 +97,7 @@ export class BuyNow implements IBuyNow {
             return false;
           } else if (limit.test(e.value)) {
             errorMessage?.remove();
+            console.log('true');
             return true;
           }
         }
