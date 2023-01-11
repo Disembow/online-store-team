@@ -92,7 +92,10 @@ export default function clickHandlerDocument(event: MouseEvent): void {
         cart.headerValue.textContent = `€${sum}`;
       }
 
-      if (cart.headerCounter) cart.headerCounter.textContent = `${cart.getItemsCount()}`;
+      if (cart.headerCounter && cart.headerValue) {
+        cart.headerCounter.textContent = `${cart.getItemsCount()}`;
+        cart.headerValue.textContent = `€${Number(cart.getTotal()).toFixed(2)}`;
+      }
     }
   }
 }
