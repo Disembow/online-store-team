@@ -98,7 +98,6 @@ export class QuantityChanger extends CartView implements ICartChanger {
     const prev = document.querySelectorAll('.product-value__sum_colored')[0];
     const headerTotal = document.querySelector('.header-total-price__sum');
 
-    console.log(promosStr);
     if (promosStr) {
       const promos = JSON.parse(promosStr);
       if (headerTotal && prev && curr) {
