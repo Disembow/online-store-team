@@ -75,9 +75,10 @@ export class BuyNow implements IBuyNow {
         p.textContent = `* name must be at least three letters length and not contain digits`;
         e.insertAdjacentElement('afterend', p);
         return false;
+      } else if (limit.test(e.value)) {
+        errorMessage?.remove();
+        return true;
       }
-      console.log(true);
-      return true;
     }
   }
 
@@ -87,24 +88,16 @@ export class BuyNow implements IBuyNow {
     p.classList.add('input__billing_error');
 
     switch (e.type) {
-      case 'text':
-        if (Number(e.value) < this.firstNameMinLength) {
-          if (!errorMessage) {
-            p.textContent = `* too short, requires ${limit} or more letters`;
-            e.insertAdjacentElement('afterend', p);
-          }
-          return false;
-        }
-        return true;
-
       case 'email':
         if (limit instanceof RegExp) {
           if (!errorMessage && !limit.test(e.value)) {
             p.textContent = `* email should be in the following template 'example@****.**`;
             e.insertAdjacentElement('afterend', p);
             return false;
+          } else if (limit.test(e.value)) {
+            errorMessage?.remove();
+            return true;
           }
-          return true;
         }
         break;
 
@@ -114,8 +107,10 @@ export class BuyNow implements IBuyNow {
             p.textContent = `* phone number must start with '+' and requires 9 or more digits length`;
             e.insertAdjacentElement('afterend', p);
             return false;
+          } else if (limit.test(e.value)) {
+            errorMessage?.remove();
+            return true;
           }
-          return true;
         }
         break;
     }
@@ -124,7 +119,7 @@ export class BuyNow implements IBuyNow {
   private testString(e: HTMLInputElement, limit: Array<number>) {
     const errorMessage = e.closest('.form__item')?.querySelector('.input__billing_error');
 
-    const arr = this.address.value.split(' ');
+    const arr = e.value.split(' ');
     const p = document.createElement('p');
     p.classList.add('input__billing_error');
 
@@ -137,8 +132,10 @@ export class BuyNow implements IBuyNow {
         return false;
       }
       return false;
+    } else if (arr.length >= limit[0] && arr.filter((e) => e.length >= limit[1]).length >= limit[0]) {
+      errorMessage?.remove();
+      return true;
     }
-    return true;
   }
 
   private testCardData(e: HTMLInputElement, limit: number) {
@@ -157,6 +154,7 @@ export class BuyNow implements IBuyNow {
       }
       return false;
     }
+    errorMessage?.remove();
     return true;
   }
 
