@@ -55,8 +55,14 @@ export class PromoCode implements IPromoCode {
 
   public render() {
     this.getFromLocalStorage(this.key);
+
+    const prevTotal = this.prevValueBox?.querySelector('.product-value__sum_colored');
     const priceBox = this.valueBox?.querySelector('.product-value__sum_colored');
-    if (priceBox) priceBox.textContent = `€${this.getCartSumWithDiscount()?.toFixed(2)}`;
+
+    if (prevTotal && priceBox) {
+      prevTotal.textContent = `€${this.getCartSum()?.toFixed(2)}`;
+      priceBox.textContent = `€${this.getCartSumWithDiscount()?.toFixed(2)}`;
+    }
     if (this.usedPromocodes.length !== 0 && this.promoList?.children.length === 0) {
       this.valueBox?.classList.remove('hidden');
 
@@ -150,9 +156,11 @@ export class PromoCode implements IPromoCode {
   private addTotalToHeader() {
     const headerTotal = document.querySelector('.header-total-price__sum');
     const sum = this.getCartSumWithDiscount()?.toFixed(2);
-    if (headerTotal && sum) {
-      // localStorage.setItem('OnlineStoreTotalValueGN', sum);
+    console.log('sum from promo', sum);
+    const current = this.valueBox?.querySelector('.product-value__sum_colored');
+    if (headerTotal && sum && current) {
       headerTotal.textContent = `€${sum}`;
+      current.textContent = `€${sum}`;
     }
   }
 }

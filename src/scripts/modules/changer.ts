@@ -62,7 +62,6 @@ export class QuantityChanger extends CartView implements ICartChanger {
           p.parseQueryParam();
           p.DisplayList();
           p.SetupPagination();
-          // p.setQueryParams();
         }
       } else {
         this.quantity -= 1;
@@ -92,20 +91,25 @@ export class QuantityChanger extends CartView implements ICartChanger {
     }
   }
 
-  private recountDiscount() {
+  public recountDiscount() {
     super.get();
     const promosStr = localStorage.getItem('OnlineStoreCartPromoGN');
-    // console.log(promosStr);
+
     if (promosStr) {
       const promos = JSON.parse(promosStr);
       const total = document.querySelector('.product-value__sum_current')?.querySelector('.product-value__sum_colored');
+      const prev = document.querySelector('.product-value__sum_previous')?.querySelector('.product-value__sum_colored');
+      const headerTotal = document.querySelector('.header-total-price__sum');
+
       if (promos.length > 0) {
         const sum = (+super.getTotal() * (1 - 0.1 * promos.length)).toFixed(2);
         if (total) total.textContent = `€${sum}`;
 
-        const headerTotal = document.querySelector('.header-total-price__sum');
-        // localStorage.setItem('OnlineStoreTotalValueGN', sum);
-        if (headerTotal && sum) headerTotal.textContent = `€${sum}`;
+        if (headerTotal && prev) {
+          headerTotal.textContent = `€${sum}`;
+          console.log('changer from promo', sum);
+          prev.textContent = `€${super.getTotal()}`;
+        }
       }
     }
   }

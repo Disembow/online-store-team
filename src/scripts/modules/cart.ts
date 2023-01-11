@@ -76,12 +76,6 @@ export class CartView extends AddToCart {
   public getTotal() {
     super.get();
     const sum = this.localStorageValue.reduce((a, c) => (a += c.quantity * c.price), 0).toFixed(2);
-    const total = document.querySelectorAll('.product-value__sum_colored')[0];
-    if (location.hash === '#cart' && total) {
-      total.textContent = `€${sum}`;
-    }
-    // localStorage.setItem('OnlineStoreTotalValueGN', sum);
-    if (this.headerValue) this.headerValue.textContent = `€${sum}`;
     return sum;
   }
 
