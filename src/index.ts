@@ -84,7 +84,6 @@ const callback = function (mutationsList: MutationRecord[]) {
         paginator.DisplayList();
         paginator.SetupPagination();
         paginator.ChangeItemPerPage();
-        // console.log('click');
 
         // Parse pagination query
         paginator.parseQueryParam();
@@ -137,7 +136,6 @@ const callback = function (mutationsList: MutationRecord[]) {
         if (targetProduct && quantity instanceof HTMLDivElement) {
           addToCart.create(targetProduct, +quantity.innerText);
           if (addToCart.headerCounter && cart.headerValue) {
-            console.log('click');
             addToCart.headerCounter.textContent = addToCart.getItemsCount();
             let sum: number = +cart.getTotal();
             const LS = localStorage.getItem('OnlineStoreCartPromoGN');

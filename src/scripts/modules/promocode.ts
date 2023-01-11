@@ -156,7 +156,6 @@ export class PromoCode implements IPromoCode {
   private addTotalToHeader() {
     const headerTotal = document.querySelector('.header-total-price__sum');
     const sum = this.getCartSumWithDiscount()?.toFixed(2);
-    console.log('sum from promo', sum);
     const current = this.valueBox?.querySelector('.product-value__sum_colored');
     if (headerTotal && sum && current) {
       headerTotal.textContent = `€${sum}`;
