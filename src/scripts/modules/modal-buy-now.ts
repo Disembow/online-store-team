@@ -1,4 +1,5 @@
 import IBuyNow from '../../types/modal-buy-now-types';
+import { iconCardsAssets } from '../../assets/icons/icons-card/icon-card';
 
 export class BuyNow implements IBuyNow {
   billingForm: HTMLFormElement | null;
@@ -168,37 +169,37 @@ export class BuyNow implements IBuyNow {
     const img: HTMLImageElement | null | undefined = this.billingForm?.querySelector('.payment__image');
     switch (this.cardnumber.value[0]) {
       case undefined:
-        if (img) img.src = './assets/generic.svg';
+        if (img) img.src = iconCardsAssets.generic;
         break;
       case '0':
-        if (img) img.src = './assets/alipay.svg';
+        if (img) img.src = iconCardsAssets.alipay;
         break;
       case '1':
-        if (img) img.src = './assets/amex.svg';
+        if (img) img.src = iconCardsAssets.amex;
         break;
       case '2':
-        if (img) img.src = './assets/discover.svg';
+        if (img) img.src = iconCardsAssets.discover;
         break;
       case '3':
-        if (img) img.src = './assets/elo.svg';
+        if (img) img.src = iconCardsAssets.elo;
         break;
       case '4':
-        if (img) img.src = './assets/visa.svg';
+        if (img) img.src = iconCardsAssets.visa;
         break;
       case '5':
-        if (img) img.src = './assets/hipercard.svg';
+        if (img) img.src = iconCardsAssets.hipercard;
         break;
       case '6':
-        if (img) img.src = './assets/jcb.svg';
+        if (img) img.src = iconCardsAssets.jcb;
         break;
       case '7':
-        if (img) img.src = './assets/mastercard.svg';
+        if (img) img.src = iconCardsAssets.mastercard;
         break;
       case '8':
-        if (img) img.src = './assets/paypal.svg';
+        if (img) img.src = iconCardsAssets.paypal;
         break;
       case '9':
-        if (img) img.src = './assets/unionpay.svg';
+        if (img) img.src = iconCardsAssets.unionpay;
         break;
     }
   }
