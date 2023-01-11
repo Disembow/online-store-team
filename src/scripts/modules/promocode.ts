@@ -123,6 +123,7 @@ export class PromoCode implements IPromoCode {
       this.promoList?.append(clonePromo);
 
       this.addTotalToHeader();
+      if (this.input) this.input.value = '';
     }
   }
 
@@ -150,7 +151,7 @@ export class PromoCode implements IPromoCode {
     const headerTotal = document.querySelector('.header-total-price__sum');
     const sum = this.getCartSumWithDiscount()?.toFixed(2);
     if (headerTotal && sum) {
-      localStorage.setItem('OnlineStoreTotalValueGN', sum);
+      // localStorage.setItem('OnlineStoreTotalValueGN', sum);
       headerTotal.textContent = `€${sum}`;
     }
   }

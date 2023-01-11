@@ -80,7 +80,7 @@ export class CartView extends AddToCart {
     if (location.hash === '#cart' && total) {
       total.textContent = `€${sum}`;
     }
-    localStorage.setItem('OnlineStoreTotalValueGN', sum);
+    // localStorage.setItem('OnlineStoreTotalValueGN', sum);
     if (this.headerValue) this.headerValue.textContent = `€${sum}`;
     return sum;
   }

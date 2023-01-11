@@ -37,7 +37,6 @@ export class Pagiantor extends CartView {
 
     const wrapper = document.querySelector('.products__container');
     if (wrapper) {
-      console.log(paginatedItems);
       wrapper.innerHTML = '';
       super.render(paginatedItems);
     }

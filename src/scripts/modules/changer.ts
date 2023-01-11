@@ -3,7 +3,9 @@ import { LocalStorage } from '../../types/product-page-types';
 import { LocalStorageCartInfo } from '../../types/add-to-cart-types';
 import { CartView } from './cart';
 import { Pagiantor } from './cart-paginator';
-// const p = new Pagiantor('OnlineStoreCartGN', []);
+// import { PromoCode } from './promocode';
+// const promocode = new PromoCode('OnlineStoreCartPromoGN');
+
 export class QuantityChanger extends CartView implements ICartChanger {
   private target: HTMLElement;
   private counter: HTMLElement | null;
@@ -12,6 +14,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
   private price: number;
   private subtotal: HTMLSpanElement | null;
   private targetId: number;
+  private currentValue: HTMLDivElement | null;
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>, target: HTMLElement) {
     super(localStorageKey, localStorageValue);
     this.target = target;
@@ -21,13 +24,14 @@ export class QuantityChanger extends CartView implements ICartChanger {
     this.price = Number(target.querySelector('.product__price_item')?.textContent?.replace('€', ''));
     this.subtotal = target.querySelector('.product__subtotal');
     this.targetId = Number(this.target.querySelector('.product__id_item')?.textContent);
+    this.currentValue = document.querySelector('.product-value__sum_current');
   }
 
   private setQuantity() {
     if (location.hash.split('/')[0] === '#cart') {
       super.get();
       const item = this.localStorageValue.filter((e) => e.id === this.targetId)[0];
-      item.quantity = this.quantity;
+      if (this.quantity > 0) item.quantity = this.quantity;
       if (this.headerCounter) this.headerCounter.textContent = super.getItemsCount();
       super.add();
     }
@@ -91,6 +95,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
   private recountDiscount() {
     super.get();
     const promosStr = localStorage.getItem('OnlineStoreCartPromoGN');
+    // console.log(promosStr);
     if (promosStr) {
       const promos = JSON.parse(promosStr);
       const total = document.querySelector('.product-value__sum_current')?.querySelector('.product-value__sum_colored');
@@ -99,7 +104,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
         if (total) total.textContent = `€${sum}`;
 
         const headerTotal = document.querySelector('.header-total-price__sum');
-        localStorage.setItem('OnlineStoreTotalValueGN', sum);
+        // localStorage.setItem('OnlineStoreTotalValueGN', sum);
         if (headerTotal && sum) headerTotal.textContent = `€${sum}`;
       }
     }
