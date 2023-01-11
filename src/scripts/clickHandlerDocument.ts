@@ -79,6 +79,7 @@ export default function clickHandlerDocument(event: MouseEvent): void {
     if (target.classList.contains('goods-card-preview__button')) {
       const currentProduct = products.products.filter((item) => item.id === Number(target.dataset.id))[0];
       target.setAttribute('disabled', 'disabled');
+      target.textContent = 'Already in cart';
 
       addToCart.create(currentProduct, 1);
       if (localStorage.getItem('OnlineStoreCartGN')) {
