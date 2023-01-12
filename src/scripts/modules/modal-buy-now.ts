@@ -8,6 +8,7 @@ export class BuyNow implements IBuyNow {
   farewellPopup: HTMLDivElement | null;
   closeButton: HTMLDivElement | null | undefined;
   overlay: HTMLElement | null;
+  img: HTMLImageElement | null | undefined;
   firstNameMinLength = 3;
   lastNameMinLength = 4;
   // eslint-disable-next-line prettier/prettier, no-useless-escape
@@ -41,6 +42,7 @@ export class BuyNow implements IBuyNow {
     this.farewellPopup = document.querySelector('.finish-order__popup');
     this.closeButton = this.billPopup?.querySelector('.close__button');
     this.overlay = document.querySelector('.overlay');
+    this.img = this.billingForm?.querySelector('.payment__image');
     this.firstName = this.billingForm?.firstName;
     this.lastName = this.billingForm?.lastName;
     this.email = this.billingForm?.email;
@@ -166,41 +168,42 @@ export class BuyNow implements IBuyNow {
   }
 
   public changePaymentSystemImage() {
-    const img: HTMLImageElement | null | undefined = this.billingForm?.querySelector('.payment__image');
-    switch (this.cardnumber.value[0]) {
-      case undefined:
-        if (img) img.src = iconCardsAssets.generic;
-        break;
-      case '0':
-        if (img) img.src = iconCardsAssets.alipay;
-        break;
-      case '1':
-        if (img) img.src = iconCardsAssets.amex;
-        break;
-      case '2':
-        if (img) img.src = iconCardsAssets.discover;
-        break;
-      case '3':
-        if (img) img.src = iconCardsAssets.elo;
-        break;
-      case '4':
-        if (img) img.src = iconCardsAssets.visa;
-        break;
-      case '5':
-        if (img) img.src = iconCardsAssets.hipercard;
-        break;
-      case '6':
-        if (img) img.src = iconCardsAssets.jcb;
-        break;
-      case '7':
-        if (img) img.src = iconCardsAssets.mastercard;
-        break;
-      case '8':
-        if (img) img.src = iconCardsAssets.paypal;
-        break;
-      case '9':
-        if (img) img.src = iconCardsAssets.unionpay;
-        break;
+    if (this.img) {
+      switch (this.cardnumber.value[0]) {
+        case undefined:
+          this.img.src = iconCardsAssets.generic;
+          break;
+        case '0':
+          this.img.src = iconCardsAssets.alipay;
+          break;
+        case '1':
+          this.img.src = iconCardsAssets.amex;
+          break;
+        case '2':
+          this.img.src = iconCardsAssets.discover;
+          break;
+        case '3':
+          this.img.src = iconCardsAssets.elo;
+          break;
+        case '4':
+          this.img.src = iconCardsAssets.visa;
+          break;
+        case '5':
+          this.img.src = iconCardsAssets.hipercard;
+          break;
+        case '6':
+          this.img.src = iconCardsAssets.jcb;
+          break;
+        case '7':
+          this.img.src = iconCardsAssets.mastercard;
+          break;
+        case '8':
+          if (this.img) this.img.src = iconCardsAssets.paypal;
+          break;
+        case '9':
+          this.img.src = iconCardsAssets.unionpay;
+          break;
+      }
     }
   }
 
@@ -220,6 +223,7 @@ export class BuyNow implements IBuyNow {
   }
 
   public showBillPopup() {
+    if (this.img) this.img.src = iconCardsAssets.generic;
     this.billPopup?.classList.remove('hidden');
     this.overlay?.classList.add('overlay_active');
   }
