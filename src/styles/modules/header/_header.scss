@@ -67,6 +67,7 @@
     font-size: 30px;
     text-shadow: 1px 1px 1px rgba(70, 118, 10, 0.6);
     user-select: none;
+    cursor: pointer;
 
     @media screen and (max-width: 600px) {
         flex-basis: 100%;
@@ -74,6 +75,7 @@
 
     &__color {
         color: $primaryColor2;
+        pointer-events: none;
     }
 }
 
@@ -211,6 +213,7 @@
 
     &_colored {
       color: $textColor1;
+      cursor: pointer;
     }
   }
 }

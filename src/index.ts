@@ -18,7 +18,7 @@ const router = new Router();
 
 window.addEventListener('hashchange', () => {
   router.locationHandler();
-  window.location.reload();
+  location.reload();
 });
 router.locationHandler();
 

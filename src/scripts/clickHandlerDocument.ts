@@ -5,7 +5,10 @@ import copyUrl from './modules/copy-url/copyUrl';
 import { AddToCart } from './modules/add-to-cart';
 import { CartView } from './modules/cart';
 import { products } from './data';
+import { Router } from './hash-router';
 import app from './app';
+
+const router = new Router();
 
 const addToCart = new AddToCart('OnlineStoreCartGN', []);
 const cart = new CartView('OnlineStoreCartGN', []);
@@ -97,6 +100,13 @@ export default function clickHandlerDocument(event: MouseEvent): void {
         cart.headerCounter.textContent = `${cart.getItemsCount()}`;
         cart.headerValue.textContent = `€${Number(cart.getTotal()).toFixed(2)}`;
       }
+    }
+    //
+    // Переход на главную страницу
+    if (target.dataset.link === 'main') {
+      event.preventDefault();
+      window.history.replaceState({}, '', window.location.origin);
+      router.locationHandler();
     }
   }
 }
