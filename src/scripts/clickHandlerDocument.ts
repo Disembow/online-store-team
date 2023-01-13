@@ -6,6 +6,7 @@ import { AddToCart } from './modules/add-to-cart';
 import { CartView } from './modules/cart';
 import { products } from './data';
 import { Router } from './hash-router';
+import { QuantityChanger } from './modules/changer';
 import app from './app';
 
 const router = new Router();
@@ -89,6 +90,9 @@ export default function clickHandlerDocument(event: MouseEvent): void {
         cart.getTotal();
       }
 
+      //
+      // Add goods quantity & value
+      //
       const LS = localStorage.getItem('OnlineStoreCartPromoGN');
       if (LS && cart.headerValue) {
         const length = JSON.parse(LS).length;
@@ -103,10 +107,24 @@ export default function clickHandlerDocument(event: MouseEvent): void {
     }
     //
     // Переход на главную страницу
+    //
     if (target.dataset.link === 'main') {
       event.preventDefault();
       window.history.replaceState({}, '', window.location.origin);
       router.locationHandler();
+    }
+
+    //
+    // Change item quantity on cart page
+    //
+    if (target.closest('.product')) {
+      const item = <HTMLDivElement>target.closest('.product');
+      const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
+      if (target.classList.contains('minus')) {
+        goodsQuantity.decrease();
+      } else if (target.classList.contains('plus')) {
+        goodsQuantity.increase();
+      }
     }
   }
 }
