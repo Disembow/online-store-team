@@ -4,7 +4,7 @@ import { products } from './scripts/data';
 import clickHandlerDocument from './scripts/clickHandlerDocument';
 import inputHandlerDocument from './scripts/inputHandlerDocument';
 import { Router } from './scripts/hash-router';
-import { QuantityChanger } from './scripts/modules/changer';
+// import { QuantityChanger } from './scripts/modules/changer';
 import { GoodsPopup } from './scripts/modules/goods-popup';
 import { ProductPage } from './scripts/modules/product-page';
 import { AddToCart } from './scripts/modules/add-to-cart';
@@ -18,7 +18,6 @@ const router = new Router();
 
 window.addEventListener('hashchange', () => {
   router.locationHandler();
-  location.reload();
 });
 router.locationHandler();
 
@@ -92,22 +91,6 @@ const callback = function (mutationsList: MutationRecord[]) {
     }
 
     if (location.hash.split('/')[0] === '#cart' || location.hash.split('/')[0] === '#goods') {
-      // Add products quantity counter
-      document.addEventListener('click', (e) => {
-        if (e.target instanceof HTMLElement && (e.target.closest('.product') || e.target.closest('.prod-item__info'))) {
-          let item;
-          e.target.closest('.product')
-            ? (item = <HTMLElement>e.target.closest('.product'))
-            : (item = <HTMLElement>e.target.closest('.prod-item__info'));
-          const goodsQuantity = new QuantityChanger('OnlineStoreCartGN', [], item);
-          if (e.target.classList.contains('minus')) {
-            goodsQuantity.decrease();
-          } else if (e.target.classList.contains('plus')) {
-            goodsQuantity.increase();
-          }
-        }
-      });
-
       // Promo code
       const promo = new PromoCode('OnlineStoreCartPromoGN');
       promo.input?.addEventListener('input', () => promo.apply());

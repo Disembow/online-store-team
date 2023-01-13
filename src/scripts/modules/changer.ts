@@ -14,7 +14,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
   private price: number;
   private subtotal: HTMLSpanElement | null;
   private targetId: number;
-  private currentValue: HTMLDivElement | null;
+  private buttonsBox: HTMLDivElement | null;
   constructor(localStorageKey: string, localStorageValue: Array<LocalStorageCartInfo>, target: HTMLElement) {
     super(localStorageKey, localStorageValue);
     this.target = target;
@@ -24,7 +24,7 @@ export class QuantityChanger extends CartView implements ICartChanger {
     this.price = Number(target.querySelector('.product__price_item')?.textContent?.replace('€', ''));
     this.subtotal = target.querySelector('.product__subtotal');
     this.targetId = Number(this.target.querySelector('.product__id_item')?.textContent);
-    this.currentValue = document.querySelector('.product-value__sum_current');
+    this.buttonsBox = document.querySelector('.cart__changer');
   }
 
   private setQuantity() {
@@ -36,6 +36,10 @@ export class QuantityChanger extends CartView implements ICartChanger {
       super.add();
     }
   }
+
+  // public clickHandler() {
+  //   console.log('click')
+  // }
 
   public increase() {
     if (this.counter && this.stock && this.quantity < this.stock) {
