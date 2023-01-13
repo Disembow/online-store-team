@@ -1,0 +1,118 @@
+.promo {
+  margin-bottom: 2.4rem;
+}
+
+.promo__input {
+  display: block;
+  height: 4rem;
+  min-width: 40vw;
+  padding: 0.3rem 2rem;
+  font-family: inherit;
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 150%;
+  color: $primaryColor1;
+  background-color: $primaryColor3;
+  background-clip: padding-box;
+  border: 1px solid $borderColor1;
+  border-right: none;
+  border-radius: 1.2rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  @media (max-width: 640px) {
+    padding: 0.3rem 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  &::placeholder {
+    color: $primaryColor1;
+    opacity: 0.4;
+  }
+
+  &:focus {
+    background-color: $background1;
+    outline: 0;
+  }
+}
+
+.promo__input[type="search"]::-webkit-search-decoration,
+.promo__input[type="search"]::-webkit-search-cancel-button,
+.promo__input[type="search"]::-webkit-search-results-button,
+.promo__input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.promo__input:disabled,
+.promo__input[readonly] {
+  background-color: $background1;
+  opacity: 1;
+}
+
+/* input button */
+.promo__group {
+  display: flex;
+  margin: 0 0 0 1.6rem;
+
+  & input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.promo__button {
+  display: inline-block;
+  position: relative;
+  font-family: "Poppins";
+  font-weight: 700;
+  line-height: 150%;
+  color: $primaryColor1;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid $borderColor1;
+  border-left: none;
+  padding: .375rem .75rem;
+  font-size: 1.5rem;
+  border-radius: 1.2rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-width: 0;
+  transition: background-color .15s ease-in-out;
+
+  @media (max-width: 640px) {
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: .375rem .25rem;
+    line-height: 120%;
+  }
+
+  &:hover {
+    background-color: $background1;
+  }
+
+  &:active {
+    background-color: $greenLight;
+  }
+
+  &:disabled {
+    color: $textColor1;
+    cursor: auto;
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.promo__label {
+  display: block;
+  color: $textColor1;
+  margin: 0.5rem 0.5rem 0.5rem 3.2rem;
+}

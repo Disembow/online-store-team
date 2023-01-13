@@ -1,0 +1,198 @@
+<section class="cart-wrapper">
+  <h2 class="cart__title">Shopping cart</h2>
+  <h2 class="cart__title cart__title_empty hidden">Shopping cart is empty</h2>
+  <span class="cart__separator"></span>
+
+  <div class="inner-wrapper">
+    <div class="products__container"></div>
+    <span class="cart__separator"></span>
+
+    <div class="pagination__box">
+      <div class="pagenumbers"></div>
+      <select name="goods-per-page" id="goods-per-page" class="goods-per-page">
+        <option value="4" selected>4</option>
+        <option value="8">8</option>
+        <option value="12">12</option>
+        <option value="16">16</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+    <span class="cart__separator"></span>
+
+    <h2 class="cart__title">Order summary</h2>
+    <div class="promo">
+      <div class="promo__group">
+        <input class="promo__input" type="search" id="search" name="search" placeholder="Apply promo code">
+        <button class="promo__button" type="button" disabled="disabled">Apply now</button>
+      </div>
+      <label class="promo__label" for="search">Promo code for testing: 'RSS', 'RSFE', 'XTDM', 'CIMA', 'DPFR', 'MMPZ'. You can apply no more than 5 promo codes.</label>
+    </div>
+
+    <section class="summary__wrapper">
+      <div class="summary__box">
+        <div class="product-value__sum">
+          <span>Total:&nbsp;</span>
+          <span class="product-value__sum_colored"></span>
+        </div>
+        <div class="product-value__sum product-value__sum_current hidden">
+          <span>Total:&nbsp;</span>
+          <span class="product-value__sum_colored"></span>
+        </div>
+      </div>
+      <div class="summary__promos"></div>
+    </section>
+    <div class="product-items">Items: <span class="product-items__count"></span></div>
+    <span class="cart__separator"></span>
+
+    <button class="button button__submit button__submit_cart" type="submit">
+      <a href="/">Continue shopping</a>
+    </button>
+    <button class="button button__submit button__submit_buynow" type="submit">Buy now ></button>
+  </div>
+
+  <template id="product-template">
+    <div class="product">
+      <div class="product__header">
+        <a class="product__image"><span class="product__number"></span></a>
+        <div class="product__info">
+          <h4 class="product__title">
+            <span class="product__subtitle">Product title: </span>
+            <!-- <a class="product__title_item"></a> -->
+            <span class="product__title_item"></span>
+          </h4>
+          <div class="product__brand">
+            <span class="product__subtitle">Brand: </span>
+            <span class="product__brand_item"></span>
+          </div>
+          <div class="product__category">
+            <span class="product__subtitle">Category: </span>
+            <span class="product__category_item"></span>
+          </div>
+          <div class="product__id hidden">
+            <span class="product__subtitle">Id: </span>
+            <span class="product__id_item"></span>
+          </div>
+          <div class="product__description">
+              <span class="product__subtitle">Description: </span>
+              <span class="product__description_item"></span>
+          </div>
+          <div class="product__rating">
+            <span class="product__subtitle">Rating: </span>
+            <span class="product__rating_item"></span>
+          </div>
+          <div class="product__price">
+            <span class="product__subtitle">Price: </span>
+            <span class="product__price_item"></span>
+          </div>
+          <div class="product__quantity">
+            <span class="product__subtitle">Quantity: </span>
+            <span class="product__counter">1</span>
+            <span class="product__category"> pcs</span>
+            <div class="cart__changer">
+              <div class="minus">&#8722;</div>
+              <div class="plus">+</div>
+            </div>
+          </div>
+          <div class="product__stock">
+            <span class="product__subtitle">Stock: </span>
+            <span class="product__stock_item"></span>
+          </div>
+          <p class="product__price">
+            <span class="product__subtitle">Subtotal: </span>
+            <span class="product__subtotal"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="cart-promos">
+    <div class="promo__item">
+      <div class="promo-code__title"></div>
+      <button class="button button__delete_promo">x</button>
+    </div>
+  </template>
+
+
+  <section class="buy-now__popup hidden">
+    <div class="close__button"></div>
+    <form name="billing" class="billing__form" action="">
+      <div class="steps">
+        <h3 class="buy-now__title">Billing info</h3>
+        <div class="buy-now__subtitle">
+          <p class="subtitle__board">Please enter your billing info</p>
+          <p class="subtitle__step">Step 1 of 3</p>
+        </div>
+          <div class="customer__info">
+            <div class="form__item">
+              <label class="form__label" for="firstName">First Name</label>
+              <input class="input__billing" type="text" name="firstName" id="firstName" placeholder="First name">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="lastName">Last Name</label>
+              <input class="input__billing" type="text" name="lastName" id="lastName" placeholder="Last name">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="email">Email address</label>
+              <input class="input__billing input__billing_email" type="email" name="email" id="email" placeholder="Email addess">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="address">Address</label>
+              <input class="input__billing" type="text" name="address" id="address" placeholder="Address">
+            </div>
+            <div class="form__item">
+              <label class="form__label" for="phone">Phone number</label>
+              <input class="input__billing" type="tel" name="phone" id="phone" placeholder="Phone number">
+            </div>
+          </div>
+        </div>
+
+        <div class="steps">
+          <h3 class="buy-now__title">Payment method</h3>
+          <div class="buy-now__subtitle">
+            <p class="subtitle__board">Please enter information below</p>
+            <p class="subtitle__step">Step 2 of 3</p>
+          </div>
+          <div class="form__item">
+            <label class="form__label" for="cardnumber">Card number</label>
+            <div class="form__item_row">
+              <input class="input__billing" type="cardnumber" name="cardnumber" id="cardnumber" placeholder="Card number">
+              <img class="payment__image" src="" alt="payment system">
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label" for="cardholder">Card holder</label>
+            <input class="input__billing input__billing_cardholder" type="text" name="cardholder" id="cardholder" placeholder="Card holder">
+          </div>
+          <div class="form__item_row">
+            <div class="form__item">
+              <div class="form__item_column">
+                <label class="form__label" for="carddate">Expiration date</label>
+                <input class="input__billing input__billing_date" type="text" name="carddate" id="carddate" placeholder="MM/YY">
+              </div>
+            </div>
+            <div class="form__item">
+              <div class="form__item_column">
+                <label class="form__label" for="cvv">CVV</label>
+                <input class="input__billing input__billing_cvv" type="text" name="cvv" id="cvv" placeholder="CVV">
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="steps">
+        <h3 class="buy-now__title">Confirmation</h3>
+        <div class="buy-now__subtitle">
+          <p class="subtitle__board">Just one click and your order is ready!</p>
+          <p class="subtitle__step">Step 3 of 3</p>
+        </div>
+        <button type="submit" class="button button__submit button__submit_order">Complete order</button>
+      </div>
+
+    </form>
+  </section>
+
+  <div class="finish-order__popup hidden">
+    <h3 class="finish-order__farewell">Thanks a lot for your trust!</h3>
+  </div>
+</section>

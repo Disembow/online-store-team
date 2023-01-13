@@ -1,0 +1,156 @@
+@import '../constants/constants';
+
+.button {
+  font-size: 1.5rem;
+  font-weight: 700;
+  height: 4.8rem;
+  background: $primaryColor2;
+  border: 2px solid $borderColor2;
+  border-radius: 1.2rem;
+  color: $primaryColor4;
+  cursor: pointer;
+
+  &__submit {
+    width: 17.6rem;
+
+    &_buynow {
+      margin: 0 1.6rem 1.6rem 1.6rem;
+
+      @media (max-width: 640px) {
+        width: 13rem;
+        margin: 1rem;
+      }
+    }
+
+    &_cart {
+      margin: 1.6rem;
+
+      @media (max-width: 640px) {
+        width: 13rem;
+        margin: 1rem;
+      }
+
+      & a {
+        text-decoration: none;
+        color: $primaryColor4;
+      }
+    }
+  }
+
+  &__delete_promo {
+    height: 2.4rem;
+    width: 2.4rem;
+    text-align: center;
+    border: 1px solid $primaryColor2;
+    text-decoration: none;
+  }
+
+  &_round {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    margin: 0 0.5rem;
+    color: $primaryColor1;
+    background-color: $background1;
+  }
+
+  &_active {
+    color: $primaryColor3;
+    background-color: $primaryColor2;
+  }
+
+  &:hover {
+    background: #5c8830;
+  }
+
+  &:active {
+    background: $borderColor2;
+  }
+
+  &:disabled {
+    background-color: $buttonDisableBG;
+    color: $primaryColor1;
+    cursor: auto;
+  }
+}
+
+.cart__changer {
+  background: $primaryColor3;
+  width: 6.4rem;
+  height: 1.6rem;
+  border: 1px solid $borderColor1;
+  border-radius: 0.75rem;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  height: 3rem;
+}
+
+.plus,
+.minus {
+  width: 50%;
+  min-height: 100%;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minus {
+  border-right: 1px solid $borderColor1;
+}
+
+.plus:hover,
+.minus.hover {
+  background: #eae8e8;
+}
+
+.plus:active,
+.minus:active {
+  background: #d1d0d0;
+}
+
+#main-aside-close {
+  display: none;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  width: 100%;
+  min-height: 45px;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  @media screen and (max-width: 1023px) {
+    display: block;
+  }
+}
+
+.close__button {
+  cursor: pointer;
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 2rem;
+    height: 0.3rem;
+    background: $primaryColor1;
+    border-radius: 0.2rem;
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}

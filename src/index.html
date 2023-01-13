@@ -1,26 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store v2.0</title>
+  <title></title>
+  <meta name="description" content="">
 </head>
+
 <body>
-  <h1>Store</h1>
-  <h2>Store 1st page</h2>
-  <h3>Some info</h3>
-  <img src="./images/Bamboo-cap.jpg" alt="man">
-  <img src="./images/monkey.svg" alt="monkey">
-  <div>
-    <ul>
-      <li>Apple</li>
-      <li>Orange</li>
-      <li>Tomato</li>
-      <li>Cucumber</li>
-      <li>Pear</li>
-      <li>Watermellon</li>
-    </ul>
-  </div>
+
+  <header class="header">
+    <div class="overlay"></div>
+
+    <section class="header__contact-block">
+      <span>8-800-800-80-80</span>
+    </section>
+
+    <section class="header__main-block">
+      <h1 class="logo" data-link="main">
+        <span class="logo__color">Online</span> Store
+      </h1>
+      <div class="search light-block">
+        <input class="search__input" type="text" id="search-input"
+          placeholder="Search products, categories, brand, description, price, discount, rating or stock">
+        <span class="search__icon"></span>
+      </div>
+      <div class="header-total-price">
+        <span>Cart total: </span><span class="header-total-price__sum">€0.00</span>
+      </div>
+      <a class="header-cart-block" href="#cart" onclick="window.history.replaceState({}, '', window.location.origin);">
+        <div class="header-cart-block__count"></div>
+        <img class="header-cart-block__icon" src="./assets/icons/cart-icon.svg" alt="Cart">
+      </a>
+    </section>
+
+    <section class="breadcrumbs">
+      <span class="breadcrumbs__links breadcrumbs__links_colored" data-link="main">Homepage</span>
+      <span class="breadcrumbs__separator">>></span>
+      <span class="breadcrumbs__links"></span>
+      <span class="breadcrumbs__separator">>></span>
+      <span class="breadcrumbs__links"></span>
+      <span class="breadcrumbs__separator">>></span>
+      <span class="breadcrumbs__links">Product</span>
+    </section>
+
+  </header>
+
+  <main class="main" id="content"></main>
+
+  <footer class="footer">
+    <div class="contacts">
+      <span class="contacts__title">GitHub:</span>
+      <a class="base-link contacts__links" href="https://github.com/Disembow">Yauhen Naliotau</a>
+      <span class="contacts__separator">/</span>
+      <a class="base-link contacts__links" href="https://github.com/KirillGenin">Kirill Genin</a>
+    </div>
+    <span class="year">Online Store. 2023</span>
+    <a href="https://rs.school/js/" class="base-link rsschool"></a>
+  </footer>
+
 </body>
+
 </html>
