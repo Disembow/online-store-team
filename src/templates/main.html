@@ -1,0 +1,151 @@
+<div class="flex-wrap-main">
+
+  <aside class="main-aside">
+    <button class="light-block aside-btn" type="button" id="main-aside-close">&#8617 Close filters</button>
+    <section class="checkbox-block">
+      <div class="main-aside__title">Category</div>
+      <ul class="checkbox-block__list" data-filter-list="category">
+        <li class="checkbox-block__item checkbox-block__item_disabled">
+          <!-- .checkbox-block__item_disabled Состояние при отсутствии товаров по фильтру-->
+          <label class="checkbox-block__label">
+            <input class="checkbox-block__input" type="checkbox" name="category" value="smartphones">
+            <span class="checkbox-block__input-fake"></span>
+            <span class="checkbox-block__text">Smartphones</span>
+          </label>
+          <div class="checkbox-block__count-wrap">
+            <span class="checkbox-block__count-current">0</span>
+            <span class="checkbox-block__count-separator">/</span>
+            <span class="checkbox-block__count-total">5</span>
+          </div>
+        </li>
+        <li class="checkbox-block__item">
+          <label class="checkbox-block__label">
+            <input class="checkbox-block__input" type="checkbox" name="category" value="laptops">
+            <span class="checkbox-block__input-fake"></span>
+            <span class="checkbox-block__text">Laptops</span>
+          </label>
+          <div class="checkbox-block__count-wrap">
+            <span class="checkbox-block__count-current">5</span>
+            <span class="checkbox-block__count-separator">/</span>
+            <span class="checkbox-block__count-total">5</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="checkbox-block">
+      <div class="main-aside__title">Brand</div>
+      <ul class="checkbox-block__list" data-filter-list="brand">
+        <li class="checkbox-block__item">
+          <label class="checkbox-block__label">
+            <input class="checkbox-block__input" type="checkbox" name="brand" value="apple">
+            <span class="checkbox-block__input-fake"></span>
+            <span class="checkbox-block__text">Apple</span>
+          </label>
+          <div class="checkbox-block__count-wrap">
+            <span class="checkbox-block__count-current">3</span>
+            <span class="checkbox-block__count-separator">/</span>
+            <span class="checkbox-block__count-total">3</span>
+          </div>
+        </li>
+        <li class="checkbox-block__item">
+          <label class="checkbox-block__label">
+            <input class="checkbox-block__input" type="checkbox" name="brand" value="samsung">
+            <span class="checkbox-block__input-fake"></span>
+            <span class="checkbox-block__text">Samsung</span>
+          </label>
+          <div class="checkbox-block__count-wrap">
+            <span class="checkbox-block__count-current" data-filter-count="samsung">2</span>
+            <span class="checkbox-block__count-separator">/</span>
+            <span class="checkbox-block__count-total">2</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="dual-slider-block">
+      <div class="main-aside__title">Price</div>
+      <div class="dual-slider" data-name="price">
+        <div class="dual-slider__display">
+          <span class="dual-slider__text" data-display="lower"></span>
+          <span class="dual-slider__text" data-display="upper"></span>
+        </div>
+        <input class="dual-slider__input" type="range" min="0" max="100" value="10" data-name="lower">
+        <input class="dual-slider__input" type="range" min="0" max="100" value="90" data-name="upper">
+        <div class="dual-slider__between-track"></div>
+      </div>
+    </section>
+
+    <section class="dual-slider-block">
+      <div class="main-aside__title">Stock</div>
+      <div class="dual-slider" data-name="stock">
+        <div class="dual-slider__display">
+          <span class="dual-slider__text" data-display="lower"></span>
+          <span class="dual-slider__text" data-display="upper"></span>
+        </div>
+        <input class="dual-slider__input" type="range" min="0" max="100" value="10" data-name="lower">
+        <input class="dual-slider__input" type="range" min="0" max="100" value="90" data-name="upper">
+        <div class="dual-slider__between-track"></div>
+      </div>
+    </section>
+
+
+    <div class="aside-btn-wrap">
+      <button class="light-block aside-btn" id="reset" type="button">Reset filter</button>
+      <button class="light-block aside-btn" id="copy" type="button">Copy link</button>
+    </div>
+
+  </aside>
+
+  <section class="goods-list-wrap">
+    <div class="goods-list-line">
+      <div class="sort-goods">
+        <div class="dropdown sort-goods__dropdown">
+          <div class="dropdown__selected sort-goods__dropdown-selected">Sort options:</div>
+          <ul class="dropdown__list sort-goods__dropdown-list dropdown__list_hidden">
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="price"
+            data-value="asc">Price</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="price"
+            data-value="desc">Price</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="rating"
+            data-value="asc">Rating</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="rating"
+            data-value="desc">Rating</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="discount"
+            data-value="asc">Discount</li>
+            <li
+            class="dropdown__item sort-goods__dropdown-item"
+            data-sort-name="discount"
+            data-value="desc">Discount</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex-wrap-line">
+        <button class="goods-list-filter"></button>
+        <div class="goods-list-total">
+          <span class="goods-list-total__content light-block-2">99</span>
+          <span class="goods-list-total__text">Products found</span>
+        </div>
+      </div>
+      <div class="goods-list-view">
+        <div class="goods-list-view__text">View</div>
+        <div class="goods-list-view__item" data-view-value="grid"></div>
+        <div class="goods-list-view__item" data-view-value="list"></div>
+      </div>
+    </div>
+
+    <div class="goods-card-preview-wrap" data-view="grid"></div>
+
+  </section>
+
+</div>

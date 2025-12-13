@@ -1,6 +1,9 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 let mode = 'development';
 if (process.env.NODE_ENV === 'production') {
@@ -14,7 +17,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash:8].js',
     assetModuleFilename: 'assets/[hash][ext][query]',
-    clean: true,
+    clean: process.env.NODE_ENV === "production",
   },
   devtool: 'source-map',
   devServer: {
@@ -23,14 +26,24 @@ module.exports = {
       directory: './src',
       watch: true,
     },
-    port: 5000,
+    port: 7000,
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   plugins: [
+    new HTMLWebpackPlugin({
+      template: './src/index.html',
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
     }),
-    new HTMLWebpackPlugin({
-      template: './src/index.html',
+    new CleanWebpackPlugin(),
+    new EslintPlugin({ extensions: 'ts' }),
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'src', 'templates'), to: path.resolve(__dirname, 'dist', 'templates') },
+      ],
     }),
   ],
   module: {
@@ -38,6 +51,9 @@ module.exports = {
       {
         test: /\.html$/i,
         loader: 'html-loader',
+      },
+      {
+        test: /\.ts$/i, use: 'ts-loader'
       },
       {
         test: /\.(sa|sc|c)ss$/i,
@@ -63,7 +79,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|jpeg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset/resource',
       },
       {
@@ -78,11 +94,6 @@ module.exports = {
         },
       },
       {
-        test: /\.pug$/i,
-        loader: 'pug-loader',
-        exclude: /(node_modules|bower_components)/,
-      },
-      {
         test: /\.m?js$/i,
         exclude: /(node_modules)/,
         use: {
@@ -91,6 +102,11 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
+      },
+      {
+        test: /\.pug$/i,
+        loader: 'pug-loader',
+        exclude: /(node_modules|bower_components)/,
       },
     ],
   },

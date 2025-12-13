@@ -1,0 +1,22 @@
+.light-block {
+    height: 42px;
+    padding: 0 15px;
+    background: $primaryColor3;
+    border: 1px solid $borderColor1;
+    border-radius: 12px;
+
+    @media screen and (max-width: 768px) {
+        height: 35px;
+        padding: 0 10px;
+    }
+
+    &:hover {
+        background-color: $background1;
+    }
+}
+
+.light-block-2 {
+    background-color: $background1;
+    border-radius: 12px;
+    color: $primaryColor2;
+}
